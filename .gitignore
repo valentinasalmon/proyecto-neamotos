@@ -1,0 +1,23 @@
+# dependencias y builds
+node_modules/
+.next/
+out/
+dist/
+.turbo/
+coverage/
+
+# SO / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/tasks.json
+
+# envs y logs
+.env
+.env.*
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
