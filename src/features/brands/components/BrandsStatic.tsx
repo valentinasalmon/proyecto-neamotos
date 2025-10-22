@@ -1,4 +1,6 @@
-export function BrandsStatic() {
+
+
+export default function BrandsStatic() {
   const items = ["Honda","Yamaha","Kawasaki","KTM","Ducati","BMW","Suzuki","Benelli"];
   return (
     <div className="marquee py-4" role="region" aria-label="Logos de marcas">

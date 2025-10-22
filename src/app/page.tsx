@@ -1,16 +1,19 @@
 import { Hero } from "@/features/hero";
 import { Marquee, BrandsStatic } from "@/features/brands";
 import { HelmetsBlock } from "@/features/helmets";
-import { GalleryGrid } from "@/features/gallery";
 import { StatsStrip } from "@/features/stats";
 import CatalogWithSidebar from "@/features/catalog/components/CatalogWithSidebar";
-
+import GalleryGrid from "@/features/gallery/components/GalleryGrid";
+import PromoStrip from "@/features/promo/PromoStrip";
+     
 
 export default function Home() {
   return (
     <>
+      {/* 1) Hero */}
       <Hero />
 
+      {/* 2) Marquee (franja negra marcas) + 3) Galería debajo */}
       <section id="marcas" className="py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-display text-2xl sm:text-3xl font-bold mb-6">
@@ -18,24 +21,17 @@ export default function Home() {
           </h2>
         </div>
         <Marquee />
+
+        {/* Galería de 3 tarjetas justo debajo del marquee */}
+        <div className="mt-8">
+          <GalleryGrid />
+        </div>
       </section>
 
-      <section id="metricas" aria-label="Métricas NEA MOTOS">
-        <StatsStrip />
-      </section>
+      {/* 4) Banda promo negra con CTA (como en la imagen) */}
+      <PromoStrip />
 
-      <section id="cascos" className="py-16">
-        <HelmetsBlock />
-      </section>
-
-      <section className="py-10">
-        <BrandsStatic />
-      </section>
-
-      <section id="gallery" className="py-16">
-        <GalleryGrid />
-      </section>
-
+      {/* 5) Catálogo destacado */}
       <section id="motos" className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between gap-4 mb-8">
@@ -49,6 +45,21 @@ export default function Home() {
           </div>
           <CatalogWithSidebar />
         </div>
+      </section>
+
+      {/* 6) Métricas al final (como en la referencia) */}
+      <section id="metricas" aria-label="Métricas NEA MOTOS">
+        <StatsStrip />
+      </section>
+
+      {/* 7) Bloque cascos (si querés mantenerlo) */}
+      <section id="cascos" className="py-16">
+        <HelmetsBlock />
+      </section>
+
+      {/* (Opcional) marcas estáticas, si querés conservarlo */}
+      <section className="py-10">
+        <BrandsStatic />
       </section>
     </>
   );

@@ -110,3 +110,9 @@ button[aria-pressed="false"] {
   width: 16px; height: 16px; border-radius: 9999px;
   background: var(--brand); border: 2px solid #fff;
 }
+
+@keyframes marquee-loop {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-100% - var(--gap))); }
+}
+.animate-marquee-loop { animation: marquee-loop linear infinite; }

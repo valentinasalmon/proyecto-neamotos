@@ -1,2 +1,2 @@
-export { Marquee } from "./components/Marquee";
-export { BrandsStatic } from "./components/BrandsStatic";
+export { default as Marquee } from "./components/Marquee";
+export { default as BrandsStatic } from "./components/BrandsStatic";
