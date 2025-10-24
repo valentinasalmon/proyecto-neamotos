@@ -2,9 +2,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useMemo, useRef, useState, useEffect } from "react";
-import { useMotos } from "@/features/catalog/api/getMotos";
+import { useMotos } from "@/features/catalog/lib/getMotos";
 import type { Moto } from "@/features/catalog/types";
-import { buildWhatsAppLink } from "@/lib/whatsapp";
+import { buildWhatsAppLink } from "@/core/lib/whatsapp";
 
 const PHONE = process.env.NEXT_PUBLIC_PHONE ?? "";
 

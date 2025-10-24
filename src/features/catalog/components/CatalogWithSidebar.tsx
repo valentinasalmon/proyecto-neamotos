@@ -1,10 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useMotos } from "../api/getMotos";
+import { useMotos } from "../lib/getMotos";
 import type { Moto } from "../types";
 import Image from "next/image";
-import { buildWhatsAppLink } from "@/lib/whatsapp";
+import { buildWhatsAppLink } from "@/core/lib/whatsapp";
 
 /* ----------------- DUAL RANGE (riel único) ----------------- */
 function DualRange({

@@ -1,9 +1,9 @@
-import { Hero } from "@/features/hero";
-import { Marquee, BrandsStatic } from "@/features/brands";
+import { Hero } from "@/features/hero-section";
+import { Marquee, BrandsStatic } from "@/features/brands-marquee";
 import { HelmetsBlock } from "@/features/helmets";
 import { StatsStrip } from "@/features/stats";
 import GalleryGrid from "@/features/gallery/components/GalleryGrid";
-import PromoStrip from "@/features/promo/PromoStrip";
+import PromoStrip from "@/features/promo/components/PromoStrip";
 import { HighlightShowcase } from "@/features/showcase";
 
 export default function Home() {

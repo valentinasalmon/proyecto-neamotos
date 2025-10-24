@@ -1,1 +1,2 @@
-export { StatsStrip } from "./components/StatsStrip";
+export { default as StatsBlock } from "./components/StatsBlock";
+

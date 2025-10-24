@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Moto } from "../types";
-import { buildWhatsAppLink } from "@/lib/whatsapp";
+import { buildWhatsAppLink } from "@/core/lib/whatsapp";
 
 const PHONE = process.env.NEXT_PUBLIC_PHONE ?? "";
 
