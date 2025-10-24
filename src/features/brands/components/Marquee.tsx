@@ -1,20 +1,61 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
-const brands = [
+const BASE = [
   { src: "/logos/motomel.png", alt: "Motomel" },
   { src: "/logos/zanella.png", alt: "Zanella" },
-  { src: "/logos/corven.png", alt: "Corven" },
-  { src: "/logos/keller.png", alt: "Keller" },
-  { src: "/logos/bajaj.png", alt: "Bajaj" },
+  { src: "/logos/corven.png",  alt: "Corven"  },
+  { src: "/logos/keller.png",  alt: "Keller"  },
+  { src: "/logos/bajaj.png",   alt: "Bajaj"   },
 ];
 
-export default function Marquee() {
+// ancho de cada “tile” y separación entre logos (deben coincidir con las clases)
+const TILE_W = 220;    // w-[220px]
+const GAP_PX = 300;     // 4rem → gap-[var(--gap)] con --gap: 4rem
+
+function Track({ items, priorityFirst = false }: { items: typeof BASE; priorityFirst?: boolean }) {
   return (
-    <div className="w-full bg-black overflow-hidden py-8">
+    <ul className="flex shrink-0 gap-[var(--gap)] animate-marquee-x will-change-transform">
+      {items.map((b, i) => (
+        <li key={`${b.alt}-${i}`} className="h-[90px] w-[220px] flex items-center justify-center">
+          <Image
+            src={b.src}
+            alt={b.alt}
+            width={600}
+            height={200}
+            quality={100}
+            className="h-full w-auto object-contain"
+            priority={priorityFirst && i < 2}
+          />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export default function Marquee() {
+  const [reps, setReps] = useState(2);
+
+  useEffect(() => {
+    const update = () => {
+      const vw = typeof window !== "undefined" ? window.innerWidth : 1280;
+      const tile = TILE_W + GAP_PX;
+      // queremos que UNA pista (Track A) cubra > 1.25× viewport
+      const need = Math.max(2, Math.ceil((vw * 1.25) / (BASE.length * tile)));
+      setReps(need);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const row = useMemo(() => Array.from({ length: reps }).flatMap(() => BASE), [reps]);
+
+  return (
+    <div className="w-full bg-black overflow-hidden py-10">
       <div
-        className="flex items-center gap-[var(--gap)]"
+        className="flex items-center"
         style={
           {
             ["--gap" as any]: "4rem",
@@ -22,39 +63,9 @@ export default function Marquee() {
           } as React.CSSProperties
         }
       >
-        <ul className="flex flex-nowrap items-center shrink-0 gap-[var(--gap)] animate-marquee-loop"
-            style={{ animationDuration: "var(--dur)" }}>
-          {brands.map((b, i) => (
-            <li key={`a-${i}`} className="h-[72px] w-[180px] flex items-center justify-center">
-              <Image
-                src={b.src}
-                alt={b.alt}
-                width={360}
-                height={144}
-                className="max-h-[72px] w-auto object-contain brightness-150 opacity-90"
-                priority={i < 3}
-              />
-            </li>
-          ))}
-        </ul>
-
-        <ul
-          aria-hidden="true"
-          className="flex flex-nowrap items-center shrink-0 gap-[var(--gap)] animate-marquee-loop"
-          style={{ animationDuration: "var(--dur)" }}
-        >
-          {brands.map((b, i) => (
-            <li key={`b-${i}`} className="h-[72px] w-[180px] flex items-center justify-center">
-              <Image
-                src={b.src}
-                alt={b.alt}
-                width={360}
-                height={144}
-                className="max-h-[72px] w-auto object-contain brightness-150 opacity-90"
-              />
-            </li>
-          ))}
-        </ul>
+        {/* No hay gap entre pistas A y B */}
+        <Track items={row} priorityFirst />
+        <Track items={row} />
       </div>
     </div>
   );

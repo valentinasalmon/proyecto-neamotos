@@ -111,8 +111,39 @@ button[aria-pressed="false"] {
   background: var(--brand); border: 2px solid #fff;
 }
 
-@keyframes marquee-loop {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(calc(-100% - var(--gap))); }
+/* ===== MARQUEE (versión fluida y lenta) ===== */
+@keyframes marquee-x {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
-.animate-marquee-loop { animation: marquee-loop linear infinite; }
+
+.animate-marquee-x {
+  animation: marquee-x var(--dur, 1000s) linear infinite;
+  will-change: transform;
+}
+
+/* Oculta la barra horizontal (opcional) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes marquee-half {
+  0%   { transform: translate3d(0,0,0); }
+  100% { transform: translate3d(-50%,0,0); }
+}
+.animate-marquee-half {
+  animation: marquee-half var(--dur, 55s) linear infinite;
+  will-change: transform;
+}
+
+/* opcional: ocultar barra de scroll horizontal */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

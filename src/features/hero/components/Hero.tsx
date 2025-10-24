@@ -15,7 +15,7 @@ type Slide = {
 
 const slides: Slide[] = [
   {
-    src: "/images/hero/moto-hero-1.jpg",
+    src: "/hero/1.png",
     title: "50% OFF EN TU PRIMERA COMPRA",
     subtitle: "Cascos y equipamiento con envío 24/48 hs en el NEA.",
     ctaLabel: "VER CATÁLOGO",
