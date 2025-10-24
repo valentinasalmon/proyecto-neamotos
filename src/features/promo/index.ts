@@ -1,1 +1,1 @@
-export { default as PromoStrip } from "./components/PromoStrip";
+export { PromoStrip } from "./components/PromoStrip";

@@ -34,7 +34,7 @@ function Card({ m }: { m: Moto }) {
   );
 }
 
-export default function HighlightShowcase() {
+export function HighlightShowcase() {
   const { data, isLoading, isError } = useMotos();
   const items = useMemo(() => (data ?? []).slice(0, 6), [data]);
 

@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function PromoStrip() {
+export function PromoStrip() {
   return (
     <section className="bg-black py-6">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">

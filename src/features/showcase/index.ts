@@ -1,2 +1,2 @@
-export { default as HighlightShowcase } from "./components/HighlightShowcase";
+export { HighlightShowcase } from "./components/HighlightShowcase";
 

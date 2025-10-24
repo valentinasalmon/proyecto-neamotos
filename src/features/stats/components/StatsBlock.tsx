@@ -30,7 +30,7 @@ function useCountUp(target: number, start: boolean) {
   return n;
 }
 
-export function StatsStrip() {
+export function StatsBlock() {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 

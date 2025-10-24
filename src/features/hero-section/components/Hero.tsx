@@ -45,13 +45,13 @@ export function Hero() {
       loop: true,
       align: "start",
       duration: 20,
-      draggable: false,          // ⛔ sin drag
+      draggable: false,
     },
     [
       Autoplay({
-        delay: 4500,             // ⏱️ tiempo por slide
+        delay: 4500,
         stopOnInteraction: false,
-        stopOnMouseEnter: false, // ⛔ no se pausa con hover
+        stopOnMouseEnter: false,
       }),
     ]
   );
@@ -68,7 +68,7 @@ export function Hero() {
   }, [emblaApi, onSelect]);
 
   return (
-    <section className="relative select-none"> {/* select-none por si acaso */}
+    <section className="relative select-none">
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
           {slides.map((s, i) => (
@@ -79,22 +79,27 @@ export function Hero() {
                   alt={s.title}
                   fill
                   priority={i === 0}
-                  className="object-cover pointer-events-none" // evita clicks
+                  className="object-cover pointer-events-none"
                 />
+
                 <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
+
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="px-4 sm:px-6 lg:px-8 text-center text-white max-w-3xl">
                     <p className="text-[12px] sm:text-sm font-semibold tracking-[0.25em] text-white/80">
                       PROMO ESPECIAL
                     </p>
+
                     <h1 className="mt-2 font-display font-extrabold leading-tight text-4xl sm:text-5xl lg:text-6xl">
                       {s.title}
                     </h1>
+
                     {s.subtitle && (
                       <p className="mt-3 text-sm sm:text-base text-white/80">
                         {s.subtitle}
                       </p>
                     )}
+
                     {s.ctaLabel && s.ctaHref && (
                       <div className="mt-6">
                         <a
@@ -115,7 +120,7 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Bullets solo informativos (no clickeables) */}
+      {/* bullets del carrusel */}
       <div className="absolute bottom-5 left-0 right-0 flex items-center justify-center gap-2">
         {slides.map((_, i) => (
           <span

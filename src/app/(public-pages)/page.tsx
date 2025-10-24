@@ -1,10 +1,10 @@
 import { Hero } from "@/features/hero-section";
 import { Marquee, BrandsStatic } from "@/features/brands-marquee";
 import { HelmetsBlock } from "@/features/helmets";
-import { StatsStrip } from "@/features/stats";
-import GalleryGrid from "@/features/gallery/components/GalleryGrid";
-import PromoStrip from "@/features/promo/components/PromoStrip";
+import { GalleryGrid } from "@/features/gallery";
+import { PromoStrip } from "@/features/promo";
 import { HighlightShowcase } from "@/features/showcase";
+import { StatsBlock } from "@/features/stats";
 
 export default function Home() {
   return (
@@ -26,7 +26,7 @@ export default function Home() {
       <HighlightShowcase />
 
       <section id="metricas" aria-label="Métricas NEA MOTOS">
-        <StatsStrip />
+        <StatsBlock />
       </section>
 
       <section id="cascos" className="py-16">

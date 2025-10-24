@@ -34,7 +34,7 @@ function Track({ items, priorityFirst = false }: { items: typeof BASE; priorityF
   );
 }
 
-export default function Marquee() {
+export function Marquee() {
   const [reps, setReps] = useState(2);
 
   useEffect(() => {

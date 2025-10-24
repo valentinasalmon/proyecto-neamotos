@@ -1,2 +1,2 @@
-export { default as StatsBlock } from "./components/StatsBlock";
+export { StatsBlock } from "./components/StatsBlock";
 
