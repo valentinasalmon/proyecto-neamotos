@@ -5,27 +5,36 @@ import React, { useEffect, useMemo, useState } from "react";
 const BASE = [
   { src: "/logos/motomel.png", alt: "Motomel" },
   { src: "/logos/zanella.png", alt: "Zanella" },
-  { src: "/logos/corven.png",  alt: "Corven"  },
-  { src: "/logos/keller.png",  alt: "Keller"  },
-  { src: "/logos/bajaj.png",   alt: "Bajaj"   },
+  { src: "/logos/corven.png", alt: "Corven" },
+  { src: "/logos/keller.png", alt: "Keller" },
+  { src: "/logos/bajaj.png", alt: "Bajaj" },
 ];
 
-// ancho de cada “tile” y separación entre logos (deben coincidir con las clases)
-const TILE_W = 220;    // w-[220px]
-const GAP_PX = 300;     // 4rem → gap-[var(--gap)] con --gap: 4rem
+// Ancho base y separación entre logos (en píxeles)
+const TILE_W = 260; // más ancho = logos más grandes
+const GAP_PX = 150; // espacio entre logos
 
-function Track({ items, priorityFirst = false }: { items: typeof BASE; priorityFirst?: boolean }) {
+function Track({
+  items,
+  priorityFirst = false,
+}: {
+  items: typeof BASE;
+  priorityFirst?: boolean;
+}) {
   return (
     <ul className="flex shrink-0 gap-[var(--gap)] animate-marquee-x will-change-transform">
       {items.map((b, i) => (
-        <li key={`${b.alt}-${i}`} className="h-[90px] w-[220px] flex items-center justify-center">
+        <li
+          key={`${b.alt}-${i}`}
+          className="h-[100px] w-[260px] flex items-center justify-center"
+        >
           <Image
             src={b.src}
             alt={b.alt}
-            width={600}
-            height={200}
+            width={700}
+            height={300}
             quality={100}
-            className="h-full w-auto object-contain"
+            className="h-full w-auto object-contain transition-transform duration-700 hover:scale-110"
             priority={priorityFirst && i < 2}
           />
         </li>
@@ -41,32 +50,66 @@ export function Marquee() {
     const update = () => {
       const vw = typeof window !== "undefined" ? window.innerWidth : 1280;
       const tile = TILE_W + GAP_PX;
-      // queremos que UNA pista (Track A) cubra > 1.25× viewport
-      const need = Math.max(2, Math.ceil((vw * 1.25) / (BASE.length * tile)));
+
+      // cantidad de repeticiones necesarias para cubrir el ancho + margen de seguridad
+      const need = Math.max(3, Math.ceil((vw * 1.5) / (BASE.length * tile)));
       setReps(need);
     };
+
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  const row = useMemo(() => Array.from({ length: reps }).flatMap(() => BASE), [reps]);
+  const row = useMemo(
+    () => Array.from({ length: reps }).flatMap(() => BASE),
+    [reps]
+  );
 
   return (
-    <div className="w-full bg-black overflow-hidden py-10">
+    <div
+      className="w-full overflow-hidden"
+      style={{
+        backgroundColor: "white", // ✅ fondo blanco
+        borderTop: "1px solid var(--border-subtle)",
+        borderBottom: "1px solid var(--border-subtle)",
+        paddingTop: "2.5rem",
+        paddingBottom: "2.5rem",
+      }}
+    >
       <div
         className="flex items-center"
         style={
           {
-            ["--gap" as any]: "4rem",
-            ["--dur" as any]: "28s",
+            ["--gap" as any]: `${GAP_PX}px`,
+            ["--dur" as any]: "55s", // ⏱️ velocidad suave
           } as React.CSSProperties
         }
       >
-        {/* No hay gap entre pistas A y B */}
         <Track items={row} priorityFirst />
         <Track items={row} />
       </div>
+
+      {/* Animación CSS */}
+      <style jsx>{`
+        @keyframes marquee-x {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+
+        .animate-marquee-x {
+          animation: marquee-x var(--dur) linear infinite;
+        }
+
+        /* pausa animación al pasar el mouse */
+        div:hover > .flex > .animate-marquee-x {
+          animation-play-state: paused;
+        }
+      `}</style>
     </div>
   );
 }

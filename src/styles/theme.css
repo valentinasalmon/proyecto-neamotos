@@ -1,0 +1,23 @@
+:root {
+  /* Fondo base oscuro */
+  --bg-page: #0a0a0a;
+  --bg-surface: #111111;
+  --bg-surface-alt: rgba(255,255,255,0.03);
+
+  /* Tipografía */
+  --text-primary: #ffffff;
+  --text-dim: rgba(255,255,255,0.6);
+  --text-muted: rgba(255,255,255,0.4);
+
+  /* Marca NEA Motos */
+  --brand-red: #e02020;          /* rojo acción */
+  --brand-red-hover: #b91919;
+  --brand-red-glow: rgba(224,32,32,0.4);
+
+  --brand-blue: #0040ff;         /* azul confianza */
+  --brand-blue-hover: #0035d1;
+  --brand-blue-glow: rgba(0,64,255,0.4);
+
+  /* Bordes y outlines */
+  --border-subtle: rgba(255,255,255,0.08);
+}

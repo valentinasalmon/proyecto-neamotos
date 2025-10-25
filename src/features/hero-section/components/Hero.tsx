@@ -22,14 +22,14 @@ const slides: Slide[] = [
     ctaHref: "#motos",
   },
   {
-    src: "/images/hero/moto-hero-2.jpg",
+    src: "/hero/2.jpg",
     title: "FINANCIACIÓN HASTA 12 CUOTAS",
     subtitle: "Asesoramiento personalizado para tu próxima moto.",
     ctaLabel: "HABLAR POR WHATSAPP",
     ctaHref: "https://wa.me/549379XXXX",
   },
   {
-    src: "/images/hero/moto-hero-3.jpg",
+    src: "/hero/3.jpg",
     title: "STOCK DE MARCAS LÍDERES",
     subtitle: "Scooters, street, enduro y más.",
     ctaLabel: "VER MARCAS",
@@ -100,18 +100,30 @@ export function Hero() {
                       </p>
                     )}
 
-                    {s.ctaLabel && s.ctaHref && (
-                      <div className="mt-6">
-                        <a
-                          href={s.ctaHref}
-                          className="inline-block rounded-full px-6 sm:px-8 py-3 text-sm font-bold
-                                     bg-red-500 hover:bg-red-600 active:bg-red-700 transition
-                                     shadow-[0_8px_20px_rgba(239,68,68,0.35)]"
-                        >
-                          {s.ctaLabel}
-                        </a>
-                      </div>
-                    )}
+                 { s.ctaLabel && s.ctaHref && (
+                  
+                  <div className="mt-6">
+                    <a
+                      href={s.ctaHref}
+                      className="inline-block rounded-full px-6 sm:px-8 py-3 text-sm font-bold text-white
+                 transition shadow-[0_8px_20px_var(--brand-red-glow)]
+                 focus:outline-none focus:ring-2 focus:ring-white/60"
+                 style={{
+              backgroundColor: "var(--brand-red)",
+                   }}
+                 onMouseEnter={(e) => {
+                (e.currentTarget as HTMLAnchorElement).style.backgroundColor =
+                 "var(--brand-red-hover)";
+               }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.backgroundColor =
+             "var(--brand-red)";
+          }}
+    >
+      {s.ctaLabel}
+    </a>
+  </div>
+)}
                   </div>
                 </div>
               </div>

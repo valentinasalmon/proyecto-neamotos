@@ -1,40 +1,44 @@
 import { Hero } from "@/features/hero-section";
-import { Marquee, BrandsStatic } from "@/features/brands-marquee";
-import { HelmetsBlock } from "@/features/helmets";
+import { Marquee } from "@/features/brands-marquee";
+import { FeaturedMotosCarousel } from "@/features/catalog/components/FeaturedMotosCarousel";
 import { GalleryGrid } from "@/features/gallery";
 import { PromoStrip } from "@/features/promo";
-import { HighlightShowcase } from "@/features/showcase";
 import { StatsBlock } from "@/features/stats";
+import { HelmetsBlock } from "@/features/helmets";
 
 export default function Home() {
   return (
     <>
+      {/* HERO principal con slider grande */}
       <Hero />
 
-      <section id="marcas" className="py-12 sm:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-display text-2xl sm:text-3xl font-bold mb-6">Trabajamos con marcas líderes</h2>
-        </div>
+      {/* FRANJA DE MARCAS (logos que se mueven) */}
+      <section id="marcas" className="py-0">
         <Marquee />
-        <div className="mt-8">
-          <GalleryGrid />
-        </div>
       </section>
 
+      {/* GALERÍA BLANCA con 3 fotos grandes */}
+      <section id="galeria">
+        <GalleryGrid />
+      </section>
+
+      {/* FRANJA PROMO AZUL con CTA "Ver motos" */}
       <PromoStrip />
+      
+        {/* MOTOS DESTACADAS (carrusel 1 en mobile / 3 en desktop) */}
+      <section id="destacadas">
+        <FeaturedMotosCarousel />
+      </section>
 
-      <HighlightShowcase />
 
+      {/* MÉTRICAS / CONFIANZA / EXPERIENCIA */}
       <section id="metricas" aria-label="Métricas NEA MOTOS">
         <StatsBlock />
       </section>
 
+      {/* CASCOS / ACCESORIOS */}
       <section id="cascos" className="py-16">
         <HelmetsBlock />
-      </section>
-
-      <section className="py-10">
-        <BrandsStatic />
       </section>
     </>
   );
