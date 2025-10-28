@@ -1,139 +1,100 @@
 "use client";
 
-export function CatalogFilters() {
-  return (
-    <div className="bg-white border border-neutral-300/70 shadow-[0_12px_24px_rgba(0,0,0,0.04)] rounded-none p-4">
-      <form
-        className="
-          grid grid-cols-1
-          gap-4
-          md:grid-cols-[1fr_auto_auto_auto_auto]
-          md:items-end
-        "
-      >
-        {/* Keywords / búsqueda */}
-        <div className="flex flex-col">
-          <label className="text-[11px] font-semibold text-neutral-700 uppercase tracking-wide mb-1">
-            Búsqueda
-          </label>
+import { useState } from "react";
 
-          <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 text-xs pointer-events-none">
-            </span>
-            <input
-              type="text"
-              placeholder="Ej. Yamaha, 300cc, scooter…"
-              className="
-                w-full
-                border border-neutral-300 text-neutral-800 bg-white
-                pl-8 pr-3 py-2
-                text-[13px]
-                leading-none
-                outline-none
-                focus:ring-[2px] focus:ring-red-500 focus:border-red-500
-                rounded-none
-              "
-            />
-          </div>
+export type CatalogFiltersState = {
+  marca: string;
+  tipo: string;
+  search: string;
+};
+
+export function CatalogFilters({
+  marcas,
+  tipos,
+  onChange,
+}: {
+  marcas: string[];
+  tipos: string[];
+  onChange: (f: CatalogFiltersState) => void;
+}) {
+  const [filters, setFilters] = useState<CatalogFiltersState>({
+    marca: "Todas",
+    tipo: "Todos",
+    search: "",
+  });
+
+  function update<K extends keyof CatalogFiltersState>(
+    key: K,
+    value: CatalogFiltersState[K]
+  ) {
+    const next = { ...filters, [key]: value };
+    setFilters(next);
+    onChange(next);
+  }
+
+  return (
+    <section className="bg-white border border-neutral-300 shadow-sm rounded-none p-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-[13px] text-neutral-800">
+        {/* Buscar por texto */}
+        <div className="flex flex-col">
+          <label className="text-[11px] font-semibold text-neutral-500 uppercase mb-1">
+            Buscar
+          </label>
+          <input
+            className="border border-neutral-300 bg-white px-3 py-2 text-[13px] outline-none focus:ring-2 focus:ring-red-500/30"
+            placeholder="Ej: Blitz, Rouser, Skua..."
+            value={filters.search}
+            onChange={(e) => update("search", e.target.value)}
+          />
         </div>
 
         {/* Marca */}
         <div className="flex flex-col">
-          <label className="text-[11px] font-semibold text-neutral-700 uppercase tracking-wide mb-1">
+          <label className="text-[11px] font-semibold text-neutral-500 uppercase mb-1">
             Marca
           </label>
           <select
-            className="
-              border border-neutral-300 text-neutral-800 bg-white
-              px-3 py-2
-              text-[13px]
-              leading-none
-              outline-none
-              focus:ring-[2px] focus:ring-red-500 focus:border-red-500
-              rounded-none
-              min-w-[140px]
-            "
+            className="border border-neutral-300 bg-white px-3 py-2 text-[13px] outline-none focus:ring-2 focus:ring-red-500/30"
+            value={filters.marca}
+            onChange={(e) => update("marca", e.target.value)}
           >
-            <option>Todos</option>
-            <option>Yamaha</option>
-            <option>Zontes</option>
-            <option>Motomel</option>
-            <option>Corven</option>
-            <option>Kove</option>
+            <option>Todas</option>
+            {marcas.map((m) => (
+              <option key={m}>{m}</option>
+            ))}
           </select>
         </div>
 
         {/* Tipo */}
         <div className="flex flex-col">
-          <label className="text-[11px] font-semibold text-neutral-700 uppercase tracking-wide mb-1">
+          <label className="text-[11px] font-semibold text-neutral-500 uppercase mb-1">
             Tipo
           </label>
           <select
-            className="
-              border border-neutral-300 text-neutral-800 bg-white
-              px-3 py-2
-              text-[13px]
-              leading-none
-              outline-none
-              focus:ring-[2px] focus:ring-red-500 focus:border-red-500
-              rounded-none
-              min-w-[140px]
-            "
+            className="border border-neutral-300 bg-white px-3 py-2 text-[13px] outline-none focus:ring-2 focus:ring-red-500/30"
+            value={filters.tipo}
+            onChange={(e) => update("tipo", e.target.value)}
           >
             <option>Todos</option>
-            <option>Street</option>
-            <option>Sport</option>
-            <option>Scooter</option>
-            <option>Enduro</option>
-            <option>Adventure</option>
-            <option>Cub</option>
+            {tipos.map((t) => (
+              <option key={t}>{t}</option>
+            ))}
           </select>
         </div>
 
-        {/* Cilindrada (ej extra) */}
+        {/* Bot simulado */}
         <div className="flex flex-col">
-          <label className="text-[11px] font-semibold text-neutral-700 uppercase tracking-wide mb-1">
-            Cilindrada
+          <label className="text-[11px] font-semibold text-transparent uppercase mb-1 select-none">
+            .
           </label>
-          <select
-            className="
-              border border-neutral-300 text-neutral-800 bg-white
-              px-3 py-2
-              text-[13px]
-              leading-none
-              outline-none
-              focus:ring-[2px] focus:ring-red-500 focus:border-red-500
-              rounded-none
-              min-w-[140px]
-            "
-          >
-            <option>Todos</option>
-            <option>110cc</option>
-            <option>150cc</option>
-            <option>250cc</option>
-            <option>300cc+</option>
-          </select>
-        </div>
-
-        {/* Botón filtrar */}
-        <div className="flex md:justify-end">
           <button
-            type="submit"
-            className="
-              w-full md:w-auto
-              bg-[#0A2342] hover:bg-[#0d2d57] active:bg-[#091b32]
-              text-white font-semibold
-              text-[13px] leading-none
-              px-4 py-2
-              shadow-[0_16px_32px_rgba(10,35,66,0.4)]
-              whitespace-nowrap
-              rounded-none
-            "
+            className="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold text-[13px] w-full py-2 shadow-[0_12px_24px_rgba(220,38,38,0.4)]"
+            onClick={() => onChange(filters)}
           >
             Filtrar
           </button>
         </div>
-      </form>
-    </div>
+      </div>
+    </section>
   );
 }
