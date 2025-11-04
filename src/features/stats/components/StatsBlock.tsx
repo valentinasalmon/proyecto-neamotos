@@ -8,7 +8,7 @@ const STATS: Stat[] = [
   { label: "AÑOS EN EL NEA", value: 12, suffix: "+" },
   { label: "MOTOS VENDIDAS", value: 1800, suffix: "+" },
   { label: "CLIENTES FELICES", value: 1600, suffix: "+" },
-  { label: "MODELOS EN STOCK", value: 48 }
+  { label: "MODELOS EN STOCK", value: 48 },
 ];
 
 function useCountUp(target: number, start: boolean) {
@@ -37,27 +37,42 @@ export function StatsBlock() {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => e.isIntersecting && setVisible(true), { threshold: 0.4 });
+    const io = new IntersectionObserver(
+      ([e]) => e.isIntersecting && setVisible(true),
+      { threshold: 0.4 }
+    );
     io.observe(el);
     return () => io.disconnect();
   }, []);
 
   return (
-    <div ref={ref} className="py-6 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+    <div
+      ref={ref}
+      className="py-14 bg-[#004AAD] text-white"
+    >
+      <div className="max-w-7xl mx-auto px-6 sm:px-8">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-10 text-center sm:text-left">
           {STATS.map((s) => {
             const n = useCountUp(s.value, visible);
             return (
-              <div key={s.label} className="flex items-center gap-3">
-                {/* Número + sufijo centrados en la línea base */}
-                <div className="inline-flex items-baseline gap-1">
-                  <span className="text-4xl sm:text-5xl font-display leading-none">{n}</span>
+              <div
+                key={s.label}
+                className="flex flex-col items-center sm:items-start"
+              >
+                {/* Número */}
+                <div className="inline-flex items-baseline gap-1 mb-2">
+                  <span className="text-5xl sm:text-6xl font-extrabold tracking-tight">
+                    {n}
+                  </span>
                   {s.suffix && (
-                    <span className="text-brand text-2xl font-display leading-none">{s.suffix}</span>
+                    <span className="text-3xl font-bold opacity-80 leading-none">
+                      {s.suffix}
+                    </span>
                   )}
                 </div>
-                <div className="text-[11px] sm:text-xs tracking-widest text-gray-600 font-semibold uppercase">
+
+                {/* Etiqueta */}
+                <div className="text-[12px] sm:text-sm tracking-widest uppercase font-semibold text-white/70">
                   {s.label}
                 </div>
               </div>

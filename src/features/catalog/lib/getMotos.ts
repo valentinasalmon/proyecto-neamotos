@@ -1,13 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import type { Moto } from "../types";
+import { getAllMotos } from "../data";
+import type { MotoSpec } from "../data/types";
 
-export function useMotos() {
-  return useQuery<Moto[]>({
-    queryKey: ["motos"],
-    queryFn: async () => {
-      const res = await fetch("/api/motos", { cache: "no-store" });
-      if (!res.ok) throw new Error("Error al obtener motos");
-      return res.json();
-    }
-  });
+// Devuelve todas las motos ya normalizadas para la grilla/filtros
+export function getMotos(): MotoSpec[] {
+  return getAllMotos();
 }
