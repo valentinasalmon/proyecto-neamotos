@@ -817,7 +817,143 @@ export const MOTO_DB: MotoItem[] = [
   },
 
   // === Corven ===
+
+  // === Corven cub ===
+  {
+    id: "keller-rz-150-full",
+    marca: "Corven" ,
+    tipo: "cub",
+    nombre: "ENERGY 110",
+    img: "/motos/corven/cub/110ENERGY.png",
+    cilindrada: "110 cm3", 
+    potencia: "8.5 hp",
+    transmision: "4 velocidades",
+    destacada: false,
+  },
+
+    {
+    id: "keller-rz-150-full",
+    marca: "Corven" ,
+    tipo: "cub",
+    nombre: "ENERGY TUNNING",
+    img: "/motos/corven/cub/ENERGYTUNNING.png",
+    cilindrada: "150 cm3", 
+    potencia: "6.6 hp",
+    transmision: "4 velocidades",
+    destacada: false,
+  },
+
+    {
+    id: "keller-rz-150-full",
+    marca: "Corven" ,
+    tipo: "cub",
+    nombre: "MIRAGE 110 RT",
+    img: "/motos/corven/cub/ENERGYTUNNING.png",
+    cilindrada: "110 cm3", 
+    potencia: "7.5 hp",
+    transmision: "4 velocidades",
+    destacada: false,
+  },
+
+    {
+    id: "keller-rz-150-full",
+    marca: "Corven" ,
+    tipo: "cub",
+    nombre: "MIRAGE 110 RT",
+    img: "/motos/corven/cub/MIRAGE110.jpg",
+    cilindrada: "110 cm3", 
+    potencia: "7.5 hp",
+    transmision: "4 velocidades",
+    destacada: false,
+  },
+
+    {
+    id: "keller-rz-150-full",
+    marca: "Corven" ,
+    tipo: "cub",
+    nombre: "MIRAGE 110 AD",
+    img: "/motos/corven/cub/MIRAGEAD.png",
+    cilindrada: "110 cm3", 
+    potencia: "7.5 hp",
+    transmision: "4 velocidades",
+    destacada: false,
+  },
+
+
+ // === Corven on off ===
+
+
+    {
+    id: "keller-rz-150-full",
+    marca: "Corven" ,
+    tipo: "on off",
+    nombre: "TRIAX 150",
+    img: "/motos/corven/on off/150.jpg",
+    cilindrada: "150 cm3", 
+    potencia: "12.5 hp",
+    transmision: "5 velocidades",
+    destacada: false,
+  },
+
+    {
+    id: "keller-rz-150-full",
+    marca: "Corven" ,
+    tipo: "on off",
+    nombre: "TRIAX 150 R3",
+    img: "/motos/corven/on off/150R3.jpg",
+    cilindrada: "149 cm3", 
+    potencia: "16 hp",
+    transmision: "5 velocidades",
+    destacada: false,
+  },
+
+{
+    id: "keller-rz-150-full",
+    marca: "Corven" ,
+    tipo: "on off",
+    nombre: "TRIAX 200 R3",
+    img: "/motos/corven/on off/200R3.webp",
+    cilindrada: "200 cm3", 
+    potencia: "15.5 hp",
+    transmision: "5 velocidades",
+    destacada: false,
+  },
+
   
+{
+    id: "keller-rz-150-full",
+    marca: "Corven" ,
+    tipo: "on off",
+    nombre: "TRIAX 250 R3",
+    img: "/motos/corven/on off/250R3.jpg",
+    cilindrada: "230 cm3", 
+    potencia: "16.7 hp",
+    transmision: "5 velocidades",
+    destacada: false,
+  },
+    
+{
+    id: "keller-rz-150-full",
+    marca: "Corven" ,
+    tipo: "on off",
+    nombre: "TRIAX 250 ADVENTURE",
+    img: "/motos/corven/on off/250ADV.png",
+    cilindrada: "250 cm3", 
+    potencia: "19 hp",
+    transmision: "6 velocidades",
+    destacada: false,
+  },
+
+
+// === Corven scooter ===
+
+
+
+
+
+
+
+
 
 
 
