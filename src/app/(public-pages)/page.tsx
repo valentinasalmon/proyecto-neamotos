@@ -3,9 +3,8 @@ import { Marquee } from "@/features/brands-marquee";
 import { GalleryGrid } from "@/features/gallery";
 import { PromoStrip } from "@/features/promo";
 import { HighlightShowcase } from "@/features/showcase";
-import { StatsBlock } from "@/features/stats";
-import { HelmetsBlock } from "@/features/helmets";
 import { FeaturedMotosCarousel } from "@/features/catalog/components/FeaturedMotosCarousel";
+import { ReviewsSection } from "@/features/reviews/components/ReviewsSection";
 
 export default function HomePage() {
   return (
@@ -29,19 +28,11 @@ export default function HomePage() {
       {/* Carrusel de motos destacadas */}
       <FeaturedMotosCarousel />
 
-      {/* Métricas de confianza */}
-      <section id="metricas" aria-label="Métricas NEA MOTOS">
-        <StatsBlock />
-      </section>
-
       {/* Showcase de productos / secciones especiales */}
       <HighlightShowcase />
 
-
-      {/* Cascos */}
-      <section id="cascos" className="py-16">
-        <HelmetsBlock />
-      </section>
+         {/* ==== RESEÑAS */}
+      <ReviewsSection />
     </>
   );
 }
