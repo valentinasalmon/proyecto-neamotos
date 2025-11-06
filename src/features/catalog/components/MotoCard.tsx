@@ -1,21 +1,42 @@
 "use client";
 
-import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MotoItem } from "@/features/catalog/data/motos";
+import AutoCropImage from "@/components/AutoCropImage";
 
 /**
- * Card de moto – Mobile-first, prolija y consistente
- * - Imagen con altura fija (misma para todas) y object-contain
- * - Specs: TRANSMISIÓN + CILINDRADA en la primera columna, POTENCIA en la segunda (sm+)
- * - WhatsApp fijo abajo a la derecha, sin cortarse
+ * MotoCard – Uniforme y coherente (auto)
+ * - Marco 4:3 fijo
+ * - AutoCropImage v4 recorta/escala y auto-boosta si quedó chica
+ * - Sin overrides por modelo
  */
 export function MotoCard({ moto }: { moto: MotoItem }) {
-  const [src, setSrc] = useState(moto.img || "/motos/_no-image.png");
+  const [src] = useState(moto.img || "/motos/_no-image.png");
+
+  // Padding dinámico por AR (equilibra el “tamaño visual” entre imágenes muy cuadradas vs panorámicas)
+  const [autoPad, setAutoPad] = useState(0.06);
+  useEffect(() => {
+    const img = new Image();
+    img.decoding = "async";
+    img.src = src;
+    img.onload = () => {
+      const ar = img.naturalWidth / img.naturalHeight; // ancho/alto
+      const MIN_AR = 1.0, MAX_AR = 2.4;
+      const MIN_PAD = 0.04, MAX_PAD = 0.10;
+      const t = (Math.min(MAX_AR, Math.max(MIN_AR, ar)) - MIN_AR) / (MAX_AR - MIN_AR);
+      const pad = MIN_PAD + t * (MAX_PAD - MIN_PAD);
+      setAutoPad(Number(pad.toFixed(3)));
+    };
+  }, [src]);
 
   const transmision = moto.transmision ?? "—";
   const potencia = moto.potencia ?? "—";
   const cilindrada = moto.cilindrada ?? "—";
+
+  // Fallback básico por si el import se rompe
+  const Img = (AutoCropImage as any) ?? (({ src, alt }: any) => (
+    <img src={src} alt={alt} className="w-full h-full object-contain" />
+  ));
 
   return (
     <article
@@ -27,7 +48,7 @@ export function MotoCard({ moto }: { moto: MotoItem }) {
     >
       {/* HEADER */}
       <header className="px-4 sm:px-5 pt-4 pb-3 border-b border-neutral-200">
-        <h2 className="text-[17px] sm:text-[19px] font-bold text-neutral-900 leading-tight tracking-tight">
+        <h2 className="text-[17px] sm:text-[19px] font-bold text-neutral-900 leading-tight tracking-tight line-clamp-2">
           {moto.nombre}
         </h2>
         <p className="mt-1 text-[11px] sm:text-[12px] font-medium text-neutral-500 uppercase tracking-wide">
@@ -35,50 +56,35 @@ export function MotoCard({ moto }: { moto: MotoItem }) {
         </p>
       </header>
 
-      {/* IMAGEN (misma altura para todas) */}
-      <div
-        className="
-          relative w-full border-b border-neutral-200 bg-white
-          h-[210px] sm:h-[240px] flex items-center justify-center
-        "
-      >
-        <Image
+      {/* IMAGEN — marco fijo 4:3, auto-recorte + auto-boost */}
+      <div className="relative w-full aspect-[4/3] bg-white border-b border-neutral-200 overflow-hidden flex items-center justify-center">
+        <Img
           src={src}
           alt={moto.nombre}
-          fill
-          priority={moto.destacada}
-          onError={() => setSrc("/motos/_no-image.png")}
-          className="
-            object-contain p-4 sm:p-5
-            transition-transform duration-500 group-hover:scale-[1.03]
-          "
-          sizes="(max-width: 640px) 100vw, 33vw"
+          padding={autoPad}       // balancea tamaños entre fotos diferentes
+          minFillPct={0.98}      // llenado mínimo base
+          whiteTolerance={245}   // punto de partida del recorte
+          aggressive={true}      // prueba más tolerancias si hace falta
+          autoBoostSize={true}   // ↑ auto-ajusta tamaño si el contenido útil es chico
+          className="absolute inset-0"
+          bg="#ffffff"
         />
       </div>
 
       {/* ESPECIFICACIONES */}
       <div className="px-4 sm:px-5 py-4 sm:py-5 bg-white">
-        <div
-          className="
-            grid gap-y-3 gap-x-6
-            grid-cols-1
-            sm:grid-cols-2
-          "
-        >
-          {/* Col 1: Transmisión + Cilindrada */}
+        <div className="grid gap-y-3 gap-x-6 grid-cols-1 sm:grid-cols-2">
           <div className="space-y-3">
             <Spec label="TRANSMISIÓN" value={transmision} />
             <Spec label="CILINDRADA" value={cilindrada} />
           </div>
-
-          {/* Col 2: Potencia */}
           <div className="space-y-3">
             <Spec label="POTENCIA" value={potencia} />
           </div>
         </div>
       </div>
 
-      {/* WHATSAPP: fijo abajo-derecha, nunca se corta */}
+      {/* WHATSAPP */}
       <a
         href={`https://wa.me/5493790000000?text=Hola!%20Quiero%20consultar%20stock%20de%20${encodeURIComponent(
           moto.nombre

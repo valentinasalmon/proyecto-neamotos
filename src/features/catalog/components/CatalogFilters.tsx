@@ -29,7 +29,7 @@ export function CatalogFilters({
   ) {
     const next = { ...filters, [key]: value };
     setFilters(next);
-    onChange(next);
+    onChange(next); // emite cambios en tiempo real
   }
 
   return (
@@ -41,7 +41,7 @@ export function CatalogFilters({
             Buscar
           </label>
           <input
-            className="border border-neutral-300 bg-white px-3 py-2 text-[13px] outline-none focus:ring-2 focus:ring-red-500/30"
+            className="border border-neutral-300 bg-white px-3 py-2 text-[13px] text-black outline-none focus:ring-2 focus:ring-red-500/30"
             placeholder="Ej: Blitz, Rouser, Skua..."
             value={filters.search}
             onChange={(e) => update("search", e.target.value)}
@@ -54,13 +54,15 @@ export function CatalogFilters({
             Marca
           </label>
           <select
-            className="border border-neutral-300 bg-white px-3 py-2 text-[13px] outline-none focus:ring-2 focus:ring-red-500/30"
+            className="border border-neutral-300 bg-white px-3 py-2 text-[13px] text-black outline-none focus:ring-2 focus:ring-red-500/30"
             value={filters.marca}
             onChange={(e) => update("marca", e.target.value)}
           >
-            <option>Todas</option>
+            <option value="Todas">Todas</option>
             {marcas.map((m) => (
-              <option key={m}>{m}</option>
+              <option key={m} value={m}>
+                {m}
+              </option>
             ))}
           </select>
         </div>
@@ -71,13 +73,15 @@ export function CatalogFilters({
             Tipo
           </label>
           <select
-            className="border border-neutral-300 bg-white px-3 py-2 text-[13px] outline-none focus:ring-2 focus:ring-red-500/30"
+            className="border border-neutral-300 bg-white px-3 py-2 text-[13px] text-black outline-none focus:ring-2 focus:ring-red-500/30"
             value={filters.tipo}
             onChange={(e) => update("tipo", e.target.value)}
           >
-            <option>Todos</option>
+            <option value="Todos">Todos</option>
             {tipos.map((t) => (
-              <option key={t}>{t}</option>
+              <option key={t} value={t}>
+                {t}
+              </option>
             ))}
           </select>
         </div>

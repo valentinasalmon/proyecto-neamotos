@@ -1,7 +1,5 @@
 // src/features/catalog/data/motos.ts
 
-import { statfsSync } from "fs";
-
 export type MotoItem = {
   id: string;            // "zanella-zb-110-full"
   marca: "Zanella" | "Motomel" | "Keller" | "Bajaj" | "Corven";
@@ -16,7 +14,7 @@ export type MotoItem = {
 
 // ========= BASE DE DATOS =========
 // Agregá acá TODAS las motos (de todas las marcas)
-export const MOTO_DB: MotoItem[] = [
+export const MOTO_DB_RAW: MotoItem[] = [
 
 
   // === Zanella urbanas ===
@@ -46,18 +44,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Zanella",
     tipo: "Urbana",
     nombre: "ZB 125 SPORT",
-    img: "/motos/zanella/urbana/ZB125sport.jpg",
-    cilindrada: "120 cm3",
-    potencia: "7.5 hp",
-    transmision: "4 velocidades",
-    destacada: false,
-  },
-  {
-    id: "zanella-due-125-sport",
-    marca: "Zanella",
-    tipo: "Urbana",
-    nombre: "DUE 125 SPORT",
-    img: "/motos/zanella/urbana/DUE125sport.webp",
+    img: "/motos/zanella/urbanas/ZB125sport.jpg",
     cilindrada: "120 cm3",
     potencia: "7.5 hp",
     transmision: "4 velocidades",
@@ -68,7 +55,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Zanella",
     tipo: "Urbana",
     nombre: "DUE 110 ST",
-    img: "/motos/zanella/urbana/DUE110st.webp",
+    img: "/motos/zanella/urbanas/DUE110st.webp",
     cilindrada: "107 cm3",
     potencia: "6.5 hp",
     transmision: "4 velocidades",
@@ -79,7 +66,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Zanella",
     tipo: "Urbana",
     nombre: "HOT 90 SHOT",
-    img: "/motos/zanella/urbana/HOT90shot.jpg",
+    img: "/motos/zanella/urbanas/HOT90shot.jpg",
     cilindrada: "86 cm3",
     potencia: "5.9 hp",
     transmision: "4 velocidades",
@@ -128,7 +115,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Zanella",
     tipo: "Ceccato",
     nombre: "CECCATO 60",
-    img: "/motos/zanella/ceccato/.jpg",
+    img: "/motos/zanella/ceccato/60.jpg",
     cilindrada: "150 cm3",
     potencia: "12.2 hp",
     transmision: "5 velocidades",
@@ -139,7 +126,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Zanella",
     tipo: "Ceccato",
     nombre: "CECCATO R150",
-    img: "/motos/zanella/ceccato/.jpg",
+    img: "/motos/zanella/ceccato/150.png",
     cilindrada: "149 cm3",
     potencia: "12 hp",
     transmision: "5 velocidades",
@@ -150,7 +137,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Zanella",
     tipo: "Ceccato",
     nombre: "CECCATO X 250",
-    img: "/motos/zanella/ceccato/.jpg",
+    img: "/motos/zanella/ceccato/250.jpg",
     cilindrada: "250 cm3",
     potencia: "20 hp",
     transmision: "6 velocidades",
@@ -161,7 +148,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Zanella",
     tipo: "Ceccato",
     nombre: "CECCATO X 700",
-    img: "/motos/zanella/ceccato/.jpg",
+    img: "/motos/zanella/ceccato/700.png",
     cilindrada: "693 cm3",
     potencia: "73.8 hp",
     transmision: "6 velocidades",
@@ -188,7 +175,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Zanella",
     tipo: "on off",
     nombre: "ZR 200 OCH",
-    img: "/motos/zanella/on off/ZR200och.png",
+    img: "/motos/zanella/on off/200.jpg",
     cilindrada: "198 cm3",
     potencia: "14.5 hp",
     transmision: "5 velocidades",
@@ -222,7 +209,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Zanella",
     tipo: "scooter",
     nombre: "CRUISER X1",
-    img: "/motos/zanella/scooter/CRUSIERx1.jpg",
+    img: "/motos/zanella/scooter/CRUISERx1.jpg",
     cilindrada: "171 cm3",
     potencia: "11 hp",
     transmision: "5 velocidades",
@@ -233,7 +220,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Zanella",
     tipo: "scooter",
     nombre: "CRUISER X",
-    img: "/motos/zanella/scooter/CRUSIERx.jpg",
+    img: "/motos/zanella/scooter/CRUISERx.jpg",
     cilindrada: "149 cm3",
     potencia: "11 hp",
     transmision: "4 velocidades",
@@ -244,7 +231,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Zanella",
     tipo: "scooter",
     nombre: "EXCLUSIVE EDIZIONE",
-    img: "/motos/zanella/scooter/EXCLUSIVEEDIZONE.webp",
+    img: "/motos/zanella/scooter/EXCLUSIVEEDIZIONE.webp",
     cilindrada: "149 cm3",
     potencia: "9 hp",
     transmision: "automática",
@@ -277,7 +264,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Zanella",
     tipo: "scooter",
     nombre: "LAMBRETTA",
-    img: "/motos/zanella/scooter/STYLERRS.jpg",
+    img: "/motos/zanella/scooter/LAMBRETTA.png",
     cilindrada: "150 cm3",
     potencia: "9.4 hp",
     transmision: "automática",
@@ -336,7 +323,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Motomel",
     tipo: "urbanas",
     nombre: "BLITZ 110 BLACK EDITION",
-    img: "/motos/motomel/urbanas/blitz/BLITZTUNNING.png",
+    img: "/motos/motomel/urbanas/blitz/BLIZTUNNING.png",
     cilindrada: "110 cm3", 
     potencia: "7 hp",
     transmision: "4 velocidades",
@@ -347,7 +334,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Motomel",
     tipo: "urbanas",
     nombre: "BLITZ 110 V8",
-    img: "/motos/motomel/urbanas/blitz/BLITZ110.png",
+    img: "/motos/motomel/urbanas/blitz/BLITZ110.jpg",
     cilindrada: "110 cm3", 
     potencia: "7 hp",
     transmision: "4 velocidades/automática",
@@ -358,7 +345,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Motomel",
     tipo: "urbanas",
     nombre: "BLITZ 110 V8 FULL ALEACIÓN",
-    img: "/motos/motomel/urbanas/blitz/BLITZ110FULLALEACIÓN.png",
+    img: "/motos/motomel/urbanas/blitz/BLITZ110FULLALELACION.png",
     cilindrada: "110 cm3", 
     potencia: "7 hp",
     transmision: "4 velocidades",
@@ -369,7 +356,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Motomel",
     tipo: "urbanas",
     nombre: "BLITZ TUNNING 110 V8",
-    img: "/motos/motomel/urbanas/blitz/BLITZTUNNING110.jpg",
+    img: "/motos/motomel/urbanas/blitz/V8.jpg",
     cilindrada: "110 cm3", 
     potencia: "7.1 hp",
     transmision: "4 velocidades",
@@ -443,7 +430,7 @@ export const MOTO_DB: MotoItem[] = [
     id: "zanella-rz-150-full",
     marca: "Motomel",
     tipo: "urbanas",
-    nombre: "victory 150",
+    nombre: "VICTORY 150",
     img: "/motos/motomel/urbanas/victory 150/victory.png",
     cilindrada: "149 cm3", 
     potencia: "12 hp",
@@ -550,7 +537,7 @@ export const MOTO_DB: MotoItem[] = [
 
 // === Keller ===
 
-// === Motomel CRONO 110 ===
+// === CRONO 110 ===
 
   {
     id: "keller-rz-150-full",
@@ -579,14 +566,14 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Keller" ,
     tipo: "crono 110",
     nombre: "CRONO CLASSIC FULL 110",
-    img: "/motos/keller/crono 110/FULL110.png",
+    img: "/motos/keller/crono 110/FULL110.jpg",
     cilindrada: "107 cm3", 
     potencia: "7 hp",
     transmision: "4 velocidades",
     destacada: false,
   },
 
-// === Motomel CRONO TUNNING  ===
+// ===  CRONO TUNNING  ===
 
 {
     id: "keller-rz-150-full",
@@ -611,7 +598,7 @@ export const MOTO_DB: MotoItem[] = [
     destacada: false,
   },
 
-// === Motomel stratus 150  ===
+// === stratus 150  ===
  {
     id: "keller-rz-150-full",
     marca: "Keller" ,
@@ -639,14 +626,14 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Keller" ,
     tipo: "stratus 150",
     nombre: "STRATUS 150 FULL",
-    img: "/motos/keller/stratus 150/FULL.jpg",
+    img: "/motos/keller/stratus 150/FULL.webp",
     cilindrada: "149 cm3", 
     potencia: "11 hp",
     transmision: "5 velocidades",
     destacada: false,
   },
 
-// === Motomel MIRACLE  ===
+// === MIRACLE  ===
  {
     id: "keller-rz-150-full",
     marca: "Keller" ,
@@ -669,12 +656,12 @@ export const MOTO_DB: MotoItem[] = [
     transmision: "5 velocidades",
     destacada: false,
   },
-// === Motomel quasar  ===
+// === quasar  ===
  {
     id: "keller-rz-150-full",
     marca: "Keller" ,
     tipo: "quasar",
-    nombre: "MIRACLE 150 ",
+    nombre: "MIRACLE 250 ",
     img: "/motos/keller/quasar/250.png",
     cilindrada: "250 cm3", 
     potencia: "19 hp",
@@ -682,13 +669,13 @@ export const MOTO_DB: MotoItem[] = [
     destacada: false,
   },
 
-  // === Motomel sygnus  ===
+  // ===  sygnus  ===
  {
     id: "keller-rz-150-full",
     marca: "Keller" ,
     tipo: "sygnus",
     nombre: "SYGNUS 150 ",
-    img: "/motos/keller/quasar/150.png",
+    img: "/motos/keller/sygnus 150/150.png",
     cilindrada: "149.5 cm3", 
     potencia: "9.4 hp",
     transmision: "variador de velocidad",
@@ -716,7 +703,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Bajaj" ,
     tipo: "rouser",
     nombre: "ROUSER P150",
-    img: "/motos/bajaj/rouser/P15O.jpg",
+    img: "/motos/bajaj/rouser/P150.jpg",
     cilindrada: "150 cm3", 
     potencia: "14.5 hp",
     transmision: "4 velocidades",
@@ -749,7 +736,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Bajaj" ,
     tipo: "rouser",
     nombre: "ROUSER NS250",
-    img: "/motos/bajaj/rouser/NS250.jpg",
+    img: "/motos/bajaj/rouser/NS250.png",
     cilindrada: "250 cm3", 
     potencia: "24.5 hp",
     transmision: "4 velocidades",
@@ -784,7 +771,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Bajaj" ,
     tipo: "dominar",
     nombre: "DOMINAR 400",
-    img: "/motos/bajaj/dominar/400.jpg",
+    img: "/motos/bajaj/dominar/400.png",
     cilindrada: "400 cm3", 
     potencia: "40 hp",
     transmision: "4 velocidades",
@@ -848,19 +835,7 @@ export const MOTO_DB: MotoItem[] = [
     marca: "Corven" ,
     tipo: "cub",
     nombre: "MIRAGE 110 RT",
-    img: "/motos/corven/cub/ENERGYTUNNING.png",
-    cilindrada: "110 cm3", 
-    potencia: "7.5 hp",
-    transmision: "4 velocidades",
-    destacada: false,
-  },
-
-    {
-    id: "keller-rz-150-full",
-    marca: "Corven" ,
-    tipo: "cub",
-    nombre: "MIRAGE 110 RT",
-    img: "/motos/corven/cub/MIRAGE110.jpg",
+    img: "/motos/corven/cub/MIRAGE110.png",
     cilindrada: "110 cm3", 
     potencia: "7.5 hp",
     transmision: "4 velocidades",
@@ -947,6 +922,89 @@ export const MOTO_DB: MotoItem[] = [
 
 // === Corven scooter ===
 
+    
+{
+    id: "keller-rz-150-full",
+    marca: "Corven" ,
+    tipo: "scooter",
+    nombre: "EXPERT 80",
+    img: "/motos/corven/scooter/80.png",
+    cilindrada: "80 cm3", 
+    potencia: "5.5 hp",
+    transmision: "automática",
+    destacada: false,
+  },
+  {
+    id: "keller-rz-150-full",
+    marca: "Corven" ,
+    tipo: "scooter",
+    nombre: "EXPERT DOT 150",
+    img: "/motos/corven/scooter/150.jpg",
+    cilindrada: "150 cm3", 
+    potencia: "10.5 hp",
+    transmision: "automática",
+    destacada: false,
+  },
+    {
+    id: "keller-rz-150-full",
+    marca: "Corven" ,
+    tipo: "scooter",
+    nombre: "EXPERT 150 MILANO",
+    img: "/motos/corven/scooter/150MILANO.jpg",
+    cilindrada: "150 cm3", 
+    potencia: "9.5 hp",
+    transmision: "automática CVT",
+    destacada: false,
+  },
+
+// === Corven street ===
+
+   {
+    id: "keller-rz-150-full",
+    marca: "Corven" ,
+    tipo: "street",
+    nombre: "DX 70",
+    img: "/motos/corven/street/DX70.jpg",
+    cilindrada: "70 cm3", 
+    potencia: "4.8 hp",
+    transmision: "4 velocidades",
+    destacada: false,
+  },
+   {
+    id: "keller-rz-150-full",
+    marca: "Corven" ,
+    tipo: "street",
+    nombre: "HUNTER 150 R2",
+    img: "/motos/corven/street/HUNTER.jpg",
+    cilindrada: "150 cm3", 
+    potencia: "11.5 hp",
+    transmision: "automática CVT",
+    destacada: false,
+  },
+  {
+    id: "keller-rz-150-full",
+    marca: "Corven" ,
+    tipo: "street",
+    nombre: "HUNTER 150 AD",
+    img: "/motos/corven/street/HUNTERAD.webp",
+    cilindrada: "150 cm3", 
+    potencia: "11.5 hp",
+    transmision: "5 marchas",
+    destacada: false,
+  },
+
+   {
+    id: "keller-rz-150-full",
+    marca: "Corven" ,
+    tipo: "street",
+    nombre: "HUNTER 150 RT",
+    img: "/motos/corven/street/HUNTERRT.webp",
+    cilindrada: "150 cm3", 
+    potencia: "12 hp",
+    transmision: "5 velocidades",
+    destacada: false,
+  },
+
 
 
 
@@ -960,9 +1018,24 @@ export const MOTO_DB: MotoItem[] = [
 
 ];
 
-// ========= HELPERS (opcionales) =========
-export const getFeatured = () => MOTO_DB.filter(m => m.destacada);
-export const getByBrand = (brand: MotoItem["marca"]) => MOTO_DB.filter(m => m.marca === brand);
-export const getBrands = () => Array.from(new Set(MOTO_DB.map(m => m.marca)));
+// === Generador de IDs y export final ===
+const slug = (s: string) =>
+  s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
+// Exportamos la DB con IDs únicos (marca + nombre + índice)
+export const MOTO_DB: MotoItem[] = MOTO_DB_RAW.map((m, i) => ({
+  ...m,
+  id: `${slug(m.marca)}-${slug(m.nombre)}-${i}`,
+}));
+
+// Helpers (usan la DB final)
+export const getFeatured = () => MOTO_DB.filter((m) => m.destacada);
+export const getByBrand = (brand: MotoItem["marca"]) => MOTO_DB.filter((m) => m.marca === brand);
+export const getBrands = () => Array.from(new Set(MOTO_DB.map((m) => m.marca)));
 export const getTypesForBrand = (brand: MotoItem["marca"]) =>
-  Array.from(new Set(MOTO_DB.filter(m => m.marca === brand).map(m => m.tipo)));
+Array.from(new Set(MOTO_DB.filter((m) => m.marca === brand).map((m) => m.tipo)));
