@@ -8,109 +8,115 @@ export type Review = {
   text: string;
   rating: number;
   time: string;
-  profilePhoto: string;
 };
 
 export function ReviewsCarousel({ reviews }: { reviews: Review[] }) {
   const ref = useRef<HTMLDivElement>(null);
 
-  const scroll = (dir: "left" | "right") => {
+  // índice de la card más alineada al borde izquierdo visible
+  const getCurrentIndex = (el: HTMLDivElement, cards: HTMLElement[]) => {
+    const crect = el.getBoundingClientRect();
+    let best = Infinity;
+    let idx = 0;
+    cards.forEach((card, i) => {
+      const r = card.getBoundingClientRect();
+      const dist = Math.abs(r.left - crect.left); // distancia al borde izquierdo del carrusel
+      if (dist < best) {
+        best = dist;
+        idx = i;
+      }
+    });
+    return idx;
+  };
+
+  // scrolla a una card por índice usando rects (respeta gap/padding)
+  const scrollToIndex = (el: HTMLDivElement, cards: HTMLElement[], index: number) => {
+    const crect = el.getBoundingClientRect();
+    const r = cards[index].getBoundingClientRect();
+    const delta = r.left - crect.left; // cuánto falta para alinear la card al inicio visible
+    el.scrollTo({ left: el.scrollLeft + delta, behavior: "smooth" });
+  };
+
+  const handleArrow = (dir: "left" | "right") => {
     const el = ref.current;
     if (!el) return;
-    const amount = Math.round(el.clientWidth * 0.9);
-    el.scrollBy({ left: dir === "left" ? -amount : amount, behavior: "smooth" });
+    const cards = Array.from(el.querySelectorAll("article")) as HTMLElement[];
+    if (!cards.length) return;
+
+    const cur = getCurrentIndex(el, cards);
+    const next = Math.min(Math.max(cur + (dir === "right" ? 1 : -1), 0), cards.length - 1);
+    scrollToIndex(el, cards, next);
   };
 
   return (
-    <div
-      className="
-        relative mt-8 px-3 sm:px-6
-        [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]
-      "
-    >
-      {/* Flecha izq */}
+    <div className="relative mt-10 font-nea text-neutral-900 flex items-center justify-center gap-6">
+      {/* Flecha izquierda - afuera */}
       <button
+        onClick={() => handleArrow("left")}
         aria-label="Anterior"
-        onClick={() => scroll("left")}
-        className="
-          hidden md:flex absolute left-1 top-1/2 -translate-y-1/2 z-10
-          h-10 w-10 items-center justify-center rounded-full bg-white shadow
-          ring-1 ring-black/5 hover:scale-105 transition
-        "
+        className="flex items-center justify-center h-10 w-10 rounded-full border border-neutral-300 bg-white shadow-md hover:scale-110 active:scale-95 transition-transform"
       >
-        <ChevronLeft className="text-neutral-700" />
+        <ChevronLeft className="w-5 h-5 text-neutral-700" />
       </button>
 
-      {/* Track */}
+      {/* Carrusel (sin márgenes extra que rompan el snap) */}
       <div
         ref={ref}
         className="
-          flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4
+          flex overflow-x-auto gap-5 snap-x snap-mandatory
           [scrollbar-width:none] [&::-webkit-scrollbar]:hidden
+          pb-5
         "
       >
         {reviews.map((r, i) => (
           <article
             key={i}
             className="
-              snap-start min-w-[320px] sm:min-w-[380px] lg:min-w-[440px]
-              bg-white rounded-2xl p-5 text-left shadow-md ring-1 ring-black/5
-              hover:shadow-lg transition-shadow
+              snap-start [scroll-snap-stop:always] shrink-0
+              w-[260px] sm:w-[280px] md:w-[300px]
+              h-[190px] sm:h-[205px] md:h-[210px]
+              bg-white rounded-lg border border-neutral-200
+              shadow-[0_3px_10px_rgba(0,0,0,0.05)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.08)]
+              transition-all duration-300
+              flex flex-col items-start p-4 text-left
             "
           >
-            <header className="flex items-center gap-3 mb-3">
-              <img
-                src={r.profilePhoto || "/avatar-fallback.png"}
-                onError={(e) => {
-                  const img = e.currentTarget;
-                  img.onerror = null;
-                  img.src = "/avatar-fallback.png";
-                }}
-                alt={r.author}
-                className="h-10 w-10 rounded-full object-cover bg-neutral-100"
-                loading="lazy"
-              />
-              <div className="flex-1">
-                <p className="text-sm font-semibold leading-none">{r.author}</p>
-                <p className="text-xs text-neutral-500">{r.time}</p>
-              </div>
-            </header>
+            {/* Nombre + tiempo */}
+            <div>
+              <h3 className="text-[15.5px] sm:text-[16px] font-semibold leading-tight">
+                {r.author}
+              </h3>
+              <p className="text-[12.5px] sm:text-[13px] text-neutral-500">
+                {r.time}
+              </p>
+            </div>
 
-            <div className="flex items-center gap-1 mb-2">
+            {/* Estrellas */}
+            <div className="flex items-center gap-[2px] mt-[4px]">
               {Array.from({ length: 5 }).map((_, idx) => (
                 <Star
                   key={idx}
-                  size={16}
-                  className={
-                    idx < Math.round(r.rating)
-                      ? "fill-yellow-400 stroke-yellow-400"
-                      : "stroke-neutral-300"
-                  }
+                  size={14}
+                  className={idx < Math.round(r.rating) ? "fill-yellow-400 stroke-yellow-400" : "stroke-neutral-300"}
                 />
               ))}
             </div>
 
-            {/* Área de texto con altura fija para que TODAS midan lo mismo */}
-            <div className="h-[112px]"> {/* ~6 líneas aprox */}
-              <p className="text-sm text-neutral-700 leading-relaxed line-clamp-6">
-                {r.text}
-              </p>
-            </div>
+            {/* Comentario una línea debajo */}
+            <p className="text-[13.5px] sm:text-[14px] text-neutral-700 leading-snug mt-4 line-clamp-3">
+              “{r.text}”
+            </p>
           </article>
         ))}
       </div>
 
-      {/* Flecha der */}
+      {/* Flecha derecha - afuera */}
       <button
+        onClick={() => handleArrow("right")}
         aria-label="Siguiente"
-        onClick={() => scroll("right")}
-        className="
-          hidden md:flex absolute right-1 top-1/2 -translate-y-1/2 z-10
-          h-10 w-10 items-center justify-center rounded-full bg-white shadow
-          ring-1 ring-black/5 hover:scale-105 transition
-        "
+        className="flex items-center justify-center h-10 w-10 rounded-full border border-neutral-300 bg-white shadow-md hover:scale-110 active:scale-95 transition-transform"
       >
-        <ChevronRight className="text-neutral-700" />
+        <ChevronRight className="w-5 h-5 text-neutral-700" />
       </button>
     </div>
   );

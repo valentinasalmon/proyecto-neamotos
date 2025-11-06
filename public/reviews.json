@@ -1,0 +1,61 @@
+{
+  "placeId": "nea-motos-corrientes",
+  "rating": 4.9,
+  "total": 22,
+  "reviews": [
+    {
+      "author": "Juan Carlos M.",
+      "text": "Excelente atención, muy amable, buen precio... ¡sigan así!",
+      "rating": 5,
+      "time": "Hace 2 años"
+    },
+    {
+      "author": "Alejandro Rodríguez",
+      "text": "Excelente atención. Muy responsable. Muy recomendable.",
+      "rating": 5,
+      "time": "Hace 3 años"
+    },
+    {
+      "author": "Eduardo Ricardo Portocala",
+      "text": "Muy buena experiencia y atención.",
+      "rating": 5,
+      "time": "Hace 3 años"
+    },
+    {
+      "author": "Mirta Mesa",
+      "text": "Muy buena atención.",
+      "rating": 5,
+      "time": "Hace 7 años"
+    },
+    {
+      "author": "Ricardo Quintana",
+      "text": "Muy grata la atención y disponible a responder todas las consultas.",
+      "rating": 5,
+      "time": "Hace 3 años"
+    },
+    {
+      "author": "Francisco Saucedo",
+      "text": "El mejor precio en Corrientes de la marca Zanella. Entrega inmediata o por la tarde.",
+      "rating": 5,
+      "time": "Hace 3 años"
+    },
+    {
+      "author": "Bea Alarcón",
+      "text": "Buena calidad en motos, cascos y accesorios. Buena atención de sus dueños. Buen precio.",
+      "rating": 5,
+      "time": "Hace 2 años"
+    },
+    {
+      "author": "Lorena Ayala",
+      "text": "La mejor de Corrientes.",
+      "rating": 5,
+      "time": "Hace 1 año"
+    },
+    {
+      "author": "Ariel Escalante",
+      "text": "Transmiten confianza.",
+      "rating": 5,
+      "time": "Hace 3 años"
+    }
+  ]
+}

@@ -2,15 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Star } from "lucide-react";
-import { ReviewsCarousel } from "./ReviewsCarousel";
+import { ReviewsCarousel, type Review } from "./ReviewsCarousel";
 
-type Review = {
-  author: string;
-  text: string;
-  rating: number;
-  time: string;
-  profilePhoto: string;
-};
 type Payload = {
   placeId: string;
   rating?: number;
@@ -27,7 +20,7 @@ export function ReviewsSection() {
     (async () => {
       try {
         setLoading(true);
-        const res = await fetch("/api/reviews", { cache: "no-store" });
+       const res = await fetch("/reviews.json", { cache: "no-store" });
         const json = await res.json();
         if (!res.ok) throw new Error(json?.error || "Error al obtener reseñas");
         setData(json);
@@ -57,11 +50,9 @@ export function ReviewsSection() {
   );
 
   return (
-    <section
-      id="reseñas"
-      className="bg-white py-16 font-nea text-neutral-900"
-    >
+    <section id="reseñas" className="bg-white py-16 font-nea text-neutral-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        {/* Encabezado */}
         <div className="flex flex-col items-center gap-2">
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
             Nuestros clientes nos recomiendan
@@ -76,7 +67,6 @@ export function ReviewsSection() {
             </div>
           )}
 
-          {/* links arriba, discretos */}
           {allUrl && (
             <div className="mt-2">
               <a
@@ -91,7 +81,7 @@ export function ReviewsSection() {
           )}
         </div>
 
-        {/* estados */}
+        {/* Estados */}
         {loading && <p className="py-10 text-neutral-500">Cargando reseñas…</p>}
         {error && (
           <p className="py-10 text-red-600">
@@ -104,21 +94,21 @@ export function ReviewsSection() {
           </p>
         )}
 
-        {/* carrusel con tarjetas igualadas */}
-        {data?.reviews?.length ? (
-          <ReviewsCarousel reviews={data.reviews} />
-        ) : null}
+        {/* Carrusel: ahora muestra más reseñas a la vez */}
+        {data?.reviews?.length ? <ReviewsCarousel reviews={data.reviews} /> : null}
 
-        {/* CTA principal abajo, centrado, rojo NEA */}
+        {/* CTA principal */}
         {writeUrl && (
           <div className="mt-10 flex justify-center">
             <a
               href={writeUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center rounded-full bg-red-600 px-6 py-3
-                         text-white font-semibold shadow-lg shadow-red-600/20
-                         hover:bg-red-700 active:bg-red-800 transition"
+              className="
+                inline-flex items-center justify-center rounded-full bg-red-600 px-6 py-3
+                text-white font-semibold shadow-lg shadow-red-600/20
+                hover:bg-red-700 active:bg-red-800 transition
+              "
             >
               + Dejá tu reseña
             </a>
@@ -129,6 +119,7 @@ export function ReviewsSection() {
   );
 }
 
+/* === ICONOS DE ESTRELLAS === */
 function Stars({ score }: { score: number }) {
   const full = Math.floor(score);
   const rest = score - full >= 0.5 ? 1 : 0;
@@ -140,7 +131,9 @@ function Stars({ score }: { score: number }) {
           key={i}
           size={16}
           className={
-            i < total ? "fill-yellow-400 stroke-yellow-400" : "stroke-neutral-300"
+            i < total
+              ? "fill-yellow-400 stroke-yellow-400"
+              : "stroke-neutral-300"
           }
         />
       ))}

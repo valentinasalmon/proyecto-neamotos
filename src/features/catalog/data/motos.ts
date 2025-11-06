@@ -106,7 +106,7 @@ export const MOTO_DB_RAW: MotoItem[] = [
     cilindrada: "149 cm3",
     potencia: "12 hp",
     transmision: "5 velocidades",
-    destacada: false,
+    destacada: true,
   },
 
 // === zanella ceccato ===
@@ -141,7 +141,7 @@ export const MOTO_DB_RAW: MotoItem[] = [
     cilindrada: "250 cm3",
     potencia: "20 hp",
     transmision: "6 velocidades",
-    destacada: false,
+    destacada: true,
   },
    {
     id: "zanella-rz-150-full",
@@ -707,7 +707,7 @@ export const MOTO_DB_RAW: MotoItem[] = [
     cilindrada: "150 cm3", 
     potencia: "14.5 hp",
     transmision: "4 velocidades",
-    destacada: false,
+    destacada: true,
   },
   {
     id: "keller-rz-150-full",
@@ -764,7 +764,7 @@ export const MOTO_DB_RAW: MotoItem[] = [
     cilindrada: "250 cm3", 
     potencia: "27 hp",
     transmision: "4 velocidades",
-    destacada: false,
+    destacada: true,
   },
   {
     id: "keller-rz-150-full",
@@ -815,7 +815,7 @@ export const MOTO_DB_RAW: MotoItem[] = [
     cilindrada: "110 cm3", 
     potencia: "8.5 hp",
     transmision: "4 velocidades",
-    destacada: false,
+    destacada: true,
   },
 
     {
@@ -932,7 +932,7 @@ export const MOTO_DB_RAW: MotoItem[] = [
     cilindrada: "80 cm3", 
     potencia: "5.5 hp",
     transmision: "automática",
-    destacada: false,
+    destacada: true,
   },
   {
     id: "keller-rz-150-full",
@@ -979,7 +979,7 @@ export const MOTO_DB_RAW: MotoItem[] = [
     cilindrada: "150 cm3", 
     potencia: "11.5 hp",
     transmision: "automática CVT",
-    destacada: false,
+    destacada: true,
   },
   {
     id: "keller-rz-150-full",
