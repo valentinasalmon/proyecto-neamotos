@@ -3,6 +3,7 @@ import { Marquee } from "@/features/brands-marquee";
 import { GalleryGrid } from "@/features/gallery";
 import { PromoStrip } from "@/features/promo";
 import { HighlightShowcase } from "@/features/showcase";
+import { Tecnico } from "@/features/showcase";
 import { FeaturedMotosCarousel } from "@/features/catalog/components/FeaturedMotosCarousel";
 import { ReviewsSection } from "@/features/reviews/components/ReviewsSection";
 
@@ -33,6 +34,9 @@ export default function HomePage() {
 
          {/* ==== RESEÑAS */}
       <ReviewsSection />
+
+            {/* Showcase de productos / secciones especiales */}
+      <Tecnico/>
     </>
   );
 }

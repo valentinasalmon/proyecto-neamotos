@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Ajuste de tamaño de texto cross-browser */
+html {
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
 :root { --brand: #ff3b2f; }
 
 body { @apply bg-white text-gray-900 font-body; }
@@ -147,3 +154,15 @@ button[aria-pressed="false"] {
 /* opcional: ocultar barra de scroll horizontal */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Autofill: mantener fondo blanco y texto oscuro */
+input:-webkit-autofill {
+  -webkit-text-fill-color: #111827 !important; /* neutral-900 */
+  transition: background-color 9999s ease-out 0s;
+  box-shadow: 0 0 0px 1000px #fff inset !important; /* fondo blanco */
+}
+
+/* Color del texto al escribir (asegura consistencia) */
+input {
+  color: #111827 !important;
+}

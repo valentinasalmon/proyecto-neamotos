@@ -78,6 +78,14 @@ export function Header() {
             Cascos
           </a>
 
+          {/* 👇 Nuevo link Financiación */}
+          <a
+            href="/financiacion"
+            className="hover:text-[#0A2342] hover:underline underline-offset-4 decoration-[#0A2342]/30"
+          >
+            Financiación
+          </a>
+
           {/* Motos con dropdown */}
           <div className="relative">
             <button
@@ -235,6 +243,15 @@ export function Header() {
                   onClick={() => setMobileOpen(false)}
                 >
                   Cascos
+                </a>
+
+                {/* 👇 Nuevo link Financiación */}
+                <a
+                  href="/financiacion"
+                  className="text-neutral-800 hover:text-[#0A2342] hover:underline underline-offset-4 decoration-[#0A2342]/30"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Financiación
                 </a>
 
                 {/* bloque Motos */}

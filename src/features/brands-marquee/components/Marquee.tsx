@@ -3,16 +3,16 @@ import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
 
 const BASE = [
-  { src: "/logos/motomel.png", alt: "Motomel" },
-  { src: "/logos/zanella.png", alt: "Zanella" },
-  { src: "/logos/corven.png", alt: "Corven" },
-  { src: "/logos/keller.png", alt: "Keller" },
-  { src: "/logos/bajaj.png", alt: "Bajaj" },
+  { src: "/logos/motomel.svg", alt: "Motomel" },
+  { src: "/logos/zanella.svg", alt: "Zanella" },
+  { src: "/logos/corven.svg", alt: "Corven" },
+  { src: "/logos/keller.svg", alt: "Keller" },
+  { src: "/logos/bajaj.svg", alt: "Bajaj" },
 ];
 
-// Ancho base y separación entre logos (en píxeles)
-const TILE_W = 260; // más ancho = logos más grandes
-const GAP_PX = 150; // espacio entre logos
+// ✅ Ajuste profesional: logos grandes y con separación armónica
+const TILE_W = 520; // ancho visual de cada logo
+const GAP_PX = 50;  // menos separación: más cohesionados
 
 function Track({
   items,
@@ -26,15 +26,15 @@ function Track({
       {items.map((b, i) => (
         <li
           key={`${b.alt}-${i}`}
-          className="h-[100px] w-[260px] flex items-center justify-center"
+          className="h-[160px] w-[520px] flex items-center justify-center"
         >
           <Image
             src={b.src}
             alt={b.alt}
-            width={700}
-            height={300}
+            width={1200}
+            height={600}
             quality={100}
-            className="h-full w-auto object-contain transition-transform duration-700 hover:scale-110"
+            className="h-full w-auto object-contain transition-transform duration-700 hover:scale-105"
             priority={priorityFirst && i < 2}
           />
         </li>
@@ -50,8 +50,6 @@ export function Marquee() {
     const update = () => {
       const vw = typeof window !== "undefined" ? window.innerWidth : 1280;
       const tile = TILE_W + GAP_PX;
-
-      // cantidad de repeticiones necesarias para cubrir el ancho + margen de seguridad
       const need = Math.max(3, Math.ceil((vw * 1.5) / (BASE.length * tile)));
       setReps(need);
     };
@@ -70,19 +68,19 @@ export function Marquee() {
     <div
       className="w-full overflow-hidden"
       style={{
-        backgroundColor: "white", // ✅ fondo blanco
-        borderTop: "1px solid var(--border-subtle)",
-        borderBottom: "1px solid var(--border-subtle)",
+        backgroundColor: "#ffffff", // blanco puro
+        borderTop: "1px solid #e5e5e5",
+        borderBottom: "1px solid #e5e5e5",
         paddingTop: "2.5rem",
         paddingBottom: "2.5rem",
       }}
     >
       <div
-        className="flex items-center"
+        className="flex items-center justify-center"
         style={
           {
             ["--gap" as any]: `${GAP_PX}px`,
-            ["--dur" as any]: "55s", // ⏱️ velocidad suave
+            ["--dur" as any]: "55s",
           } as React.CSSProperties
         }
       >
@@ -90,7 +88,6 @@ export function Marquee() {
         <Track items={row} />
       </div>
 
-      {/* Animación CSS */}
       <style jsx>{`
         @keyframes marquee-x {
           0% {
@@ -105,7 +102,6 @@ export function Marquee() {
           animation: marquee-x var(--dur) linear infinite;
         }
 
-        /* pausa animación al pasar el mouse */
         div:hover > .flex > .animate-marquee-x {
           animation-play-state: paused;
         }

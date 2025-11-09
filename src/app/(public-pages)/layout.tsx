@@ -25,50 +25,42 @@ const body = Manrope({
 export const metadata: Metadata = {
   title: "NEA MOTOS · Potencia & Perfección",
   description: "Catálogo de motos, cascos y asesoramiento en Corrientes.",
+  viewport: { width: "device-width", initialScale: 1 },
 };
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" className={`${display.variable} ${body.variable} font-body`}>
-      <body className="bg-black text-white antialiased">
-        {/* HEADER fijo */}
+      {/* Sitio claro; mantenemos footer oscuro NEA */}
+      <body className="bg-white text-neutral-900 antialiased">
         <Header />
 
-        {/* CONTENIDO */}
         <ReactQueryProvider>
-          {/* pt-24 porque el header es fixed height 64px */}
+          {/* header fixed = 64px */}
           <main className="pt-24">{children}</main>
         </ReactQueryProvider>
 
-        {/* FOOTER */}
-        <footer
-          id="contacto"
-          className="bg-gray-900 text-gray-200 mt-24"
-        >
+        {/* Footer oscuro original */}
+        <footer id="contacto" className="bg-[#0A2342] text-white mt-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 grid md:grid-cols-3 gap-10">
             <div>
-              <h4 className="font-display text-xl font-bold">
-                NEA MOTOS
-              </h4>
-              <p className="mt-3 text-sm text-gray-400">
-                Tu punto de encuentro para elegir la moto de tus sueños en
-                Corrientes.
+              <h4 className="font-display text-xl font-bold">NEA MOTOS</h4>
+              <p className="mt-3 text-sm text-gray-300">
+                Tu punto de encuentro para elegir la moto de tus sueños en Corrientes.
               </p>
-              <p className="mt-4 text-sm">
-                Horarios: Lun a Sáb 9–13 / 16–20
-              </p>
+              <p className="mt-4 text-sm text-gray-300">Horarios: Lun a Sáb 9–13 / 16–20</p>
             </div>
 
             <div>
               <h5 className="font-semibold">Contacto</h5>
-              <ul className="mt-3 space-y-2 text-sm">
+              <ul className="mt-3 space-y-2 text-sm text-gray-300">
                 <li>📍 Corrientes, AR</li>
                 <li>📞 (379) 400-0000</li>
                 <li>📧 ventas@neamotos.com</li>
                 <li>
                   💬 WhatsApp:{" "}
                   <a
-                    className="underline"
+                    className="underline text-white hover:text-gray-200"
                     href="https://wa.me/5493790000000?text=Hola!%20Quiero%20hacer%20una%20consulta"
                   >
                     +54 9 379 000 0000
@@ -81,21 +73,21 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
               <h5 className="font-semibold">Seguinos</h5>
               <div className="mt-3 flex gap-3">
                 <a
-                  className="w-9 h-9 grid place-items-center rounded-full bg-white/10 hover:bg-white/20"
+                  className="w-9 h-9 grid place-items-center rounded-full bg-white/10 hover:bg-white/20 transition"
                   href="#"
                   aria-label="Instagram"
                 >
                   IG
                 </a>
                 <a
-                  className="w-9 h-9 grid place-items-center rounded-full bg-white/10 hover:bg-white/20"
+                  className="w-9 h-9 grid place-items-center rounded-full bg-white/10 hover:bg-white/20 transition"
                   href="#"
                   aria-label="Facebook"
                 >
                   FB
                 </a>
                 <a
-                  className="w-9 h-9 grid place-items-center rounded-full bg-white/10 hover:bg-white/20"
+                  className="w-9 h-9 grid place-items-center rounded-full bg-white/10 hover:bg-white/20 transition"
                   href="#"
                   aria-label="YouTube"
                 >

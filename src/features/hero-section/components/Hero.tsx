@@ -15,23 +15,23 @@ type Slide = {
 
 const slides: Slide[] = [
   {
-    src: "/hero/1.png",
+    src: "/hero/prueba.jpg",
     title: "50% OFF EN TU PRIMERA COMPRA",
-    subtitle: "Cascos y equipamiento con envío 24/48 hs en el NEA.",
+    subtitle: "Cascos y equipamiento para tu moto",
     ctaLabel: "VER CATÁLOGO",
     ctaHref: "#motos",
   },
   {
-    src: "/hero/2.jpg",
-    title: "FINANCIACIÓN HASTA 12 CUOTAS",
-    subtitle: "Asesoramiento personalizado para tu próxima moto.",
-    ctaLabel: "HABLAR POR WHATSAPP",
+    src: "/hero/prueba2.jpg",
+    title: "CONSULTA POR FINANCIACIÓN",
+    subtitle: "Asesoramiento personalizado para tu próxima moto",
+    ctaLabel: "CONSULTÁ POR WHATSAPP",
     ctaHref: "https://wa.me/549379XXXX",
   },
   {
-    src: "/hero/3.jpg",
+    src: "/hero/prueba3.jpg",
     title: "STOCK DE MARCAS LÍDERES",
-    subtitle: "Scooters, street, enduro y más.",
+    subtitle: "Scooters, street, urbanas y más",
     ctaLabel: "VER MARCAS",
     ctaHref: "#marcas",
   },
@@ -87,7 +87,7 @@ export function Hero() {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="px-4 sm:px-6 lg:px-8 text-center text-white max-w-3xl">
                     <p className="text-[12px] sm:text-sm font-semibold tracking-[0.25em] text-white/80">
-                      PROMO ESPECIAL
+              
                     </p>
 
                     <h1 className="mt-2 font-display font-extrabold leading-tight text-4xl sm:text-5xl lg:text-6xl">
