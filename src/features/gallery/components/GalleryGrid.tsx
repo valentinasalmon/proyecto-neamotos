@@ -3,7 +3,7 @@
 import Image from "next/image";
 
 const images = [
-  { src: "/gallery/moto2.jpg", alt: "Moto deportiva NEA" },
+  { src: "/gallery/moto2.png", alt: "Moto deportiva NEA" },
   { src: "/gallery/moto1.jpg", alt: "Moto urbana NEA" },
   { src: "/gallery/moto3.jpg", alt: "Moto touring NEA" },
 ];
