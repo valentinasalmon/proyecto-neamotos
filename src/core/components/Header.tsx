@@ -12,7 +12,6 @@ export function Header() {
         backdrop-blur bg-white/80
         border-b border-neutral-200
         text-neutral-900
-        transition-all duration-300
       "
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -44,29 +43,27 @@ export function Header() {
           </a>
         </nav>
 
-        {/* Botón hamburguesa (mobile) */}
+        {/* Botón hamburguesa */}
         <button
-          onClick={() => setMobileOpen((v) => !v)}
-          className="relative lg:hidden w-10 h-10 flex flex-col items-center justify-center"
-          aria-label="Menú"
-          aria-expanded={mobileOpen}
-          aria-controls="mobile-drawer"
+          onClick={() => setMobileOpen(true)}
+          className="lg:hidden w-10 h-10 flex flex-col items-center justify-center"
+          aria-label="Abrir menú"
         >
-          <span className={`block h-0.5 w-6 bg-neutral-800 transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-[7px]" : ""}`} />
-          <span className={`block h-0.5 w-6 bg-neutral-800 my-[5px] transition-all duration-300 ${mobileOpen ? "opacity-0" : "opacity-100"}`} />
-          <span className={`block h-0.5 w-6 bg-neutral-800 transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-[7px]" : ""}`} />
+          <span className="block h-0.5 w-6 bg-neutral-800" />
+          <span className="block h-0.5 w-6 bg-neutral-800 my-[5px]" />
+          <span className="block h-0.5 w-6 bg-neutral-800" />
         </button>
       </div>
 
-      {/* Overlay + Drawer mobile */}
+      {/* === Drawer mobile con overlay y fondo blanco === */}
       <div
         className={`
-          lg:hidden fixed inset-0 z-40
+          lg:hidden fixed inset-0 z-50
           ${mobileOpen ? "pointer-events-auto" : "pointer-events-none"}
         `}
         aria-hidden={!mobileOpen}
       >
-        {/* Fondo semitransparente */}
+        {/* Overlay oscuro */}
         <div
           className={`
             absolute inset-0 bg-black/50 transition-opacity duration-200
@@ -75,61 +72,79 @@ export function Header() {
           onClick={() => setMobileOpen(false)}
         />
 
-        {/* Panel lateral (FIX: sin redondeo, alto completo, sin fugas) */}
+        {/* Drawer lateral derecho */}
         <aside
-          id="mobile-drawer"
           role="dialog"
+          aria-label="Menú móvil"
+          onClick={(e) => e.stopPropagation()}
           className={`
             absolute top-0 right-0 h-full w-[80%] max-w-[320px]
-            bg-white text-neutral-900
-            shadow-[0_40px_80px_rgba(0,0,0,0.5)]
-            flex flex-col overscroll-contain
+            bg-white text-neutral-900 shadow-[0_40px_80px_rgba(0,0,0,0.4)]
             transition-transform duration-300
             ${mobileOpen ? "translate-x-0" : "translate-x-full"}
+            flex flex-col
           `}
-          onClick={(e) => e.stopPropagation()}
         >
-          {/* Header dentro del panel (FIX: sticky + sin bordes raros) */}
-          <div className="sticky top-0 z-10 flex items-center justify-between px-4 h-16 bg-white border-b border-neutral-200">
-            <span className="font-display text-base font-bold tracking-wide">NEA MOTOS</span>
-
-            {/* Botón cerrar simple, sin caja sobresaliente */}
+          {/* Top bar del panel */}
+          <div className="flex items-center justify-between px-4 h-16 border-b border-neutral-200">
+            <span className="font-display text-base font-bold tracking-wide">
+              NEA MOTOS
+            </span>
             <button
               onClick={() => setMobileOpen(false)}
               aria-label="Cerrar menú"
               className="inline-flex items-center justify-center w-9 h-9 text-neutral-700 hover:bg-neutral-100 rounded"
             >
-              <span className="sr-only">Cerrar</span>
               ✕
             </button>
           </div>
 
-          {/* Links mobile (FIX: scroll propio del panel) */}
-          <nav className="flex-1 overflow-y-auto px-4 py-6 text-[14px] font-semibold leading-tight">
-            <div className="flex flex-col gap-4">
-              <a href="/catalogo" onClick={() => setMobileOpen(false)} className="hover:text-[#0A2342]">Catálogo</a>
-              <a href="/#consejos" onClick={() => setMobileOpen(false)} className="hover:text-[#0A2342]">Consejos</a>
-              <a href="/#reseñas" onClick={() => setMobileOpen(false)} className="hover:text-[#0A2342]">Reseñas</a>
-              <a href="/financiacion" onClick={() => setMobileOpen(false)} className="hover:text-[#0A2342]">Financiación</a>
-              <a href="/seguros" onClick={() => setMobileOpen(false)} className="hover:text-[#0A2342]">Seguros</a>
+          {/* Links */}
+          <nav className="flex-1 overflow-y-auto px-4 py-6 text-[15px] font-semibold">
+            <ul className="flex flex-col gap-4">
+              <li>
+                <a href="/catalogo" onClick={() => setMobileOpen(false)} className="hover:text-[#0A2342]">
+                  Catálogo
+                </a>
+              </li>
+              <li>
+                <a href="/#consejos" onClick={() => setMobileOpen(false)} className="hover:text-[#0A2342]">
+                  Consejos
+                </a>
+              </li>
+              <li>
+                <a href="/#reseñas" onClick={() => setMobileOpen(false)} className="hover:text-[#0A2342]">
+                  Reseñas
+                </a>
+              </li>
+              <li>
+                <a href="/financiacion" onClick={() => setMobileOpen(false)} className="hover:text-[#0A2342]">
+                  Financiación
+                </a>
+              </li>
+              <li>
+                <a href="/seguros" onClick={() => setMobileOpen(false)} className="hover:text-[#0A2342]">
+                  Seguros
+                </a>
+              </li>
 
-              {/* CTA WhatsApp */}
-              <div className="pt-4 border-t border-neutral-200">
+              {/* WhatsApp */}
+              <li className="pt-4 border-t border-neutral-200">
                 <a
                   href="https://wa.me/5493790000000?text=Hola!%20Quiero%20hacer%20una%20consulta"
-                  className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 active:bg-green-700 text-white font-semibold text-[13px] px-3 py-2 shadow-[0_16px_32px_rgba(0,0,0,0.35)] rounded-none"
                   onClick={() => setMobileOpen(false)}
+                  className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 active:bg-green-700 text-white font-semibold text-[14px] px-4 py-2 rounded"
                 >
-                  <span>WhatsApp</span>
+                  WhatsApp
                 </a>
-              </div>
+              </li>
 
               {/* Info negocio */}
-              <div className="pt-6 text-[11px] text-neutral-500 leading-relaxed">
+              <li className="text-[12px] text-neutral-500 leading-relaxed">
                 <p>Horarios: Lun a Sáb 8:30 – 13 / 16:30 – 20:30</p>
                 <p>Corrientes Capital · Envíos a todo el país</p>
-              </div>
-            </div>
+              </li>
+            </ul>
           </nav>
         </aside>
       </div>

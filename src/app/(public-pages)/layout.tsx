@@ -31,17 +31,17 @@ export const metadata: Metadata = {
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" className={`${display.variable} ${body.variable} font-body`}>
-      {/* Sitio claro; mantenemos footer oscuro NEA */}
-      <body className="bg-white text-neutral-900 antialiased">
+      <body className="bg-white text-neutral-900 antialiased min-h-screen flex flex-col">
+        {/* Header fijo arriba */}
         <Header />
 
         <ReactQueryProvider>
-          {/* header fixed = 64px */}
-          <main className="pt-24">{children}</main>
+          {/* Contenido ocupa el espacio restante */}
+          <main className="pt-24 flex-1">{children}</main>
         </ReactQueryProvider>
 
-        {/* Footer oscuro original */}
-        <footer id="contacto" className="bg-[#0A2342] text-white mt-24">
+        {/* Footer oscuro (queda al final siempre) */}
+        <footer id="contacto" className="bg-[#0A2342] text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 grid md:grid-cols-3 gap-10">
             <div>
               <h4 className="font-display text-xl font-bold">NEA MOTOS</h4>
@@ -72,27 +72,16 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             <div>
               <h5 className="font-semibold">Seguinos</h5>
               <div className="mt-3 flex gap-3">
-                <a
-                  className="w-9 h-9 grid place-items-center rounded-full bg-white/10 hover:bg-white/20 transition"
-                  href="#"
-                  aria-label="Instagram"
-                >
-                  IG
-                </a>
-                <a
-                  className="w-9 h-9 grid place-items-center rounded-full bg-white/10 hover:bg-white/20 transition"
-                  href="#"
-                  aria-label="Facebook"
-                >
-                  FB
-                </a>
-                <a
-                  className="w-9 h-9 grid place-items-center rounded-full bg-white/10 hover:bg-white/20 transition"
-                  href="#"
-                  aria-label="YouTube"
-                >
-                  YT
-                </a>
+                {["IG","FB","YT"].map((s) => (
+                  <a
+                    key={s}
+                    className="w-9 h-9 grid place-items-center rounded-full bg-white/10 hover:bg-white/20 transition"
+                    href="#"
+                    aria-label={s}
+                  >
+                    {s}
+                  </a>
+                ))}
               </div>
             </div>
           </div>

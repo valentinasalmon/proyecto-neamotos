@@ -166,3 +166,13 @@ input:-webkit-autofill {
 input {
   color: #111827 !important;
 }
+/* ====== Mantiene el footer siempre al final ====== */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
