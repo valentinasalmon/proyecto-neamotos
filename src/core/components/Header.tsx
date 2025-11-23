@@ -30,11 +30,45 @@ export function Header() {
           className="hidden lg:flex items-center gap-6 text-[13px] font-semibold text-neutral-800"
           aria-label="Principal"
         >
-          <a href="/catalogo" className="hover:text-[#0A2342] hover:underline underline-offset-4 decoration-[#0A2342]/30">Catálogo</a>
-          <a href="/#consejos" className="hover:text-[#0A2342] hover:underline underline-offset-4 decoration-[#0A2342]/30">Consejos</a>
-          <a href="/#reseñas" className="hover:text-[#0A2342] hover:underline underline-offset-4 decoration-[#0A2342]/30">Reseñas</a>
-          <a href="/financiacion" className="hover:text-[#0A2342] hover:underline underline-offset-4 decoration-[#0A2342]/30">Financiación</a>
-          <a href="/seguros" className="hover:text-[#0A2342] hover:underline underline-offset-4 decoration-[#0A2342]/30">Seguros</a>
+          <a
+            href="/catalogo"
+            className="hover:text-[#0A2342] hover:underline underline-offset-4 decoration-[#0A2342]/30"
+          >
+            Catálogo
+          </a>
+
+          {/* 🔴 NUEVO: link a Indumentaria */}
+          <a
+            href="/indumentaria"
+            className="hover:text-[#0A2342] hover:underline underline-offset-4 decoration-[#0A2342]/30"
+          >
+            Indumentaria
+          </a>
+
+          <a
+            href="/#consejos"
+            className="hover:text-[#0A2342] hover:underline underline-offset-4 decoration-[#0A2342]/30"
+          >
+            Consejos
+          </a>
+          <a
+            href="/#reseñas"
+            className="hover:text-[#0A2342] hover:underline underline-offset-4 decoration-[#0A2342]/30"
+          >
+            Reseñas
+          </a>
+          <a
+            href="/financiacion"
+            className="hover:text-[#0A2342] hover:underline underline-offset-4 decoration-[#0A2342]/30"
+          >
+            Financiación
+          </a>
+          <a
+            href="/seguros"
+            className="hover:text-[#0A2342] hover:underline underline-offset-4 decoration-[#0A2342]/30"
+          >
+            Seguros
+          </a>
           <a
             href="https://wa.me/5493790000000?text=Hola!%20Quiero%20hacer%20una%20consulta"
             className="inline-flex items-center rounded-full bg-red-600 hover:bg-red-700 active:bg-red-800 text-white px-4 py-2 text-[13px] font-semibold shadow-[0_16px_32px_rgba(220,38,38,0.4)]"
@@ -103,27 +137,59 @@ export function Header() {
           <nav className="flex-1 overflow-y-auto px-4 py-6 text-[15px] font-semibold">
             <ul className="flex flex-col gap-4">
               <li>
-                <a href="/catalogo" onClick={() => setMobileOpen(false)} className="hover:text-[#0A2342]">
+                <a
+                  href="/catalogo"
+                  onClick={() => setMobileOpen(false)}
+                  className="hover:text-[#0A2342]"
+                >
                   Catálogo
                 </a>
               </li>
+
+              {/* 🔴 NUEVO: link a Indumentaria en mobile */}
               <li>
-                <a href="/#consejos" onClick={() => setMobileOpen(false)} className="hover:text-[#0A2342]">
+                <a
+                  href="/indumentaria"
+                  onClick={() => setMobileOpen(false)}
+                  className="hover:text-[#0A2342]"
+                >
+                  Indumentaria
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="/#consejos"
+                  onClick={() => setMobileOpen(false)}
+                  className="hover:text-[#0A2342]"
+                >
                   Consejos
                 </a>
               </li>
               <li>
-                <a href="/#reseñas" onClick={() => setMobileOpen(false)} className="hover:text-[#0A2342]">
+                <a
+                  href="/#reseñas"
+                  onClick={() => setMobileOpen(false)}
+                  className="hover:text-[#0A2342]"
+                >
                   Reseñas
                 </a>
               </li>
               <li>
-                <a href="/financiacion" onClick={() => setMobileOpen(false)} className="hover:text-[#0A2342]">
+                <a
+                  href="/financiacion"
+                  onClick={() => setMobileOpen(false)}
+                  className="hover:text-[#0A2342]"
+                >
                   Financiación
                 </a>
               </li>
               <li>
-                <a href="/seguros" onClick={() => setMobileOpen(false)} className="hover:text-[#0A2342]">
+                <a
+                  href="/seguros"
+                  onClick={() => setMobileOpen(false)}
+                  className="hover:text-[#0A2342]"
+                >
                   Seguros
                 </a>
               </li>

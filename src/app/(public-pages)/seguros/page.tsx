@@ -69,7 +69,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Logos (más grandes, centrados, espaciado como Financiación) */}
+      {/* Logos (más grandes, centrados) */}
       <section className="mt-14 pt-10 border-t border-neutral-200">
         <h3 className="font-display text-lg sm:text-xl font-bold tracking-wide mb-6 text-neutral-900">
           Aseguradoras aliadas
@@ -78,12 +78,12 @@ export default function Page() {
         <div className="grid gap-x-10 gap-y-12 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 place-items-center">
           {insurers.map((i) => (
             <div key={i.name} className="flex items-center justify-center">
-              <div className="w-56 h-24 sm:w-64 sm:h-28">
-                {/* <img> simple para SSR 1:1 (sin next/image) */}
+              {/* Contenedor más grande */}
+              <div className="w-64 h-28 sm:w-72 sm:h-32">
                 <img
                   src={i.logo}
                   alt={i.alt}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain scale-125"
                   loading="lazy"
                 />
               </div>
@@ -120,54 +120,78 @@ function Benefit({
   );
 }
 
-/* SVG inline (nada de client components) */
 function ShieldSVG() {
   return (
     <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
       <path d="M12 3l7 4v5a9 9 0 01-7 8 9 9 0 01-7-8V7l7-4z" stroke="currentColor" strokeWidth="2" />
-      <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path
+        d="M9 12l2 2 4-4"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 function BuoySVG() {
   return (
     <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2"/>
-      <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
-      <path d="M12 3v6M21 12h-6M12 21v-6M3 12h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
+      <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" />
+      <path
+        d="M12 3v6M21 12h-6M12 21v-6M3 12h6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
 function FileCheckSVG() {
   return (
     <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-      <path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z" stroke="currentColor" strokeWidth="2"/>
-      <path d="M14 3v5h5" stroke="currentColor" strokeWidth="2"/>
-      <path d="M9 14l2 2 4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path
+        d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path d="M14 3v5h5" stroke="currentColor" strokeWidth="2" />
+      <path
+        d="M9 14l2 2 4-4"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 function WrenchSVG() {
   return (
     <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-      <path d="M10 7a5 5 0 017.07-4.95l-3.12 3.12a2 2 0 102.83 2.83l3.12-3.12A5 5 0 0117 14a5 5 0 01-5-5z" stroke="currentColor" strokeWidth="2"/>
-      <path d="M2 22l6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      <path
+        d="M10 7a5 5 0 017.07-4.95l-3.12 3.12a2 2 0 102.83 2.83l3.12-3.12A5 5 0 0117 14a5 5 0 01-5-5z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path d="M2 22l6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
 function CardSVG() {
   return (
     <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-      <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" strokeWidth="2"/>
-      <path d="M2 10h20" stroke="currentColor" strokeWidth="2"/>
+      <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" strokeWidth="2" />
+      <path d="M2 10h20" stroke="currentColor" strokeWidth="2" />
     </svg>
   );
 }
 function GaugeSVG() {
   return (
     <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-      <path d="M21 13a9 9 0 10-18 0" stroke="currentColor" strokeWidth="2"/>
-      <path d="M12 13l4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M21 13a9 9 0 10-18 0" stroke="currentColor" strokeWidth="2" />
+      <path d="M12 13l4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
