@@ -56,17 +56,14 @@ export default function CatalogoPage() {
 
         {/* Header de página */}
         <header className="mb-8">
-          <p className="text-[10px] sm:text-[11px] font-semibold tracking-[0.25em] text-red-600 uppercase">
-            Catálogo
-          </p>
+         
 
           <h1 className="font-display text-[2rem] sm:text-[2.25rem] font-extrabold leading-[1.1] text-neutral-900">
             Elegí tu próxima moto
           </h1>
 
           <p className="text-[13px] sm:text-[14px] text-neutral-600 mt-4 max-w-2xl leading-relaxed">
-            Buscá por marca, tipo o nombre. Escribinos directo por WhatsApp para
-            consultar stock y financiación.
+             Escribinos por WhatsApp para consultar stock y financiación.
           </p>
 
           <div className="mt-6 border-t border-neutral-200" />

@@ -1,59 +1,69 @@
 "use client";
 
-import AutoCropImage from "@/components/AutoCropImage";
-import { IndumentariaItem } from "@/features/indumentaria/data/indumentaria";
+import React from "react";
+import type { IndumentariaItem } from "@/features/indumentaria/data/indumentaria";
 
 export function IndumentariaCard({ item }: { item: IndumentariaItem }) {
-  const Img = (AutoCropImage as any) ?? (({ src, alt }: any) => (
-    <img src={src} alt={alt} className="w-full h-full object-contain" />
-  ));
+  const generoLabel = Array.isArray(item.genero)
+    ? item.genero.join(" / ")
+    : item.genero;
 
   return (
-    <article className="group relative bg-white border border-neutral-300 shadow-sm hover:shadow-md transition-all">
+    <article
+      className="
+        group relative bg-white border border-neutral-300 rounded-none
+        shadow-[0_8px_20px_rgba(0,0,0,0.06)]
+        hover:shadow-[0_16px_32px_rgba(0,0,0,0.08)]
+        transition-all duration-300 overflow-hidden
+      "
+    >
       {/* HEADER */}
-      <header className="px-4 py-3 border-b border-neutral-200">
-        <h2 className="text-[17px] font-bold text-neutral-900 leading-tight">
-          {item.nombre}
+      <header className="px-4 sm:px-5 pt-4 pb-3 border-b border-neutral-200">
+        <h2 className="text-[17px] sm:text-[19px] font-semibold text-neutral-900 leading-tight tracking-tight">
+          {item.nombre.toUpperCase()}
         </h2>
-        <p className="text-[11px] text-neutral-500 uppercase tracking-wide mt-1">
-          {item.categoria} · {item.genero}
+
+        <p className="mt-1 text-[11px] sm:text-[12px] font-medium text-neutral-500 uppercase tracking-wide">
+          {item.categoria.toUpperCase()} · {generoLabel.toUpperCase()}
         </p>
       </header>
 
       {/* IMAGEN */}
-      <div className="relative w-full aspect-[4/3] bg-white border-b border-neutral-200 flex items-center justify-center">
-        <Img
+      <div className="relative w-full aspect-[4/3] bg-white overflow-hidden flex items-center justify-center">
+        <img
           src={item.img}
           alt={item.nombre}
-          autoBoostSize={true}
-          padding={0.05}
-          className="absolute inset-0"
+          className="w-full h-full object-contain"
         />
       </div>
 
-      {/* TEXTO FIJO DE TALLES y colores */}
-  <div className="px-4 py-4">
-  <p className="text-[13px] font-semibold text-neutral-700 mb-2">
-    Consultá talles y colores disponibles
-  </p>
-</div>
-
-
-      {/* WHATSAPP */}
-      <a
-        href={`https://wa.me/5493790000000?text=Hola!%20Consulta%20por%20${encodeURIComponent(
-          item.nombre
-        )}`}
-        className="
-          absolute bottom-3 right-3 inline-flex items-center justify-center
-          w-11 h-11 rounded-full bg-green-500 hover:bg-green-600 text-white shadow
-          hover:scale-110 transition-transform
-        "
-      >
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-          <path d="M20.52 3.48A11.78 11.78 0 0 0 12 .75C5.74.75.72 5.77.72 12.02c0 2 .52 3.96 1.52 5.7L.75 23.25l5.7-1.47a11.3 11.3 0 0 0 5.57 1.42h.01c6.26 0 11.28-5.02 11.28-11.27 0-3.01-1.17-5.83-3.27-7.95ZM12.03 21c-1.7 0-3.36-.45-4.82-1.3l-.35-.2-3.38.87.9-3.3-.22-.34a9.32 9.32 0 0 1-1.42-4.86c0-5.15 4.2-9.35 9.37-9.35 2.5 0 4.84.98 6.61 2.75a9.3 9.3 0 0 1 2.74 6.6c0 5.16-4.2 9.34-9.43 9.34Zm5.25-6.98c-.28-.14-1.66-.82-1.92-.91-.26-.1-.45-.14-.64.14-.19.29-.74.9-.9 1.09-.17.19-.33.21-.61.07-.28-.14-1.16-.43-2.2-1.37-.81-.72-1.36-1.6-1.52-1.87-.16-.28-.02-.43.12-.57.12-.12.28-.32.42-.48.14-.16.19-.27.28-.45.1-.19.05-.34-.02-.48-.07-.14-.64-1.54-.88-2.1-.23-.55-.47-.47-.64-.48l-.55-.01c-.19 0-.48.07-.73.34-.25.27-.96.94-.96 2.3 0 1.36.99 2.67 1.13 2.85.14.19 1.94 3.04 4.8 4.26.67.29 1.2.46 1.61.59.68.22 1.3.19 1.8.12.55-.08 1.66-.68 1.9-1.33.24-.65.24-1.21.17-1.33-.07-.12-.26-.19-.54-.33Z" />
-        </svg>
-      </a>
+      {/* FOOTER (sin línea arriba, botón igual al catálogo de motos) */}
+      <div className="px-4 sm:px-5 py-4 flex justify-end">
+        <a
+          href={`https://wa.me/5493790000000?text=Hola!%20Quiero%20consultar%20por%20${encodeURIComponent(
+            item.nombre
+          )}`}
+          className="
+            flex items-center justify-center
+            w-12 h-12 rounded-full
+            bg-[#25D366] text-white
+            shadow-[0_4px_12px_rgba(0,0,0,0.25)]
+            hover:scale-110 active:scale-95 
+            transition-all duration-200
+          "
+          aria-label="Consultar por WhatsApp"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="26"
+            height="26"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path d="M20.52 3.48A11.8 11.8 0 0 0 12 .2a11.8 11.8 0 0 0-8.52 3.28A11.42 11.42 0 0 0 .2 12.07c0 2 .53 3.93 1.54 5.63L0 24l6.49-1.7A12 12 0 0 0 12 23.8a11.42 11.42 0 0 0 8.52-3.28A11.42 11.42 0 0 0 23.8 12a11.8 11.8 0 0 0-3.28-8.52zM12 21.1c-1.78 0-3.5-.46-5.02-1.33l-.36-.21-3.85 1 1.03-3.76-.24-.39A9.17 9.17 0 0 1 2.9 12c0-5.03 4.1-9.1 9.1-9.1 2.43 0 4.72.94 6.44 2.64A9.05 9.05 0 0 1 21.1 12c0 5-4.1 9.1-9.1 9.1zm5.21-6.87c-.29-.15-1.71-.84-1.98-.94-.27-.1-.47-.15-.67.15-.2.29-.77.94-.94 1.13-.17.2-.35.22-.64.07-.29-.15-1.22-.45-2.32-1.44-.86-.76-1.44-1.7-1.61-1.99-.17-.29-.02-.45.13-.6.13-.13.29-.35.44-.53.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.6-.92-2.2-.24-.57-.48-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.29-1.04 1.02-1.04 2.49 0 1.46 1.06 2.87 1.21 3.07.15.2 2.07 3.16 5.02 4.43.7.3 1.25.48 1.67.62.7.22 1.33.19 1.83.12.56-.08 1.71-.7 1.95-1.38.24-.67.24-1.25.17-1.38-.07-.13-.26-.2-.55-.35z" />
+          </svg>
+        </a>
+      </div>
     </article>
   );
 }
