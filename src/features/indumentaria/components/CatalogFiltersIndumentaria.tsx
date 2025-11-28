@@ -1,12 +1,94 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export type CatalogFiltersIndumentariaState = {
   categoria: string;
   genero: "Todos" | "Hombre" | "Mujer";
   search: string;
 };
+
+type SelectOption = {
+  value: string;
+  label: string;
+};
+
+// 🔽 Mismo CustomSelect que usás en el otro catálogo
+function CustomSelect({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  options: SelectOption[];
+}) {
+  const [open, setOpen] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (!wrapperRef.current?.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const currentLabel =
+    options.find((o) => o.value === value)?.label ?? value ?? "";
+
+  return (
+    <div className="flex flex-col relative" ref={wrapperRef}>
+      <label className="text-[11px] font-semibold text-neutral-500 uppercase mb-1">
+        {label}
+      </label>
+
+      {/* Botón visible */}
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className="w-full border border-neutral-300 bg-white px-3 py-2 text-left text-[13px] text-neutral-900 outline-none focus:ring-2 focus:ring-red-500/30 flex items-center justify-between"
+      >
+        <span>{currentLabel}</span>
+        <span className="ml-2 text-neutral-500 text-[11px]">▾</span>
+      </button>
+
+      {/* Dropdown custom */}
+      {open && (
+        <ul
+          className="
+            absolute left-0 right-0
+            z-50 mt-1 rounded
+            border border-neutral-200
+            bg-white shadow-md
+            max-h-40 overflow-y-auto
+            text-[12px]
+          "
+        >
+          {options.map((opt) => (
+            <li
+              key={opt.value}
+              className={`px-3 py-1.5 cursor-pointer hover:bg-neutral-100 ${
+                opt.value === value ? "bg-neutral-100 font-semibold" : ""
+              }`}
+              onClick={() => {
+                onChange(opt.value);
+                setOpen(false);
+              }}
+            >
+              {opt.label}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 export function CatalogFiltersIndumentaria({
   categorias,
@@ -30,10 +112,18 @@ export function CatalogFiltersIndumentaria({
     onChange(next);
   }
 
+  // Opciones para el dropdown de Categoría con el mismo formato
+  const categoriaOptions: SelectOption[] = [
+    { value: "Todas", label: "Todas" },
+    ...categorias.map((c) => ({
+      value: c,
+      label: c,
+    })),
+  ];
+
   return (
     <section className="bg-white border border-neutral-300 shadow-sm rounded-none p-4 mb-6">
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-[13px] text-neutral-800">
-        
         {/* Buscar */}
         <div className="flex flex-col">
           <label className="text-[11px] font-semibold text-neutral-500 uppercase mb-1">
@@ -52,30 +142,15 @@ export function CatalogFiltersIndumentaria({
           />
         </div>
 
-        {/* Categoría */}
-        <div className="flex flex-col">
-          <label className="text-[11px] font-semibold text-neutral-500 uppercase mb-1">
-            Categoría
-          </label>
-          <select
-            className="
-              border border-neutral-300 bg-white
-              px-3 py-2 text-[13px] text-neutral-900
-              outline-none focus:ring-2 focus:ring-red-500/30
-            "
-            value={filters.categoria}
-            onChange={(e) => update("categoria", e.target.value)}
-          >
-            <option value="Todas">Todas</option>
-            {categorias.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
-        </div>
+        {/* Categoría con el mismo dropdown custom */}
+        <CustomSelect
+          label="Categoría"
+          value={filters.categoria}
+          onChange={(v) => update("categoria", v)}
+          options={categoriaOptions}
+        />
 
-        {/* Género compacto */}
+        {/* Género compacto (igual que antes) */}
         <div className="flex flex-col">
           <label className="text-[11px] font-semibold text-neutral-500 uppercase mb-1">
             Género
@@ -104,7 +179,6 @@ export function CatalogFiltersIndumentaria({
             })}
           </div>
         </div>
-
       </div>
     </section>
   );

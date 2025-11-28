@@ -3,18 +3,14 @@
 import Image from "next/image";
 
 const images = [
-  { src: "/gallery/moto2.png", alt: "Moto deportiva NEA" },
-  { src: "/gallery/moto1.jpg", alt: "Moto urbana NEA" },
-  { src: "/gallery/moto3.jpg", alt: "Moto touring NEA" },
+  { src: "/gallery/motoo.png", alt: "Moto urbana NEA" },
+  { src: "/gallery/moto.png", alt: "Moto deportiva NEA" },
+  { src: "/gallery/motooo.png", alt: "Moto touring NEA" },
 ];
 
 export function GalleryGrid() {
   return (
-    <section
-      id="galeria"
-      className="w-full bg-white"
-    >
-      {/* Grid totalmente responsive */}
+    <section id="galeria" className="w-full bg-white">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0">
         {images.map((img, i) => (
           <div
@@ -25,8 +21,9 @@ export function GalleryGrid() {
               src={img.src}
               alt={img.alt}
               fill
+              quality={100}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-cover transition-transform duration-700 hover:scale-105"
+              className="object-cover scale-[1.25] transition-transform duration-700 hover:scale-[1.35]"
               priority={i === 0}
             />
           </div>

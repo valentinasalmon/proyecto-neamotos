@@ -68,29 +68,49 @@ export default function Page() {
           />
         </div>
       </section>
+<section className="mt-10 pt-4 border-t border-neutral-200">
+  <h3 className="font-display text-2xl sm:text-3xl font-bold tracking-wide mb-1 text-neutral-900">
+    Aseguradoras aliadas
+  </h3>
 
-      {/* Logos (más grandes, centrados) */}
-      <section className="mt-14 pt-10 border-t border-neutral-200">
-        <h3 className="font-display text-lg sm:text-xl font-bold tracking-wide mb-6 text-neutral-900">
-          Aseguradoras aliadas
-        </h3>
+  <div
+    className="
+      mt-1
+      max-w-3xl mx-auto
+      grid
+      grid-cols-2 sm:grid-cols-3
+      gap-x-4 gap-y-3
+      place-items-center
+    "
+  >
+    {insurers.map((i, index) => {
+      const isSanPatricio = i.name === "San Patricio";
+      const isLast = index === insurers.length - 1;
 
-        <div className="grid gap-x-10 gap-y-12 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 place-items-center">
-          {insurers.map((i) => (
-            <div key={i.name} className="flex items-center justify-center">
-              {/* Contenedor más grande */}
-              <div className="w-64 h-28 sm:w-72 sm:h-32">
-                <img
-                  src={i.logo}
-                  alt={i.alt}
-                  className="w-full h-full object-contain scale-125"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          ))}
+      return (
+        <div
+          key={i.name}
+          className={`
+            flex items-center justify-center
+            ${isSanPatricio ? "overflow-hidden w-64 h-48 sm:w-72 sm:h-56" : ""}
+            ${isLast ? "col-span-2 sm:col-span-1" : ""}
+          `}
+        >
+          <img
+            src={i.logo}
+            alt={i.alt}
+            loading="lazy"
+            className={`
+              h-40 sm:h-48 md:h-56 w-auto object-contain
+              ${isSanPatricio ? "scale-[1.45]" : ""}
+            `}
+          />
         </div>
-      </section>
+      );
+    })}
+  </div>
+</section>
+
     </div>
   );
 }
