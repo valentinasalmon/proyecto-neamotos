@@ -44,6 +44,8 @@ export function Header() {
             <a href="/indumentaria" className="hover:text-[#0A2342]">Indumentaria</a>
             <a href="/financiacion" className="hover:text-[#0A2342]">Financiación</a>
             <a href="/seguros" className="hover:text-[#0A2342]">Seguros</a>
+            <a href="/cascos" className="hover:text-[#0A2342]">Cascos</a>
+
 
             {/* BOTÓN ROJO CONSULTAR */}
             <a
