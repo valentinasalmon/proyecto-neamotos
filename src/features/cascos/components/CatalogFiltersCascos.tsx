@@ -58,12 +58,9 @@ function CustomSelect({
       {open && (
         <ul
           className="
-            absolute left-0 right-0
-            z-50 mt-1 rounded
-            border border-neutral-200
-            bg-white shadow-md
-            max-h-40 overflow-y-auto
-            text-[12px]
+            absolute left-0 right-0 z-50 mt-1 rounded
+            border border-neutral-200 bg-white shadow-md
+            max-h-40 overflow-y-auto text-[12px]
           "
         >
           {options.map((opt) => (
@@ -106,6 +103,16 @@ export function CatalogFiltersCascos({
     onChange(next);
   }
 
+  function resetFilters() {
+    const reset: CatalogFiltersCascosState = {
+      categoria: "Todas",
+      marca: "Todas",
+      search: "",
+    };
+    setFilters(reset);
+    onChange(reset);
+  }
+
   const categoriaOptions: SelectOption[] = [
     { value: "Todas", label: "Todas" },
     { value: "Integrales", label: "Integrales" },
@@ -122,7 +129,8 @@ export function CatalogFiltersCascos({
 
   return (
     <section className="bg-white border border-neutral-300 shadow-sm rounded-none p-4 mb-6">
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-[13px] text-neutral-800">
+      {/* GRID FILTROS */}
+      <div className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_1fr_44px] gap-4 text-[13px] text-neutral-800 items-end">
         {/* Buscar */}
         <div className="flex flex-col">
           <label className="text-[11px] font-semibold text-neutral-500 uppercase mb-1">
@@ -156,6 +164,47 @@ export function CatalogFiltersCascos({
           onChange={(v) => update("marca", v)}
           options={marcaOptions}
         />
+
+        {/* ❌ X SOLO DESKTOP */}
+        <div className="hidden sm:flex flex-col">
+          <span className="text-[11px] font-semibold text-neutral-500 uppercase mb-1 opacity-0 select-none">
+            X
+          </span>
+          <button
+            type="button"
+            onClick={resetFilters}
+            aria-label="Limpiar filtros"
+            title="Limpiar filtros"
+            className="
+              h-[38px] w-[44px]
+              grid place-items-center
+              rounded-md border border-neutral-300 bg-white
+              text-neutral-700 hover:bg-neutral-100 transition-colors
+              leading-none text-[18px]
+            "
+          >
+            ×
+          </button>
+        </div>
+      </div>
+
+      {/* ✅ MOBILE: botón abajo */}
+      <div className="sm:hidden mt-4 pt-4 border-t border-neutral-200">
+        <button
+          type="button"
+          onClick={resetFilters}
+          className="
+            w-full
+            flex items-center justify-center gap-2
+            border border-neutral-300 bg-white
+            px-4 py-2
+            text-[13px] font-semibold text-neutral-700
+            hover:bg-neutral-100 transition-colors
+          "
+        >
+          <span className="text-[16px] leading-none">×</span>
+          Limpiar filtros
+        </button>
       </div>
     </section>
   );

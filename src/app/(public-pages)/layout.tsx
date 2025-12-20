@@ -58,15 +58,15 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       <h5 className="font-semibold">Contacto</h5>
       <ul className="mt-3 space-y-2 text-sm text-white/90">
         <li>📍 Corrientes, AR</li>
-        <li>📞 (379) 400-0000</li>
+        <li>📞 (379) 5134533</li>
         <li>📧 ventas@neamotos.com</li>
         <li>
           💬 WhatsApp:{" "}
           <a
             className="underline text-white hover:text-white/80"
-            href="https://wa.me/5493790000000?text=Hola!%20Quiero%20hacer%20una%20consulta"
+            href="https://wa.me/5493795134533?text=Hola!%20Quiero%20hacer%20una%20consulta"
           >
-            +54 9 379 000 0000
+            +54 9 379 5134533
           </a>
         </li>
       </ul>

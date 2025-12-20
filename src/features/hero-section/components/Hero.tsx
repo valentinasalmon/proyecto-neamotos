@@ -16,24 +16,24 @@ type Slide = {
 const slides: Slide[] = [
   {
     src: "/hero/prueba.jpg",
-    title: "50% OFF EN TU PRIMERA COMPRA",
-    subtitle: "Cascos y equipamiento para tu moto",
+    title: "TU PRÓXIMA MOTO ESTÁ ACÁ",
+    subtitle:  "Variedad de modelos para ciudad, trabajo y aventura",
     ctaLabel: "VER CATÁLOGO",
-    ctaHref: "#motos",
+    ctaHref: "/catalogo",
   },
   {
     src: "/hero/prueba2.jpg",
-    title: "CONSULTA POR FINANCIACIÓN",
-    subtitle: "Asesoramiento personalizado para tu próxima moto",
-    ctaLabel: "CONSULTÁ POR WHATSAPP",
-    ctaHref: "https://wa.me/549379XXXX",
+    title: "INDUMENTARIA QUE TE ACOMPAÑA",
+    subtitle: "Cascos, equipamiento y accesorios para cada estilo de conducción",
+    ctaLabel: "VER INDUMENTARIA",
+    ctaHref: "/indumentaria",
   },
   {
     src: "/hero/prueba3.jpg",
-    title: "STOCK DE MARCAS LÍDERES",
-    subtitle: "Scooters, street, urbanas y más",
-    ctaLabel: "VER MARCAS",
-    ctaHref: "#marcas",
+    title: "TU MOTO, A TU MEDIDA",
+    subtitle: "Opciones de financiación flexibles para que llegues a tu próxima moto",
+    ctaLabel: "CONSULTAR FINANCIACION",
+    ctaHref: "/financiacion",
   },
 ];
 

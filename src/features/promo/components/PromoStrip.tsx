@@ -17,7 +17,7 @@ export function PromoStrip() {
             leading-[1] tracking-tight fade-up-delay
           "
         >
-          De la vida sobre ruedas.
+          De la vida sobre ruedas
         </h2>
 
         {/* Botón CTA */}

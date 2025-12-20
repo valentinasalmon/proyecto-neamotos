@@ -7,7 +7,7 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const whatsappHref =
-    "https://wa.me/5493790000000?text=Hola!%20Quiero%20hacer%20una%20consulta";
+    "https://wa.me/5493795134533?text=Hola!%20Quiero%20hacer%20una%20consulta";
 
   return (
     <>
@@ -41,6 +41,7 @@ export function Header() {
           >
             <a href="/" className="hover:text-[#0A2342]">Home</a>
             <a href="/catalogo" className="hover:text-[#0A2342]">Motos</a>
+            <a href="/cubiertas" className="hover:text-[#0A2342]">Cubiertas</a>
             <a href="/indumentaria" className="hover:text-[#0A2342]">Indumentaria</a>
             <a href="/financiacion" className="hover:text-[#0A2342]">Financiación</a>
             <a href="/seguros" className="hover:text-[#0A2342]">Seguros</a>
@@ -118,9 +119,11 @@ export function Header() {
             <ul className="flex flex-col gap-4">
               <li><a href="/" onClick={() => setMobileOpen(false)}>Home</a></li>
               <li><a href="/catalogo" onClick={() => setMobileOpen(false)}>Motos</a></li>
+               <li><a href="/cubiertas" onClick={() => setMobileOpen(false)}>Cubiertas</a></li>
               <li><a href="/indumentaria" onClick={() => setMobileOpen(false)}>Indumentaria</a></li>
               <li><a href="/financiacion" onClick={() => setMobileOpen(false)}>Financiación</a></li>
               <li><a href="/seguros" onClick={() => setMobileOpen(false)}>Seguros</a></li>
+               <li><a href="/cascos" onClick={() => setMobileOpen(false)}>Cascos</a></li>
 
               {/* BOTÓN ROJO CONSULTAR — MOBILE */}
               <li className="pt-4 border-t border-neutral-200">

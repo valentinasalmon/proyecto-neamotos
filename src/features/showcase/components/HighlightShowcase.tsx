@@ -39,7 +39,7 @@ export function HighlightShowcase() {
 
           {/* Solo el botón de WhatsApp */}
           <a
-            href="https://wa.me/5493790000000?text=Hola!%20Quiero%20consultar%20por%20servicio%20técnico"
+            href="https://wa.me/5493795134533?text=Hola!%20Quiero%20consultar%20por%20servicio%20técnico"
             className="
               inline-flex items-center justify-center gap-2
               bg-red-600 hover:bg-red-700 active:bg-red-800

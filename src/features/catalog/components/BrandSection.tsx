@@ -77,7 +77,7 @@ export function BrandSection({ brand }: { brand: CatalogBrand }) {
                   {/* CTA WhatsApp */}
                   <div className="mt-3 sm:mt-0 sm:ml-6 flex-shrink-0">
                     <a
-                      href={`https://wa.me/5493790000000?text=Hola!%20Quiero%20consultar%20stock%20de%20${encodeURIComponent(
+                      href={`https://wa.me/5493795134533?text=Hola!%20Quiero%20consultar%20stock%20de%20${encodeURIComponent(
                         modelo.nombre
                       )}%20de%20${encodeURIComponent(brand.displayName)}`}
                       className="inline-flex items-center gap-2 px-3 py-2 text-[12px] font-semibold leading-none bg-green-500 hover:bg-green-600 active:bg-green-700 text-white shadow-[0_12px_24px_rgba(0,0,0,0.25)] rounded-full"

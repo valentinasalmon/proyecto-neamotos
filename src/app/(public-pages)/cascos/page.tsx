@@ -41,26 +41,32 @@ export default function CascosPage() {
   );
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-8">
-      {/* Título + botón tabla de talles */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
-        <div>
-          <h1 className="font-display text-3xl sm:text-4xl font-extrabold">
-            Cascos para cada viaje
-          </h1>
-          <p className="text-[14px] text-neutral-600 max-w-2xl mt-1">
-            Elegí el casco que mejor se adapte a vos. Consultá talles, colores y
-            stock disponible por WhatsApp.
-          </p>
-        </div>
+    <main className="bg-[#f5f6f7] min-h-screen py-12 sm:py-16 px-4 sm:px-6 lg:px-8 text-neutral-900">
+      <div className="max-w-7xl mx-auto w-full">
+        {/* Header */}
+        <header className="mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div>
+              <h1 className="font-display text-[2rem] sm:text-[2.25rem] font-extrabold leading-[1.1] text-neutral-900">
+                Protección en cada trayecto 
+              </h1>
+              <p className="text-[13px] sm:text-[14px] text-neutral-600 mt-3 max-w-2xl leading-relaxed">
+                Elegí el casco que mejor se adapte a vos. Consultá talles, colores y stock disponible por WhatsApp.
+              </p>
+            </div>
 
-        {/* Botón que abre el modal de tabla de talles de cascos */}
-        <SizeGuideCascosModal />
+            {/* Tabla de talles */}
+            <SizeGuideCascosModal />
+          </div>
+
+          {/* Línea separadora (igual que motos/indumentaria) */}
+          <div className="mt-6 border-t border-neutral-200" />
+        </header>
+
+        <CatalogFiltersCascos items={cascos} onChange={setFilters} />
+
+        <CatalogGridCascos items={filtrados} />
       </div>
-
-      <CatalogFiltersCascos onChange={setFilters} />
-
-      <CatalogGridCascos items={filtrados} />
     </main>
   );
 }

@@ -40,7 +40,7 @@ export function IndumentariaCard({ item }: { item: IndumentariaItem }) {
       {/* FOOTER (sin línea arriba, botón igual al catálogo de motos) */}
       <div className="px-4 sm:px-5 py-4 flex justify-end">
         <a
-          href={`https://wa.me/5493790000000?text=Hola!%20Quiero%20consultar%20por%20${encodeURIComponent(
+          href={`https://wa.me/5493795134533?text=Hola!%20Quiero%20consultar%20por%20${encodeURIComponent(
             item.nombre
           )}`}
           className="

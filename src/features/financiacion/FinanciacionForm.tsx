@@ -15,7 +15,7 @@ export default function FinanciacionForm({ whatsappNumber, modelos = [] }: Props
   const phone =
     whatsappNumber ||
     process.env.NEXT_PUBLIC_WHATSAPP_FINANCIACION ||
-    "54937940000000";
+    "5493795134533";
 
   const dniDigits = dni.replace(/\D/g, "");
 

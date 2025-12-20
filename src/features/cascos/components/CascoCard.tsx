@@ -63,7 +63,7 @@ export function CascoCard({ item }: { item: CascoItem }) {
       {/* BOTÓN WHATSAPP */}
       <div className="px-4 sm:px-5 pb-4 flex justify-end">
         <a
-          href={`https://wa.me/5493790000000?text=Hola!%20Quiero%20consultar%20por%20el%20casco%20${encodeURIComponent(
+          href={`https://wa.me/5493795134533?text=Hola!%20Quiero%20consultar%20por%20el%20casco%20${encodeURIComponent(
             item.nombre
           )}`}
           className="
