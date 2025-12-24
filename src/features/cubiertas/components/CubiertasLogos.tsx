@@ -3,9 +3,9 @@
 import Image from "next/image";
 
 const logos = [
-  { src: "/cubiertas/horng.jpeg", alt: "Horng Fortune" },
-  { src: "/cubiertas/wanda.webp", alt: "Wanda Tires" },
-  { src: "/cubiertas/rinaldi.png", alt: "Rinaldi" },
+  { src: "/cubiertas/horng.webp", alt: "Horng Fortune", scale: "scale-[1.35]" },
+  { src: "/cubiertas/wanda.webp", alt: "Wanda Tyre", scale: "scale-[1.08]" },
+  { src: "/cubiertas/rinaldi.png", alt: "Rinaldi", scale: "scale-[1.0]" },
 ];
 
 export default function CubiertasLogos() {
@@ -13,29 +13,30 @@ export default function CubiertasLogos() {
     <section className="w-full">
       <div
         className="
-          mx-auto
-          max-w-5xl
-          grid grid-cols-2 sm:grid-cols-3
-          gap-x-12 gap-y-10
+          mx-auto max-w-6xl
+          grid grid-cols-1 sm:grid-cols-3
+          gap-y-8 sm:gap-y-10
+          gap-x-10 sm:gap-x-14
           items-center justify-items-center
+          px-6 sm:px-0
         "
       >
         {logos.map((l) => (
           <div
             key={l.alt}
             className="
+              relative
+              w-[240px] h-[120px]
+              sm:w-[220px] sm:h-[120px]
               flex items-center justify-center
-              w-[180px] h-[90px]
             "
-            aria-label={l.alt}
-            title={l.alt}
           >
             <Image
               src={l.src}
               alt={l.alt}
-              width={180}
-              height={90}
-              className="object-contain"
+              fill
+              sizes="(max-width: 640px) 240px, 220px"
+              className={`object-contain ${l.scale}`}
             />
           </div>
         ))}

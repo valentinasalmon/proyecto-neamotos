@@ -4,15 +4,29 @@ import { useMemo, useState } from "react";
 
 type Props = {
   whatsappNumber?: string;
-  modelos?: string[]; // nombres de modelos para autocompletar
+  modelos?: string[];
 };
+
+function normalizePhone(raw: string) {
+  // deja solo dígitos
+  return (raw || "").replace(/\D/g, "");
+}
+
+function buildWhatsAppUrl(phoneRaw: string, text: string) {
+  const phone = normalizePhone(phoneRaw);
+
+  // api.whatsapp.com suele ser más estable que wa.me en desktop + algunos móviles
+  return `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(
+    text
+  )}`;
+}
 
 export default function FinanciacionForm({ whatsappNumber, modelos = [] }: Props) {
   const [nombre, setNombre] = useState("");
   const [dni, setDni] = useState("");
   const [modelo, setModelo] = useState("");
 
-  const phone =
+  const phoneRaw =
     whatsappNumber ||
     process.env.NEXT_PUBLIC_WHATSAPP_FINANCIACION ||
     "5493795134533";
@@ -36,14 +50,14 @@ export default function FinanciacionForm({ whatsappNumber, modelos = [] }: Props
       `DNI: ${dniDigits}\n` +
       `Modelo: ${modelo.trim()}`;
 
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(texto)}`;
-    window.open(url, "_blank");
+    const url = buildWhatsAppUrl(phoneRaw, texto);
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
     <form onSubmit={handleSubmit} className="max-w-3xl text-neutral-900">
       <p className="text-sm text-neutral-500 mb-8 mt-2">
-       Escribinos por WhatsApp para simular tu plan
+        Escribinos por WhatsApp para simular tu plan
       </p>
 
       <div className="grid gap-10 md:grid-cols-2">
@@ -89,18 +103,15 @@ export default function FinanciacionForm({ whatsappNumber, modelos = [] }: Props
             "
             required
           />
-          <p className="text-[12px] text-neutral-500 mt-2">
-            Solo números, sin puntos
-          </p>
+          <p className="text-[12px] text-neutral-500 mt-2">Solo números, sin puntos</p>
         </div>
 
-        {/* Modelo con autocomplete */}
+        {/* Modelo */}
         <div className="md:col-span-2">
           <label className="text-[13px] font-semibold text-neutral-800 mb-2 block">
             Modelo a consultar <span className="text-red-600">*</span>
           </label>
 
-          {/* Autocomplete nativo con datalist */}
           <input
             type="text"
             list="modelos-list"
@@ -118,7 +129,6 @@ export default function FinanciacionForm({ whatsappNumber, modelos = [] }: Props
             required
           />
 
-          {/* Opciones */}
           {modelos.length > 0 && (
             <datalist id="modelos-list">
               {modelos.map((m) => (
@@ -126,7 +136,6 @@ export default function FinanciacionForm({ whatsappNumber, modelos = [] }: Props
               ))}
             </datalist>
           )}
-
         </div>
       </div>
 

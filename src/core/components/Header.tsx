@@ -2,28 +2,37 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const whatsappHref =
-    "https://wa.me/5493795134533?text=Hola!%20Quiero%20hacer%20una%20consulta";
+  const whatsappHref = `https://api.whatsapp.com/send?phone=5493795134533&text=${encodeURIComponent(
+    "Hola! Quiero hacer una consulta"
+  )}`;
+
+  const links: Array<{ label: string; href: string }> = [
+    { label: "Home", href: "/" },
+    { label: "Cascos", href: "/cascos" },
+    { label: "Cubiertas", href: "/cubiertas" },
+    { label: "Financiación", href: "/financiacion" },
+    { label: "Indumentaria", href: "/indumentaria" },
+    { label: "Motos", href: "/catalogo" },
+    { label: "Seguros", href: "/seguros" },
+  ];
 
   return (
     <>
-      {/* ================= HEADER ================= */}
       <header
         className="
-          fixed top-0 inset-x-0 z-[50]
-          backdrop-blur bg-white/80
-          border-b border-neutral-200
-          text-neutral-900
+          fixed top-0 inset-x-0 z-[999999]
+          h-16 bg-white/90 backdrop-blur
+          border-b border-neutral-200 text-neutral-900
         "
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-
-          {/* LOGO SOLO */}
-          <a href="/" className="flex items-center" aria-label="Inicio">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
+          {/* LOGO */}
+          <Link href="/" className="flex items-center" aria-label="Inicio">
             <Image
               src="/logo nea/neamotos.png"
               alt="NEA Motos"
@@ -32,25 +41,20 @@ export function Header() {
               className="h-10 w-auto object-contain"
               priority
             />
-          </a>
+          </Link>
 
           {/* NAV DESKTOP */}
-          <nav
-            className="hidden lg:flex items-center gap-6 text-[13px] font-semibold text-neutral-800"
-            aria-label="Principal"
-          >
-            <a href="/" className="hover:text-[#0A2342]">Home</a>
-            <a href="/catalogo" className="hover:text-[#0A2342]">Motos</a>
-            <a href="/cubiertas" className="hover:text-[#0A2342]">Cubiertas</a>
-            <a href="/indumentaria" className="hover:text-[#0A2342]">Indumentaria</a>
-            <a href="/financiacion" className="hover:text-[#0A2342]">Financiación</a>
-            <a href="/seguros" className="hover:text-[#0A2342]">Seguros</a>
-            <a href="/cascos" className="hover:text-[#0A2342]">Cascos</a>
+          <nav className="hidden lg:flex items-center gap-6 text-[13px] font-semibold text-neutral-800">
+            {links.map((l) => (
+              <Link key={l.href} href={l.href} className="hover:text-[#0A2342]">
+                {l.label}
+              </Link>
+            ))}
 
-
-            {/* BOTÓN ROJO CONSULTAR */}
             <a
               href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
               className="
                 inline-flex items-center rounded-full
                 bg-red-600 hover:bg-red-700 active:bg-red-800
@@ -75,21 +79,16 @@ export function Header() {
         </div>
       </header>
 
-      {/* ==================== MENÚ MOBILE ==================== */}
+      {/* MENÚ MOBILE */}
       <div
         className={`
-          fixed inset-0 z-[9999]
+          fixed inset-0 z-[1000000]
           transition-opacity duration-200
           ${mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
         `}
       >
-        {/* Overlay */}
-        <div
-          className="absolute inset-0 bg-black/40"
-          onClick={() => setMobileOpen(false)}
-        />
+        <div className="absolute inset-0 bg-black/40" onClick={() => setMobileOpen(false)} />
 
-        {/* Panel */}
         <aside
           role="dialog"
           onClick={(e) => e.stopPropagation()}
@@ -101,34 +100,32 @@ export function Header() {
             flex flex-col
           `}
         >
-          {/* HEADER DEL PANEL */}
           <div className="flex items-center justify-between px-4 h-16 border-b border-neutral-200">
-            <span className="font-display text-base font-bold tracking-wide">
-              NEA MOTOS
-            </span>
+            <span className="font-display text-base font-bold tracking-wide">NEA MOTOS</span>
             <button
               onClick={() => setMobileOpen(false)}
-              className="inline-flex items-center justify-center w-9 h-9 text-neutral-700 hover:bg-neutral-100 rounded"
+              className="w-9 h-9 grid place-items-center rounded hover:bg-neutral-100"
+              aria-label="Cerrar menú"
             >
               ✕
             </button>
           </div>
 
-          {/* LINKS */}
           <nav className="flex-1 overflow-y-auto px-4 py-6 text-[15px] font-semibold">
             <ul className="flex flex-col gap-4">
-              <li><a href="/" onClick={() => setMobileOpen(false)}>Home</a></li>
-              <li><a href="/catalogo" onClick={() => setMobileOpen(false)}>Motos</a></li>
-               <li><a href="/cubiertas" onClick={() => setMobileOpen(false)}>Cubiertas</a></li>
-              <li><a href="/indumentaria" onClick={() => setMobileOpen(false)}>Indumentaria</a></li>
-              <li><a href="/financiacion" onClick={() => setMobileOpen(false)}>Financiación</a></li>
-              <li><a href="/seguros" onClick={() => setMobileOpen(false)}>Seguros</a></li>
-               <li><a href="/cascos" onClick={() => setMobileOpen(false)}>Cascos</a></li>
+              {links.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} onClick={() => setMobileOpen(false)}>
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
 
-              {/* BOTÓN ROJO CONSULTAR — MOBILE */}
               <li className="pt-4 border-t border-neutral-200">
                 <a
                   href={whatsappHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setMobileOpen(false)}
                   className="
                     inline-flex items-center justify-center w-full
@@ -141,7 +138,6 @@ export function Header() {
                 </a>
               </li>
 
-              {/* INFO NEGOCIO */}
               <li className="text-[12px] text-neutral-500 leading-relaxed">
                 <p>Horarios: Lun a Sáb 8:30 – 13 / 16:30 – 20:30</p>
                 <p>Corrientes Capital · Envíos a todo el país</p>

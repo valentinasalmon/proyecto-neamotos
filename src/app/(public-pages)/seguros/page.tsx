@@ -6,82 +6,75 @@ export const metadata: Metadata = {
     "Protegé tu moto con coberturas a tu medida. Trabajamos con aseguradoras aliadas.",
 };
 
+/* ================= ASEGURADORAS ================= */
+
 const insurers = [
-  { name: "La Caja",      logo: "/seguros/lacaja.svg",      alt: "Logo La Caja" },
-  { name: "San Patricio", logo: "/seguros/sanpatricio.svg", alt: "Logo San Patricio Seguros" },
-  { name: "Triunfo",      logo: "/seguros/triunfo.svg",     alt: "Logo Triunfo Seguros" },
+  {
+    name: "La Caja",
+    logo: "/seguros/lacaja.svg",
+    alt: "Logo La Caja",
+    imgClass: "scale-[1.22]",
+    capClass: "",
+  },
+  {
+    name: "San Patricio",
+    logo: "/seguros/sp.jpg",
+    alt: "Logo San Patricio Seguros",
+    imgClass: "scale-[1]",
+    // 👇 un toque MÁS chico (ajuste fino final)
+    capClass:
+      "max-w-[175px] sm:max-w-[185px] md:max-w-[195px] max-h-[80px] sm:max-h-[88px] md:max-h-[95px]",
+  },
+  {
+    name: "Triunfo",
+    logo: "/seguros/triunfo.svg",
+    alt: "Logo Triunfo Seguros",
+    imgClass: "scale-[1.25]",
+    capClass: "",
+  },
 ];
 
-const waHref =
-  "https://wa.me/5493795134533?text=Hola!%20Quiero%20consultar%20por%20seguros%20para%20mi%20moto.";
+const phone = "543795134533";
+const message = "Hola! Quiero consultar por seguros para mi moto.";
+const waHref = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(
+  message
+)}`;
 
 export default function Page() {
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
-      {/* HEADER */}
-      <header className="mb-10">
+      {/* ================= HEADER ================= */}
+      <header className="mb-8">
         <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-wide text-neutral-900">
-          PROTECCIÓN EN CADA KILOMETRO 
+          PROTECCIÓN EN CADA KILÓMETRO
         </h1>
 
         <p className="mt-4 max-w-3xl text-[15px] sm:text-[16px] leading-relaxed text-neutral-700">
           En NEA Motos trabajamos con aseguradoras de confianza para que elijas la
           cobertura ideal según tu estilo de conducción, uso y presupuesto.
-          Protegé tu moto y disfrutá el camino con tranquilidad.
         </p>
 
         <div className="mt-6 border-t border-neutral-200" />
       </header>
 
-      {/* ¿POR QUÉ CONTRATAR UN SEGURO? */}
+      {/* ================= BENEFICIOS ================= */}
       <section>
-       <h2 className="
-  text-sm sm:text-base
-  font-semibold
-  uppercase
-  tracking-wide
-  text-neutral-600
-">
-  ¿Por qué contratar un seguro?
-</h2>
-
+        <h2 className="text-sm sm:text-base font-semibold uppercase tracking-wide text-neutral-600">
+          ¿Por qué contratar un seguro?
+        </h2>
 
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-neutral-800">
-          <Benefit
-            title="Responsabilidad civil"
-            text="Cumplí con lo obligatorio y protegé a terceros ante un siniestro."
-            svg={ShieldSVG}
-          />
-          <Benefit
-            title="Asistencia 24/7"
-            text="Grúa, auxilio y soporte en ruta cuando lo necesitás."
-            svg={BuoySVG}
-          />
-          <Benefit
-            title="Gestión simple"
-            text="Te ayudamos a elegir la póliza y a resolver trámites sin vueltas."
-            svg={FileCheckSVG}
-          />
-          <Benefit
-            title="Daños y robo"
-            text="Opciones con robo total y coberturas de daños parciales."
-            svg={WrenchSVG}
-          />
-          <Benefit
-            title="Pagos flexibles"
-            text="Elegí el medio de pago y cuotas que mejor se adapten a vos."
-            svg={CardSVG}
-          />
-          <Benefit
-            title="A tu medida"
-            text="Coberturas según tu uso, presupuesto y tipo de moto."
-            svg={GaugeSVG}
-          />
+          <Benefit title="Responsabilidad civil" text="Protegé a terceros." svg={ShieldSVG} />
+          <Benefit title="Asistencia 24/7" text="Auxilio y grúa en ruta." svg={BuoySVG} />
+          <Benefit title="Gestión simple" text="Sin vueltas ni trámites eternos." svg={FileCheckSVG} />
+          <Benefit title="Daños y robo" text="Coberturas completas." svg={WrenchSVG} />
+          <Benefit title="Pagos flexibles" text="Cuotas a tu medida." svg={CardSVG} />
+          <Benefit title="A tu medida" text="Según tu moto y uso." svg={GaugeSVG} />
         </div>
       </section>
 
-      {/* CTA – ubicación óptima */}
-      <div className="mt-10 flex justify-start">
+      {/* ================= CTA ================= */}
+      <div className="mt-10">
         <a
           href={waHref}
           target="_blank"
@@ -93,58 +86,53 @@ export default function Page() {
             text-white font-semibold
             px-7 py-3
             shadow-[0_12px_24px_rgba(220,38,38,0.35)]
-            transition-colors
             w-full sm:w-auto
           "
-          aria-label="Consultar seguros por WhatsApp"
         >
           Consultar
         </a>
       </div>
 
-      {/* ASEGURADORAS */}
-      <section className="mt-12 pt-6 border-t border-neutral-200">
-      
+      {/* ================= ASEGURADORAS ================= */}
+      <section className="mt-12 border-t border-neutral-200">
         <div
           className="
-            mt-4
-            max-w-3xl mx-auto
-            grid
-            grid-cols-2 sm:grid-cols-3
-            gap-x-6 gap-y-6
+            pt-6 pb-12
+            grid grid-cols-1 sm:grid-cols-3
+            gap-y-8 sm:gap-y-0
+            gap-x-12
             place-items-center
           "
         >
-          {insurers.map((i, index) => {
-            const isSanPatricio = i.name === "San Patricio";
-            const isLast = index === insurers.length - 1;
-
-            return (
-              <div
-                key={i.name}
-                className={`flex items-center justify-center ${
-                  isLast ? "col-span-2 sm:col-span-1" : ""
-                }`}
-              >
-                <img
-  src={i.logo}
-  alt={i.alt}
-  loading="lazy"
-  className={`h-40 sm:h-48 md:h-56 w-auto object-contain ${
-    isSanPatricio ? "scale-[1.35]" : ""
-  }`}
-/>
-
-              </div>
-            );
-          })}
+          {insurers.map((i) => (
+            <div
+              key={i.name}
+              className="
+                w-[260px] h-[130px]
+                sm:w-[280px] sm:h-[140px]
+                md:w-[300px] md:h-[150px]
+                flex items-center justify-center
+              "
+            >
+              <img
+                src={i.logo}
+                alt={i.alt}
+                loading="lazy"
+                className={`
+                  object-contain
+                  ${i.imgClass}
+                  ${i.capClass ? `${i.capClass} w-auto h-auto` : "w-full h-full"}
+                `}
+              />
+            </div>
+          ))}
         </div>
       </section>
     </div>
   );
 }
 
-/* ===== Helpers ===== */
+/* ================= COMPONENTES ================= */
 
 function Benefit({
   title,
@@ -172,7 +160,7 @@ function Benefit({
   );
 }
 
-/* ===== SVGs ===== */
+/* ================= SVG ORIGINALES ================= */
 
 function ShieldSVG() {
   return (
