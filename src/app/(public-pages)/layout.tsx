@@ -47,7 +47,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
               <p className="mt-3 text-sm text-white/90">
                 Tu punto de encuentro para elegir la moto de tus sueños en Corrientes.
               </p>
-              <p className="mt-4 text-sm text-white/90">Horarios: Lun a Sáb 9–13 / 16–20</p>
+              <p className="mt-4 text-sm text-white/90">Horarios: Lun a Sáb 8:30 – 13:00 | 16:30 – 20:30</p>
             </div>
 
             <div>
@@ -55,7 +55,6 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
               <ul className="mt-3 space-y-2 text-sm text-white/90">
                 <li>📍 Corrientes, AR</li>
                 <li>📞 (379) 5134533</li>
-                <li>📧 ventas@neamotos.com</li>
                 <li>
                   💬 WhatsApp:{" "}
                   <a

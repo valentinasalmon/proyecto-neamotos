@@ -48,7 +48,7 @@ export const cascos: CascoItem[] = [
     nombre: "LS2 352 rookie antars",
     categoria: "Integrales",
     marca: "LS2",
-    img: "/cascos/rookieantars.png",
+    img: "/cascos/rookieantars.webp",
     peso: " 1350 ± 50 g",
     material: "HPTT ",
     certificacion: "ECE 22.05",
@@ -58,7 +58,7 @@ export const cascos: CascoItem[] = [
     nombre: "LS2 352 rookie demon",
     categoria: "Integrales",
     marca: "LS2",
-    img: "/cascos/rookieantars.webp",
+    img: "/cascos/rookiedemon.webp",
     peso: " 1350 ± 50 g",
     material: "HPTT ",
     certificacion: "ECE 22.05",
@@ -138,7 +138,7 @@ export const cascos: CascoItem[] = [
     nombre: "LS2 806 fusion nexus",
     categoria: "Integrales",
     marca: "LS2",
-    img: "/cascos/fusionnexus.png",
+    img: "/cascos/fusionnexus.webp",
     peso: " 1550 ± 50 g",
     material: "KPA",
     certificacion: "ECE 22.06",
@@ -424,6 +424,45 @@ export const cascos: CascoItem[] = [
     material: "KPA",
     certificacion: "ECE 22.06",
   },
+   
+
+   // CASCOS VERTIGO // 
+   
+       {
+    id: "Casco Vertigo V 32 Line",
+    nombre: "Casco Vertigo V 32 Line",
+    categoria: "Edicion especial",
+    marca: "Vertigo",
+    img: "/cascos/vertigo1.jpg",
+    peso: "1450 ± 50 g",
+    material: "ABS",
+    certificacion: "IRAM – AITA 3621/2002 – INTI (CHAS)",
+  },
+   
+   
+       {
+    id: "Casco Vertigo Junior",
+    nombre: "Casco Vertigo Junior",
+    categoria: "Integral",
+    marca: "Vertigo",
+    img: "/cascos/vertigojr.jpg",
+    peso: "1400 ± 50 g",
+    material: "Termoplástico",
+    certificacion: "IRAM – AITA 3621/2002 – INTI (CHAS)",
+  },
+
+         {
+    id: "Casco Vertigo Tamashi",
+    nombre: "Casco Vertigo Tamashi",
+    categoria: "Integral",
+    marca: "Vertigo",
+    img: "/cascos/vertigotamashi.png",
+    peso: "1450 ± 50 g",
+    material: "Termoplástico",
+    certificacion: "IRAM – AITA 3621/2002 – INTI (CHAS)",
+  },
+   
+   
    
    
    
