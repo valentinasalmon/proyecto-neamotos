@@ -1,8 +1,9 @@
 "use client";
 
-import { CatalogBrand } from "@/features/catalog/data/catalogData";
+import type { CatalogBrand } from "@/features/catalog/data/catalogData";
 
 export function BrandSection({ brand }: { brand: CatalogBrand }) {
+
   return (
     <section
       id={brand.slug}
