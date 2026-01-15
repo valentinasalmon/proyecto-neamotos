@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
-import { MOTO_DB, MotoVisual } from "@/features/catalog/data/motos";
+import { MOTO_DB, type MotoItem } from "@/features/catalog/data/motos";
 import {
   CatalogFilters,
   CatalogFiltersState,
@@ -50,7 +50,7 @@ export default function CatalogoPage() {
   }, [filters.marca]); // a propósito solo cuando cambia marca
 
   // ✅ Filtrado final (marca + tipo + búsqueda)
-  const filtradas: MotoVisual[] = useMemo(() => {
+  const filtradas: MotoItem[] = useMemo(() => {
     const q = norm(filters.search);
 
     return MOTO_DB.filter((moto) => {

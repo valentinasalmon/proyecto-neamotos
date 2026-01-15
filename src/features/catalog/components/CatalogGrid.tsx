@@ -1,9 +1,9 @@
 "use client";
 
-import { MotoVisual } from "@/features/catalog/data/motos";
+import { MotoItem } from "@/features/catalog/data/motos";
 import { MotoCard } from "@/features/catalog/components/MotoCard";
 
-export function CatalogGrid({ items }: { items: MotoVisual[] }) {
+export function CatalogGrid({ items }: { items: MotoItem[] }) {
   return (
     <div
       className="
