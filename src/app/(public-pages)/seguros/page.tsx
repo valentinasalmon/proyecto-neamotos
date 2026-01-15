@@ -1,3 +1,5 @@
+import React from "react";
+
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -141,8 +143,9 @@ function Benefit({
 }: {
   title: string;
   text: string;
-  svg: () => JSX.Element;
+  svg: React.ElementType;
 }) {
+
   return (
     <div className="flex items-start gap-3">
       <div className="shrink-0 rounded-md bg-neutral-100 p-2 text-neutral-900">
