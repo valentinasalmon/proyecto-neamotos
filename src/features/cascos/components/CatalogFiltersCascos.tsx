@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 export type CatalogFiltersCascosState = {
   categoria: string;
@@ -82,12 +82,14 @@ function CustomSelect({
     </div>
   );
 }
-
 export function CatalogFiltersCascos({
+  items,
   onChange,
 }: {
-  onChange: (f: CatalogFiltersCascosState) => void;
+  items?: unknown[]; // por ahora no se usa, pero así no rompe el build
+  onChange: React.Dispatch<React.SetStateAction<CatalogFiltersCascosState>>;
 }) {
+
   const [filters, setFilters] = useState<CatalogFiltersCascosState>({
     categoria: "Todas",
     marca: "Todas",
