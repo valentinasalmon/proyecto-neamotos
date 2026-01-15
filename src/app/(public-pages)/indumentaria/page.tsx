@@ -1,16 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import {
-  CatalogFiltersIndumentaria,
-  CatalogFiltersIndumentariaState,
-} from "@/features/indumentaria/components/CatalogFiltersIndumentaria";
+import { CatalogFiltersIndumentaria, CatalogFiltersIndumentariaState,} from "@/features/indumentaria/components/CatalogFiltersIndumentaria";
 import { CatalogGridIndumentaria } from "@/features/indumentaria/components/CatalogGridIndumentaria";
-import {
-  INDUMENTARIA_DB,
-  getCategorias,
-  getGeneros,
-} from "@/features/indumentaria/data/indumentaria";
+import { INDUMENTARIA_DB, getCategorias, } from "@/features/indumentaria/data/indumentaria";
 import { SizeGuideModal } from "@/features/indumentaria/components/SizeGuideModal";
 
 export default function IndumentariaPage() {
@@ -21,7 +14,7 @@ export default function IndumentariaPage() {
   });
 
   const categorias = useMemo(() => getCategorias(), []);
-  const generos = useMemo(() => getGeneros(), []);
+
 
   const filtrados = useMemo(
     () =>
@@ -82,7 +75,6 @@ export default function IndumentariaPage() {
         {/* Filtros */}
         <CatalogFiltersIndumentaria
           categorias={categorias}
-          generos={generos}
           onChange={setFilters}
         />
 

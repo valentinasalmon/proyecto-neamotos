@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 export type CatalogFiltersIndumentariaState = {
   categoria: string;
@@ -87,13 +87,12 @@ function CustomSelect({
 
 export function CatalogFiltersIndumentaria({
   categorias,
-  generos, // se pasa desde la page (no se usa acá)
   onChange,
 }: {
   categorias: string[];
-  generos: string[];
-  onChange: (f: CatalogFiltersIndumentariaState) => void;
+  onChange: React.Dispatch<React.SetStateAction<CatalogFiltersIndumentariaState>>;
 }) {
+
   const [filters, setFilters] = useState<CatalogFiltersIndumentariaState>({
     categoria: "Todas",
     genero: "Todos",
