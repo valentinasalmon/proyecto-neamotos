@@ -45,7 +45,6 @@ export function Hero() {
       loop: true,
       align: "start",
       duration: 20,
-      draggable: false,
     },
     [
       Autoplay({

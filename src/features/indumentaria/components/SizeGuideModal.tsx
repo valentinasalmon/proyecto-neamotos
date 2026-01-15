@@ -443,16 +443,20 @@ function SimpleTable({
 }
 
 /** Bloque combinado texto + imagen — TODO del mismo tamaño */
+type MeasureSize = "guantes" | "camperas" | "pantalones";
+
 function MeasureSection({
   title,
   children,
   imageSrc,
   imageAlt,
+  size,
 }: {
   title: string;
   children: ReactNode;
   imageSrc: string;
   imageAlt: string;
+  size?: MeasureSize; // ✅ ahora existe
 }) {
   return (
     <section
@@ -463,6 +467,7 @@ function MeasureSection({
         gap-10
         items-start sm:items-center
       "
+      data-size={size} // (opcional, por si querés usarlo después)
     >
       {/* Texto */}
       <div className="space-y-4 text-[15px] leading-relaxed text-neutral-800">
