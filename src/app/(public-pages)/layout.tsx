@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 import "@/styles/global.css";
 import "@/styles/theme.css";
@@ -22,7 +22,11 @@ const body = Manrope({
 export const metadata: Metadata = {
   title: "NEA MOTOS · Potencia & Perfección",
   description: "Catálogo de motos, cascos y asesoramiento en Corrientes.",
-  viewport: { width: "device-width", initialScale: 1 },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
@@ -36,7 +40,6 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
         <Header />
 
         <ReactQueryProvider>
-          {/* FIX GLOBAL: header fixed (64px) + border (1px) */}
           <main className="flex-1 pt-[65px]">{children}</main>
         </ReactQueryProvider>
 
