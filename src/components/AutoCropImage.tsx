@@ -5,29 +5,22 @@ import { useEffect, useMemo, useState } from "react";
 type Props = {
   src: string;
   alt: string;
-  /** Padding visual extra (0–0.2). */
   padding?: number;
-  /** Llenado mínimo del marco (0.90–0.995). */
   minFillPct?: number;
-  /** Tolerancia base de blanco (0–255). */
   whiteTolerance?: number;
-  /** Color de fondo del marco. */
   bg?: string;
-  /** Clases extra del contenedor interno (ocupa todo el marco). */
   className?: string;
-  /** Si true, intenta más tolerancias (recorte más agresivo). */
   aggressive?: boolean;
-  /** Si true, auto-boosta el tamaño si el contenido útil quedó chico. */
   autoBoostSize?: boolean;
 };
 
-/**
- * AutoCropImage v4
- * - Recorte progresivo de bordes blancos (tolerancias decrecientes).
- * - Calcula areaRatio (área útil/área original).
- * - Si autoBoostSize=true, aumenta el tamaño objetivo cuando areaRatio es bajo.
- * - Mantiene proporción, sin recorte del sujeto (object-contain).
- */
+type CacheValue = {
+  displaySrc: string;
+  intrinsic: { w: number; h: number; areaRatio: number } | null;
+};
+
+const CROP_CACHE = new Map<string, CacheValue>();
+
 export default function AutoCropImage({
   src,
   alt,
@@ -36,76 +29,109 @@ export default function AutoCropImage({
   whiteTolerance = 245,
   bg = "#ffffff",
   className = "",
-  aggressive = true,
+  aggressive = false,          // ✅ por defecto más liviano
   autoBoostSize = true,
 }: Props) {
-  const [displaySrc, setDisplaySrc] = useState<string>(src);
-  const [intrinsic, setIntrinsic] = useState<{ w: number; h: number; areaRatio: number } | null>(null);
+  const cached = CROP_CACHE.get(src);
+
+  const [displaySrc, setDisplaySrc] = useState<string>(cached?.displaySrc ?? src);
+  const [intrinsic, setIntrinsic] = useState<CacheValue["intrinsic"]>(cached?.intrinsic ?? null);
 
   useEffect(() => {
+    // ✅ si ya está cacheado, listo
+    const hit = CROP_CACHE.get(src);
+    if (hit) {
+      setDisplaySrc(hit.displaySrc);
+      setIntrinsic(hit.intrinsic);
+      return;
+    }
+
     let cancelled = false;
+
     const tries = aggressive
-      ? [whiteTolerance, 242, 240, 238, 236, 234, 232, 230]
-      : [whiteTolerance, 242, 240, 238, 236];
+      ? [whiteTolerance, 242, 240, 238] // ✅ menos intentos
+      : [whiteTolerance, 242, 240];
 
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.decoding = "async";
-    img.src = src;
+    const work = () => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.decoding = "async";
+      img.src = src;
 
-    img.onload = () => {
-      if (cancelled) return;
-      const baseW = img.naturalWidth;
-      const baseH = img.naturalHeight;
+      img.onload = () => {
+        if (cancelled) return;
 
-      try {
-        let chosen = { w: baseW, h: baseH, dataUrl: "", areaRatio: 1 };
-        // Buscamos el primer recorte que deje areaRatio razonable; si ninguno, nos quedamos con el mejor.
-        let best = { ...chosen, areaRatio: 0, dataUrl: "" };
+        const baseW = img.naturalWidth;
+        const baseH = img.naturalHeight;
 
-        for (const tol of tries) {
-          const res = cropWhiteBorders(img, tol);
-          if (res.areaRatio > best.areaRatio) best = res;
-          // si ya supera 0.75, aceptamos
-          if (res.areaRatio >= 0.75) {
-            chosen = res;
-            break;
+        try {
+          let chosen = { w: baseW, h: baseH, dataUrl: "", areaRatio: 1 };
+          let best = { ...chosen, areaRatio: 0, dataUrl: "" };
+
+          for (const tol of tries) {
+            const res = cropWhiteBorders(img, tol);
+            if (res.areaRatio > best.areaRatio) best = res;
+            if (res.areaRatio >= 0.75) {
+              chosen = res;
+              break;
+            }
           }
+
+          if (chosen.dataUrl === "") chosen = best.areaRatio > 0 ? best : chosen;
+
+          const nextIntrinsic = { w: chosen.w, h: chosen.h, areaRatio: chosen.areaRatio };
+          const nextDisplaySrc = chosen.dataUrl || src;
+
+          const payload: CacheValue = { displaySrc: nextDisplaySrc, intrinsic: nextIntrinsic };
+          CROP_CACHE.set(src, payload);
+
+          setIntrinsic(nextIntrinsic);
+          setDisplaySrc(nextDisplaySrc);
+        } catch {
+          const payload: CacheValue = {
+            displaySrc: src,
+            intrinsic: { w: baseW, h: baseH, areaRatio: 1 },
+          };
+          CROP_CACHE.set(src, payload);
+
+          setIntrinsic(payload.intrinsic);
+          setDisplaySrc(src);
         }
-        // si ninguno superó 0.75, usamos el mejor encontrado
-        if (chosen.dataUrl === "") chosen = best.areaRatio > 0 ? best : chosen;
+      };
 
-        setIntrinsic({ w: chosen.w, h: chosen.h, areaRatio: chosen.areaRatio });
-        setDisplaySrc(chosen.dataUrl || src);
-      } catch {
-        // fallback (CORS u otro)
-        setIntrinsic({ w: baseW, h: baseH, areaRatio: 1 });
-        setDisplaySrc(src);
-      }
-    };
-
-    img.onerror = () => {
-      if (!cancelled) {
+      img.onerror = () => {
+        if (cancelled) return;
+        const payload: CacheValue = { displaySrc: src, intrinsic: null };
+        CROP_CACHE.set(src, payload);
         setIntrinsic(null);
         setDisplaySrc(src);
-      }
+      };
     };
+
+    // ✅ correr el recorte cuando el navegador esté libre
+    const ric = (window as any).requestIdleCallback as undefined | ((cb: () => void) => number);
+    const cic = (window as any).cancelIdleCallback as undefined | ((id: number) => void);
+
+    let idleId: number | null = null;
+    if (ric) idleId = ric(work);
+    else {
+      // fallback
+      const t = window.setTimeout(work, 0);
+      idleId = t as unknown as number;
+    }
 
     return () => {
       cancelled = true;
+      if (idleId != null && cic) cic(idleId);
     };
   }, [src, whiteTolerance, aggressive]);
 
-  // Cálculo del tamaño objetivo (auto-boost si quedó chica)
   const targetPct = useMemo(() => {
-    // límites
     const fill = clamp(minFillPct, 0.9, 0.995);
     const pad = clamp(padding, 0, 0.2);
     let base = fill;
 
     if (autoBoostSize && intrinsic) {
-      // Si el contenido útil es poco (areaRatio bajo), boosteamos fill levemente.
-      // Mapeo simple: areaRatio ≤ 0.55 → boost +0.03; 0.55–0.7 → +0.02; 0.7–0.85 → +0.01.
       const ar = intrinsic.areaRatio;
       let boost = 0;
       if (ar <= 0.55) boost = 0.03;
@@ -115,15 +141,11 @@ export default function AutoCropImage({
       base = clamp(fill + boost, fill, 0.995);
     }
 
-    // target real aplicando padding visual; nunca mayor a 1.
     return Math.min(1, base * (1 - pad));
   }, [intrinsic, minFillPct, padding, autoBoostSize]);
 
   return (
-    <div
-      className={`w-full h-full flex items-center justify-center ${className}`}
-      style={{ backgroundColor: bg }}
-    >
+    <div className={`w-full h-full flex items-center justify-center ${className}`} style={{ backgroundColor: bg }}>
       <img
         src={displaySrc}
         alt={alt}
@@ -138,18 +160,10 @@ export default function AutoCropImage({
   );
 }
 
-/** Utils */
-
 function clamp(n: number, a: number, b: number) {
   return Math.max(a, Math.min(b, n));
 }
 
-/**
- * Recorta bordes "blancos". Devuelve:
- * - dataUrl del recorte
- * - dimensiones recortadas
- * - areaRatio: (área recortada) / (área original) 0..1
- */
 function cropWhiteBorders(img: HTMLImageElement, tolerance = 245) {
   const w = img.naturalWidth;
   const h = img.naturalHeight;
@@ -164,34 +178,30 @@ function cropWhiteBorders(img: HTMLImageElement, tolerance = 245) {
 
   const isWhite = (i: number) => {
     const r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
-    if (a === 0) return true; // transparente = “aire”
+    if (a === 0) return true;
     return r >= tolerance && g >= tolerance && b >= tolerance;
   };
 
   let top = 0, bottom = h - 1, left = 0, right = w - 1;
 
-  // top
   scanTop: for (; top < h; top++) {
     for (let x = 0; x < w; x++) {
       const i = (top * w + x) * 4;
       if (!isWhite(i)) break scanTop;
     }
   }
-  // bottom
   scanBottom: for (; bottom >= top; bottom--) {
     for (let x = 0; x < w; x++) {
       const i = (bottom * w + x) * 4;
       if (!isWhite(i)) break scanBottom;
     }
   }
-  // left
   scanLeft: for (; left < w; left++) {
     for (let y = top; y <= bottom; y++) {
       const i = (y * w + left) * 4;
       if (!isWhite(i)) break scanLeft;
     }
   }
-  // right
   scanRight: for (; right >= left; right--) {
     for (let y = top; y <= bottom; y++) {
       const i = (y * w + right) * 4;
@@ -202,7 +212,6 @@ function cropWhiteBorders(img: HTMLImageElement, tolerance = 245) {
   const cw = Math.max(1, right - left + 1);
   const ch = Math.max(1, bottom - top + 1);
 
-  // si todo parece blanco o casi nulo, devolvemos original
   if (cw <= 2 || ch <= 2) {
     return { w, h, dataUrl: canvas.toDataURL(), areaRatio: 1 };
   }
@@ -212,6 +221,7 @@ function cropWhiteBorders(img: HTMLImageElement, tolerance = 245) {
   out.height = ch;
   const octx = out.getContext("2d")!;
   octx.drawImage(canvas, left, top, cw, ch, 0, 0, cw, ch);
+
   const dataUrl = out.toDataURL("image/png");
   const areaRatio = (cw * ch) / (w * h);
 

@@ -1,11 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
 
   const whatsappHref = `https://api.whatsapp.com/send?phone=5493795134533&text=${encodeURIComponent(
     "Hola! Quiero hacer una consulta"
@@ -31,7 +37,6 @@ export function Header() {
         "
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
-          {/* LOGO */}
           <Link href="/" className="flex items-center" aria-label="Inicio">
             <Image
               src="/logo nea/neamotos.png"
@@ -43,7 +48,6 @@ export function Header() {
             />
           </Link>
 
-          {/* NAV DESKTOP */}
           <nav className="hidden lg:flex items-center gap-6 text-[13px] font-semibold text-neutral-800">
             {links.map((l) => (
               <Link key={l.href} href={l.href} className="hover:text-[#0A2342]">
@@ -66,7 +70,6 @@ export function Header() {
             </a>
           </nav>
 
-          {/* HAMBURGUESA */}
           <button
             onClick={() => setMobileOpen(true)}
             className="lg:hidden w-10 h-10 flex flex-col items-center justify-center"
@@ -79,26 +82,25 @@ export function Header() {
         </div>
       </header>
 
-      {/* MENÚ MOBILE */}
+      {/* ✅ IMPORTANTE: cuando está cerrado -> hidden (no existe overlay) */}
       <div
-        className={`
-          fixed inset-0 z-[1000000]
-          transition-opacity duration-200
-          ${mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
-        `}
+        className={[
+          "fixed inset-0 z-[1000000] transition-opacity duration-200",
+          mobileOpen ? "opacity-100" : "opacity-0 hidden",
+        ].join(" ")}
       >
         <div className="absolute inset-0 bg-black/40" onClick={() => setMobileOpen(false)} />
 
+        {/* Menú desde arriba */}
         <aside
           role="dialog"
+          aria-modal="true"
           onClick={(e) => e.stopPropagation()}
-          className={`
-            absolute top-0 right-0 h-full w-[80%] max-w-[320px]
+          className="
+            absolute top-0 left-0 right-0
             bg-white text-neutral-900 shadow-xl
-            transform transition-transform duration-300
-            ${mobileOpen ? "translate-x-0" : "translate-x-full"}
-            flex flex-col
-          `}
+            rounded-b-2xl
+          "
         >
           <div className="flex items-center justify-between px-4 h-16 border-b border-neutral-200">
             <span className="font-display text-base font-bold tracking-wide">NEA MOTOS</span>
@@ -111,17 +113,25 @@ export function Header() {
             </button>
           </div>
 
-          <nav className="flex-1 overflow-y-auto px-4 py-6 text-[15px] font-semibold">
-            <ul className="flex flex-col gap-4">
+          <nav className="px-4 py-5 text-[15px] font-semibold">
+            <ul className="flex flex-col gap-1">
               {links.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} onClick={() => setMobileOpen(false)}>
+                  <Link
+                    href={l.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="
+                      block py-3 text-neutral-800
+                      transition-all duration-200
+                      hover:text-[#0A2342] hover:translate-x-1
+                    "
+                  >
                     {l.label}
                   </Link>
                 </li>
               ))}
 
-              <li className="pt-4 border-t border-neutral-200">
+              <li className="pt-5">
                 <a
                   href={whatsappHref}
                   target="_blank"
@@ -138,7 +148,7 @@ export function Header() {
                 </a>
               </li>
 
-              <li className="text-[12px] text-neutral-500 leading-relaxed">
+              <li className="mt-4 text-[12px] text-neutral-500 leading-relaxed">
                 <p>Horarios: Lun a Sáb 8:30 – 13 / 16:30 – 20:30</p>
                 <p>Corrientes Capital · Envíos a todo el país</p>
               </li>

@@ -35,7 +35,7 @@ export default function FinanciacionForm({ whatsappNumber, modelos = [] }: Props
 
   const isValid = useMemo(() => {
     const hasName = nombre.trim().length >= 3;
-    const hasDni = dniDigits.length >= 8 && dniDigits.length <= 10;
+    const hasDni = dniDigits.length >= 8 && dniDigits.length <= 8;
     const hasModelo = modelo.trim().length >= 2;
     return hasName && hasDni && hasModelo;
   }, [nombre, dniDigits, modelo]);

@@ -1,10 +1,10 @@
 "use client";
 
-import { useMemo, useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { MOTO_DB, type MotoItem } from "@/features/catalog/data/motos";
 import {
   CatalogFilters,
-  CatalogFiltersState,
+  type CatalogFiltersState,
 } from "@/features/catalog/components/CatalogFilters";
 import { CatalogGrid } from "@/features/catalog/components/CatalogGrid";
 
@@ -17,13 +17,10 @@ export default function CatalogoPage() {
 
   const norm = (s: string) => s.trim().toLowerCase();
 
-  // ✅ Marcas únicas (siempre global)
-  const marcas = useMemo(
-    () => Array.from(new Set(MOTO_DB.map((m) => m.marca))).sort(),
-    []
-  );
+  const marcas = useMemo(() => {
+    return Array.from(new Set(MOTO_DB.map((m) => m.marca))).sort();
+  }, []);
 
-  // ✅ Tipos DEPENDEN de la marca seleccionada
   const tipos = useMemo(() => {
     const base =
       filters.marca === "Todas"
@@ -33,7 +30,6 @@ export default function CatalogoPage() {
     return Array.from(new Set(base.map((m) => m.tipo))).sort();
   }, [filters.marca]);
 
-  // ✅ Si cambia marca y el tipo actual ya no existe para esa marca, reseteo tipo
   useEffect(() => {
     if (filters.tipo === "Todos") return;
 
@@ -47,27 +43,19 @@ export default function CatalogoPage() {
     if (!existe) {
       setFilters((prev) => ({ ...prev, tipo: "Todos" }));
     }
-  }, [filters.marca]); // a propósito solo cuando cambia marca
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters.marca]);
 
-  // ✅ Filtrado final (marca + tipo + búsqueda)
   const filtradas: MotoItem[] = useMemo(() => {
     const q = norm(filters.search);
 
     return MOTO_DB.filter((moto) => {
-      // marca
-      if (
-        filters.marca !== "Todas" &&
-        norm(moto.marca) !== norm(filters.marca)
-      ) {
+      if (filters.marca !== "Todas" && norm(moto.marca) !== norm(filters.marca))
         return false;
-      }
 
-      // tipo
-      if (filters.tipo !== "Todos" && norm(moto.tipo) !== norm(filters.tipo)) {
+      if (filters.tipo !== "Todos" && norm(moto.tipo) !== norm(filters.tipo))
         return false;
-      }
 
-      // búsqueda
       if (q) {
         const hay =
           norm(moto.nombre).includes(q) ||
@@ -78,12 +66,11 @@ export default function CatalogoPage() {
 
       return true;
     });
-  }, [filters]);
+  }, [filters.marca, filters.tipo, filters.search]);
 
   return (
-    <main className="bg-[#f5f6f7] min-h-screen py-12 sm:py-16 px-4 sm:px-6 lg:px-8 text-neutral-900">
+    <div className="bg-[#f5f6f7] min-h-screen py-12 sm:py-16 px-4 sm:px-6 lg:px-8 text-neutral-900">
       <div className="max-w-7xl mx-auto w-full">
-        {/* Header de página */}
         <header className="mb-8">
           <h1 className="font-display text-[2rem] sm:text-[2.25rem] font-extrabold leading-[1.1] text-neutral-900">
             Elegí tu próxima moto
@@ -96,12 +83,9 @@ export default function CatalogoPage() {
           <div className="mt-6 border-t border-neutral-200" />
         </header>
 
-        {/* Barra de filtros */}
         <CatalogFilters marcas={marcas} tipos={tipos} onChange={setFilters} />
-
-        {/* Grilla de motos filtradas */}
         <CatalogGrid items={filtradas} />
       </div>
-    </main>
+    </div>
   );
 }

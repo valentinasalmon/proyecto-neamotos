@@ -52,14 +52,6 @@ export function ReviewsSection() {
             Nuestros clientes nos recomiendan
           </h2>
 
-          {data?.rating != null && (
-            <div className="flex items-center gap-2 text-sm text-neutral-700 mt-1 font-manrope">
-              <Stars score={data.rating} />
-              <span className="font-semibold">{data.rating.toFixed(1)}</span>
-              <span className="text-neutral-400">•</span>
-              <span>{data.total} reseñas en Google</span>
-            </div>
-          )}
         </div>
 
         {/* === ESTADOS === */}
@@ -90,7 +82,7 @@ export function ReviewsSection() {
               hover:bg-red-700 active:bg-red-800 transition
             "
           >
-            + Dejá tu reseña
+            Dejá tu reseña
           </a>
         </div>
       </div>

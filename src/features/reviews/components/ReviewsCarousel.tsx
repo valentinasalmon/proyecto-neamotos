@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { Star } from "lucide-react";
 
 export type Review = {
   author: string;
@@ -12,8 +12,9 @@ export type Review = {
 
 export function ReviewsCarousel({ reviews }: { reviews: Review[] }) {
   const ref = useRef<HTMLDivElement>(null);
+  const timerRef = useRef<number | null>(null);
+  const pausedRef = useRef(false);
 
-  // índice de la card más alineada al borde izquierdo visible
   const getCurrentIndex = (el: HTMLDivElement, cards: HTMLElement[]) => {
     const crect = el.getBoundingClientRect();
     let best = Infinity;
@@ -29,108 +30,98 @@ export function ReviewsCarousel({ reviews }: { reviews: Review[] }) {
     return idx;
   };
 
-  // scroll a una card por índice usando rects (respeta gap/padding)
   const scrollToIndex = (el: HTMLDivElement, cards: HTMLElement[], index: number) => {
     const crect = el.getBoundingClientRect();
     const r = cards[index].getBoundingClientRect();
-    el.scrollTo({ left: el.scrollLeft + (r.left - crect.left), behavior: "smooth" });
+    el.scrollTo({
+      left: el.scrollLeft + (r.left - crect.left),
+      behavior: "smooth",
+    });
   };
 
-  // cuántas cards por vista (1 / 2 / 3) según el ancho real del carrusel
-  const getVisiblePerView = (el: HTMLDivElement, firstCard: HTMLElement | null) => {
-    if (!firstCard) return 1;
-    const cardW = firstCard.getBoundingClientRect().width;
-    const gapPx = 20; // gap-5
-    const elW = el.getBoundingClientRect().width;
-    const approx = Math.max(1, Math.floor((elW + gapPx) / (cardW + gapPx)));
-    return Math.min(3, approx);
+  const startAuto = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+
+    timerRef.current = window.setInterval(() => {
+      if (pausedRef.current) return;
+
+      const el = ref.current;
+      if (!el) return;
+
+      const cards = Array.from(el.querySelectorAll("article")) as HTMLElement[];
+      if (!cards.length) return;
+
+      const cur = getCurrentIndex(el, cards);
+      const next = cur + 1 >= cards.length ? 0 : cur + 1;
+
+      scrollToIndex(el, cards, next);
+    }, 4500); // ⬅️ velocidad (más alto = más lento)
   };
 
-  // flechas: avanzar/retroceder por grupos completos (1/2/3)
-  const handleArrow = (dir: "left" | "right") => {
-    const el = ref.current;
-    if (!el) return;
-    const cards = Array.from(el.querySelectorAll("article")) as HTMLElement[];
-    if (!cards.length) return;
-
-    const visible = getVisiblePerView(el, cards[0]);
-    const cur = getCurrentIndex(el, cards);
-    const delta = dir === "right" ? visible : -visible;
-    const next = Math.min(Math.max(cur + delta, 0), Math.max(cards.length - visible, 0));
-    scrollToIndex(el, cards, next);
+  const stopAuto = () => {
+    pausedRef.current = true;
+    if (timerRef.current) clearInterval(timerRef.current);
   };
+
+  const resumeAuto = () => {
+    pausedRef.current = false;
+    startAuto();
+  };
+
+  useEffect(() => {
+    startAuto();
+    return () => stopAuto();
+  }, [reviews.length]);
 
   return (
-    <div className="relative mt-10 flex items-center justify-center gap-6 font-manrope text-neutral-900">
-      {/* Flecha izquierda (afuera). Oculta en mobile para no tapar contenido */}
-      <button
-        onClick={() => handleArrow("left")}
-        aria-label="Anterior"
-        className="hidden sm:flex items-center justify-center h-10 w-10 rounded-full border border-neutral-300 bg-white shadow-md hover:scale-110 active:scale-95 transition-transform"
-      >
-        <ChevronLeft className="w-5 h-5 text-neutral-700" />
-      </button>
-
-      {/* Carrusel */}
+    <div className="relative mt-10 font-manrope text-neutral-900">
       <div
         ref={ref}
         className="
           flex overflow-x-auto gap-5 snap-x snap-mandatory
           [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-5
         "
+        onMouseEnter={stopAuto}
+        onMouseLeave={resumeAuto}
+        onTouchStart={stopAuto}
+        onTouchEnd={() => setTimeout(resumeAuto, 800)}
       >
         {reviews.map((r, i) => (
           <article
             key={i}
             className="
-              snap-start [scroll-snap-stop:always] shrink-0
-              w-full                               /* 1 por vista en mobile -> sin cortes */
-              sm:w-[calc((100%-20px)/2)]           /* 2 por vista en sm (gap-5=20px) */
-              md:w-[calc((100%-40px)/3)]           /* 3 por vista en md (2 gaps=40px) */
-              min-h-[200px]
+              snap-start shrink-0
+              w-full
+              sm:w-[calc((100%-20px)/2)]
+              md:w-[calc((100%-40px)/3)]
               bg-white rounded-xl border border-neutral-200
-              shadow-[0_3px_10px_rgba(0,0,0,0.06)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.09)]
-              transition-all duration-300
-              flex flex-col items-start p-5 text-left
+              shadow-[0_3px_10px_rgba(0,0,0,0.06)]
+              p-5 text-left
             "
           >
-            {/* Nombre + tiempo */}
-            <div>
-              <h3 className="font-bebas text-[20px] leading-none tracking-[0.3px]">
-                {r.author}
-              </h3>
-              <p className="font-manrope text-[13px] text-neutral-500 mt-1">
-                {r.time}
-              </p>
-            </div>
+            <h3 className="font-bebas text-[20px] leading-none">{r.author}</h3>
+            <p className="text-xs text-neutral-500 mt-1">{r.time}</p>
 
-            {/* Estrellas */}
-            <div className="flex items-center gap-[2px] mt-[6px]">
+            <div className="flex items-center gap-[2px] mt-2">
               {Array.from({ length: 5 }).map((_, idx) => (
                 <Star
                   key={idx}
                   size={15}
-                  className={idx < Math.round(r.rating) ? "fill-yellow-400 stroke-yellow-400" : "stroke-neutral-300"}
+                  className={
+                    idx < Math.round(r.rating)
+                      ? "fill-yellow-400 stroke-yellow-400"
+                      : "stroke-neutral-300"
+                  }
                 />
               ))}
             </div>
 
-            {/* Comentario */}
-            <p className="font-manrope text-[14px] text-neutral-700 leading-snug mt-4 line-clamp-4">
+            <p className="text-sm text-neutral-700 leading-snug mt-4 line-clamp-4">
               “{r.text}”
             </p>
           </article>
         ))}
       </div>
-
-      {/* Flecha derecha (afuera). Oculta en mobile */}
-      <button
-        onClick={() => handleArrow("right")}
-        aria-label="Siguiente"
-        className="hidden sm:flex items-center justify-center h-10 w-10 rounded-full border border-neutral-300 bg-white shadow-md hover:scale-110 active:scale-95 transition-transform"
-      >
-        <ChevronRight className="w-5 h-5 text-neutral-700" />
-      </button>
     </div>
   );
 }
