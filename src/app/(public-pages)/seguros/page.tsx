@@ -1,6 +1,13 @@
 import React from "react";
-
 import type { Metadata } from "next";
+import {
+  Shield,
+  LifeBuoy,
+  FileText,
+  Wrench,
+  CreditCard,
+  Gauge,
+} from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Seguros | NEA Motos",
@@ -23,7 +30,6 @@ const insurers = [
     logo: "/seguros/sp.jpg",
     alt: "Logo San Patricio Seguros",
     imgClass: "scale-[1]",
-    // 👇 un toque MÁS chico (ajuste fino final)
     capClass:
       "max-w-[175px] sm:max-w-[185px] md:max-w-[195px] max-h-[80px] sm:max-h-[88px] md:max-h-[95px]",
   },
@@ -66,12 +72,20 @@ export default function Page() {
         </h2>
 
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-neutral-800">
-          <Benefit title="Responsabilidad civil" text="Protegé a terceros." svg={ShieldSVG} />
-          <Benefit title="Asistencia 24/7" text="Auxilio y grúa en ruta." svg={BuoySVG} />
-          <Benefit title="Gestión simple" text="Sin vueltas ni trámites eternos." svg={FileCheckSVG} />
-          <Benefit title="Daños y robo" text="Coberturas completas." svg={WrenchSVG} />
-          <Benefit title="Pagos flexibles" text="Cuotas a tu medida." svg={CardSVG} />
-          <Benefit title="A tu medida" text="Según tu moto y uso." svg={GaugeSVG} />
+          <Benefit
+            title="Responsabilidad civil"
+            text="Protegé a terceros."
+            icon={Shield}
+          />
+          <Benefit title="Asistencia 24/7" text="Auxilio y grúa en ruta." icon={LifeBuoy} />
+          <Benefit
+            title="Gestión simple"
+            text="Sin vueltas ni trámites eternos."
+            icon={FileText}
+          />
+          <Benefit title="Daños y robo" text="Coberturas completas." icon={Wrench} />
+          <Benefit title="Pagos flexibles" text="Cuotas a tu medida." icon={CreditCard} />
+          <Benefit title="A tu medida" text="Según tu moto y uso." icon={Gauge} />
         </div>
       </section>
 
@@ -134,23 +148,32 @@ export default function Page() {
   );
 }
 
-/* ================= COMPONENTES ================= */
+/* ================= COMPONENTE BENEFIT ================= */
 
 function Benefit({
   title,
   text,
-  svg: SVG,
+  icon: Icon,
 }: {
   title: string;
   text: string;
-  svg: React.ElementType;
+  icon: React.ElementType;
 }) {
-
   return (
     <div className="flex items-start gap-3">
-      <div className="shrink-0 rounded-md bg-neutral-100 p-2 text-neutral-900">
-        <SVG />
+      {/* Caja fija, centrado perfecto, icono consistente */}
+      <div
+        className="
+          shrink-0
+          w-11 h-11
+          rounded-lg bg-neutral-100 text-neutral-900
+          ring-1 ring-black/5
+          grid place-items-center
+        "
+      >
+        <Icon className="w-5 h-5" strokeWidth={2.25} />
       </div>
+
       <div>
         <h4 className="text-[15px] font-semibold uppercase tracking-wide text-neutral-900">
           {title}
@@ -160,55 +183,5 @@ function Benefit({
         </p>
       </div>
     </div>
-  );
-}
-
-/* ================= SVG ORIGINALES ================= */
-
-function ShieldSVG() {
-  return (
-    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-      <path d="M12 3l7 4v5a9 9 0 01-7 8 9 9 0 01-7-8V7l7-4z" stroke="currentColor" strokeWidth="2" />
-      <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  );
-}
-function BuoySVG() {
-  return (
-    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" />
-      <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  );
-}
-function FileCheckSVG() {
-  return (
-    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-      <path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z" stroke="currentColor" strokeWidth="2" />
-      <path d="M14 3v5h5" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  );
-}
-function WrenchSVG() {
-  return (
-    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-      <path d="M10 7a5 5 0 017.07-4.95l-3.12 3.12a2 2 0 102.83 2.83l3.12-3.12A5 5 0 0117 14a5 5 0 01-5-5z" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  );
-}
-function CardSVG() {
-  return (
-    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-      <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" strokeWidth="2" />
-      <path d="M2 10h20" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  );
-}
-function GaugeSVG() {
-  return (
-    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-      <path d="M21 13a9 9 0 10-18 0" stroke="currentColor" strokeWidth="2" />
-      <path d="M12 13l4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
   );
 }

@@ -37,17 +37,30 @@ export function Header() {
         "
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
+          {/* LOGO HEADER */}
           <Link href="/" className="flex items-center" aria-label="Inicio">
+            {/* Desktop */}
             <Image
               src="/logo nea/neamotos.png"
               alt="NEA Motos"
               width={150}
               height={48}
-              className="h-10 w-auto object-contain"
+              className="hidden lg:block h-10 w-auto object-contain"
+              priority
+            />
+
+            {/* Mobile */}
+            <Image
+              src="/favicon.ico"
+              alt="NEA Motos"
+              width={32}
+              height={32}
+              className="lg:hidden h-8 w-8"
               priority
             />
           </Link>
 
+          {/* NAV DESKTOP */}
           <nav className="hidden lg:flex items-center gap-6 text-[13px] font-semibold text-neutral-800">
             {links.map((l) => (
               <Link key={l.href} href={l.href} className="hover:text-[#0A2342]">
@@ -70,6 +83,7 @@ export function Header() {
             </a>
           </nav>
 
+          {/* HAMBURGER */}
           <button
             onClick={() => setMobileOpen(true)}
             className="lg:hidden w-10 h-10 flex flex-col items-center justify-center"
@@ -82,16 +96,18 @@ export function Header() {
         </div>
       </header>
 
-      {/* ✅ IMPORTANTE: cuando está cerrado -> hidden (no existe overlay) */}
+      {/* OVERLAY MOBILE */}
       <div
         className={[
           "fixed inset-0 z-[1000000] transition-opacity duration-200",
           mobileOpen ? "opacity-100" : "opacity-0 hidden",
         ].join(" ")}
       >
-        <div className="absolute inset-0 bg-black/40" onClick={() => setMobileOpen(false)} />
+        <div
+          className="absolute inset-0 bg-black/40"
+          onClick={() => setMobileOpen(false)}
+        />
 
-        {/* Menú desde arriba */}
         <aside
           role="dialog"
           aria-modal="true"
@@ -102,8 +118,17 @@ export function Header() {
             rounded-b-2xl
           "
         >
+          {/* HEADER MOBILE MENU */}
           <div className="flex items-center justify-between px-4 h-16 border-b border-neutral-200">
-            <span className="font-display text-base font-bold tracking-wide">NEA MOTOS</span>
+            {/* LOGO CHICO EN VEZ DE TEXTO */}
+            <Image
+              src="/favicon.ico"
+              alt="NEA Motos"
+              width={28}
+              height={28}
+              className="h-7 w-7"
+            />
+
             <button
               onClick={() => setMobileOpen(false)}
               className="w-9 h-9 grid place-items-center rounded hover:bg-neutral-100"

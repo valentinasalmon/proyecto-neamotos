@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Star } from "lucide-react";
 import { ReviewsCarousel, type Review } from "./ReviewsCarousel";
 
 type Payload = {
@@ -26,7 +25,7 @@ export function ReviewsSection() {
         setData(json);
         setError(null);
       } catch (e: any) {
-        setError(e.message ?? "Error");
+        setError(e?.message ?? "Error");
       } finally {
         setLoading(false);
       }
@@ -39,23 +38,21 @@ export function ReviewsSection() {
   return (
     <section id="reseñas" className="bg-white py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* === ENCABEZADO === */}
         <div className="flex flex-col items-center gap-2 mb-4">
           <h2
             className="
-              font-anton uppercase
-              text-black
+              font-anton uppercase text-black
               text-[34px] sm:text-[44px] md:text-[52px]
               leading-[0.9] tracking-tight
             "
           >
             Nuestros clientes nos recomiendan
           </h2>
-
         </div>
 
-        {/* === ESTADOS === */}
-        {loading && <p className="py-10 font-manrope text-neutral-500">Cargando reseñas…</p>}
+        {loading && (
+          <p className="py-10 font-manrope text-neutral-500">Cargando reseñas…</p>
+        )}
         {error && (
           <p className="py-10 font-manrope text-red-600">
             No pudimos cargar las reseñas ({error})
@@ -67,10 +64,8 @@ export function ReviewsSection() {
           </p>
         )}
 
-        {/* === CARRUSEL === */}
         {data?.reviews?.length ? <ReviewsCarousel reviews={data.reviews} /> : null}
 
-        {/* === CTA PRINCIPAL === */}
         <div className="mt-10 flex justify-center">
           <a
             href={googleReviewUrl}
@@ -87,27 +82,5 @@ export function ReviewsSection() {
         </div>
       </div>
     </section>
-  );
-}
-
-/* === ICONOS DE ESTRELLAS === */
-function Stars({ score }: { score: number }) {
-  const full = Math.floor(score);
-  const rest = score - full >= 0.5 ? 1 : 0;
-  const total = full + rest;
-  return (
-    <div className="flex items-center">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star
-          key={i}
-          size={16}
-          className={
-            i < total
-              ? "fill-yellow-400 stroke-yellow-400"
-              : "stroke-neutral-300"
-          }
-        />
-      ))}
-    </div>
   );
 }

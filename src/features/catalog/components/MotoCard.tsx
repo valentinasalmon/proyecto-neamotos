@@ -33,28 +33,24 @@ export function MotoCard({ moto }: { moto: MotoItem }) {
         </p>
       </header>
 
-      {/* IMAGEN — marco fijo 4:3 (liviano, sin canvas) */}
+      {/* IMAGEN */}
       <div className="relative w-full aspect-[4/3] bg-white border-b border-neutral-200 overflow-hidden flex items-center justify-center">
         <img
           src={src}
           alt={moto.nombre}
           loading="lazy"
           decoding="async"
-          className="
-            absolute inset-0 w-full h-full object-contain
-            scale-[1.04]
-          "
+          className="absolute inset-0 w-full h-full object-contain scale-[1.04]"
         />
       </div>
 
       {/* ESPECIFICACIONES */}
       <div className="px-4 sm:px-5 py-4 sm:py-5 bg-white">
-        <div className="grid gap-y-3 gap-x-6 grid-cols-1 sm:grid-cols-2">
-          <div className="space-y-3">
-            <Spec label="TRANSMISIÓN" value={transmision} />
-            <Spec label="CILINDRADA" value={cilindrada} />
-          </div>
-          <div className="space-y-3">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-3">
+          <Spec label="TRANSMISIÓN" value={transmision} />
+          <Spec label="CILINDRADA" value={cilindrada} />
+
+          <div className="col-span-2 sm:col-span-1">
             <Spec label="POTENCIA" value={potencia} />
           </div>
         </div>
@@ -75,6 +71,7 @@ export function MotoCard({ moto }: { moto: MotoItem }) {
         "
         aria-label={`Consultar stock de ${moto.nombre} por WhatsApp`}
       >
+        {/* ÍCONO WHATSAPP ORIGINAL */}
         <svg
           viewBox="0 0 24 24"
           fill="currentColor"

@@ -8,12 +8,16 @@ import {
 } from "@/features/catalog/components/CatalogFilters";
 import { CatalogGrid } from "@/features/catalog/components/CatalogGrid";
 
+const PAGE_SIZE = 24;
+
 export default function CatalogoPage() {
   const [filters, setFilters] = useState<CatalogFiltersState>({
     marca: "Todas",
     tipo: "Todos",
     search: "",
   });
+
+  const [visible, setVisible] = useState(PAGE_SIZE);
 
   const norm = (s: string) => s.trim().toLowerCase();
 
@@ -46,6 +50,11 @@ export default function CatalogoPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.marca]);
 
+  // ✅ cuando cambian filtros/búsqueda, reseteo “visible” para no renderizar 200 de golpe
+  useEffect(() => {
+    setVisible(PAGE_SIZE);
+  }, [filters.marca, filters.tipo, filters.search]);
+
   const filtradas: MotoItem[] = useMemo(() => {
     const q = norm(filters.search);
 
@@ -68,6 +77,13 @@ export default function CatalogoPage() {
     });
   }, [filters.marca, filters.tipo, filters.search]);
 
+  // ✅ SOLO renderizo una parte
+  const shown = useMemo(() => {
+    return filtradas.slice(0, visible);
+  }, [filtradas, visible]);
+
+  const hasMore = visible < filtradas.length;
+
   return (
     <div className="bg-[#f5f6f7] min-h-screen py-12 sm:py-16 px-4 sm:px-6 lg:px-8 text-neutral-900">
       <div className="max-w-7xl mx-auto w-full">
@@ -84,7 +100,27 @@ export default function CatalogoPage() {
         </header>
 
         <CatalogFilters marcas={marcas} tipos={tipos} onChange={setFilters} />
-        <CatalogGrid items={filtradas} />
+
+        {/* ✅ antes: <CatalogGrid items={filtradas} /> */}
+        <CatalogGrid items={shown} />
+
+        {/* ✅ botón “Ver más” sin cambiar estética del grid */}
+        {hasMore && (
+          <div className="mt-10 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setVisible((v) => v + PAGE_SIZE)}
+              className="
+                rounded-full bg-neutral-900 text-white
+                px-6 py-3 text-[14px] font-semibold
+                hover:bg-neutral-800 active:bg-neutral-950
+                transition
+              "
+            >
+              Ver más
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
