@@ -24,6 +24,7 @@ export function Header() {
     { label: "Financiación", href: "/financiacion" },
     { label: "Indumentaria", href: "/indumentaria" },
     { label: "Motos", href: "/catalogo" },
+    { label: "Motos usadas", href: "/motos-usadas" },
     { label: "Seguros", href: "/seguros" },
   ];
 

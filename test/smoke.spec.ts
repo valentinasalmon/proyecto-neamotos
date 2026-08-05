@@ -6,6 +6,7 @@ const routes = [
   "/cascos",
   "/cubiertas",
   "/financiacion",
+  "/motos-usadas",
   "/indumentaria",
   "/seguros",
 ];
@@ -29,7 +30,8 @@ test("indumentaria: abre/cierra modal de talles", async ({ page }) => {
 
 test("seguros: CTA consultar existe y apunta a whatsapp", async ({ page }) => {
   await page.goto("/seguros");
-  const cta = page.getByRole("link", { name: /consultar/i });
+  // Hay un CTA "Consultar" también en la barra superior (header). Nos quedamos con el de la página.
+  const cta = page.locator("main").getByRole("link", { name: /consultar/i });
   await expect(cta).toBeVisible();
   await expect(cta).toHaveAttribute("href", /whatsapp|wa\.me|api\.whatsapp\.com/i);
 });
