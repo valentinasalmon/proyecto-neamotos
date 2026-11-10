@@ -2,7 +2,7 @@ import { Hero } from "@/features/hero-section";
 import { Marquee } from "@/features/brands-marquee";
 import { GalleryGrid } from "@/features/gallery";
 import { PromoStrip } from "@/features/promo";
-import { HighlightShowcase } from "@/features/showcase";
+import { PromocionesSection } from "@/features/promociones";
 import { MusicaRuta} from "@/features/showcase";
 import { FeaturedMotosCarousel } from "@/features/catalog/components/FeaturedMotosCarousel";
 import { ReviewsSection } from "@/features/reviews/components/ReviewsSection";
@@ -29,8 +29,8 @@ export default function HomePage() {
       {/* Carrusel de motos destacadas */}
       <FeaturedMotosCarousel />
 
-      {/* Showcase de productos / secciones especiales */}
-      <HighlightShowcase />
+      {/* NEA MOTOS TE ACONSEJA: promos de contado por tiempo limitado */}
+      <PromocionesSection />
 
          {/* ==== RESEÑAS */}
       <ReviewsSection />
