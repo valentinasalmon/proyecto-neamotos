@@ -17,7 +17,7 @@ type Filtro = "Todas" | PromoMarca;
 /**
  * PromocionesSection – Promos de contado por tiempo limitado (Home).
  * Reemplaza a la sección "NEA MOTOS TE ACONSEJA".
- * Tarjetas tipo "ticket" con modelo, cilindrada, precio de contado y un
+ * Tarjetas tipo "ticket" con modelo, precio de contado y un
  * botón de WhatsApp por moto para consultar esa promo puntual.
  */
 export function PromocionesSection() {
@@ -39,15 +39,6 @@ export function PromocionesSection() {
       aria-labelledby="promociones-heading"
       className="relative bg-[#0A2342] text-white overflow-hidden py-16 sm:py-24"
     >
-      {/* Brillos de fondo */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-40 -right-40 h-[480px] w-[480px] rounded-full bg-red-600/20 blur-[120px]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-40 -left-40 h-[420px] w-[420px] rounded-full bg-blue-500/10 blur-[120px]"
-      />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* ================= ENCABEZADO ================= */}
@@ -75,7 +66,7 @@ export function PromocionesSection() {
           </div>
 
           {/* Destacado "desde" */}
-          <div className="flex items-center gap-4 self-start sm:justify-self-start lg:justify-self-end lg:self-end bg-red-600 px-5 py-4 sm:px-6 sm:py-5 shadow-[0_16px_32px_rgba(220,38,38,0.4)]">
+          <div className="flex items-center gap-4 self-start sm:justify-self-start lg:justify-self-end lg:self-end bg-red-600 px-5 py-4 sm:px-6 sm:py-5">
             <div>
               <p className="text-[11px] sm:text-[12px] font-semibold uppercase tracking-[0.2em] text-white/80">
                 Desde
@@ -181,9 +172,6 @@ function PromoTicket({ promo }: { promo: PromoItem }) {
         <h3 className="mt-3 font-display text-[19px] sm:text-[22px] font-extrabold uppercase leading-[1.05] tracking-tight">
           {promo.nombre}
         </h3>
-        <p className="mt-1 text-[11px] sm:text-[12px] font-medium text-neutral-500 uppercase tracking-wide">
-          {promo.detalle}
-        </p>
       </div>
 
       {/* Corte de ticket */}
@@ -211,7 +199,6 @@ function PromoTicket({ promo }: { promo: PromoItem }) {
             w-full rounded-full py-2.5
             bg-green-500 hover:bg-green-600 active:bg-green-700
             text-white text-[13px] sm:text-[14px] font-semibold
-            shadow-[0_8px_18px_rgba(34,197,94,0.35)]
             transition-colors
           "
           aria-label={`Consultar por la promo de ${promo.marca} ${promo.nombre} por WhatsApp`}
